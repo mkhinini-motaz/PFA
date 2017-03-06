@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block headcontainer %}
+  <div class="display-tc animate-box" data-animate-effect="fadeIn">
+    <h1>My Event</h1>
+    <h2>Are you up for the challenge</h2>
+    <!-- Cette div va contenir le compteur à rebous -->
+    <div class="simply-countdown simply-countdown-one"></div>
+    <p><a href="#" class="btn btn-default btn-sm">Save the date</a></p>
+  </div>
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-6 col-md-push-3">
+			    <h1 class="text-center h1">Event Show</h1>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  <script>
+      // Choix du date à qui compter
+      simplyCountdown('.simply-countdown-one', {
+          year: 2017,
+          month: 4,
+          day: 4,
+          hours: 19,
+          minutes: 21,
+          seconds: 40,
+          enableUtc: false
+      });
+
+  </script>
+{% endblock %}

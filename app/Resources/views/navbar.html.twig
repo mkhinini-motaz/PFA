@@ -1,0 +1,41 @@
+<nav class="fh5co-nav" role="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-2">
+                <div id="fh5co-logo">
+                  <a href="{{ path('homepage') }}">TunisiaEvents</a>
+                </div>
+            </div>
+            <div class="col-xs-10 text-right menu-1">
+                <ul>
+                    <li {{ (app.request.attributes.get('_route') == 'homepage') ? ' class="active"' }}>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Story</a>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#">DropDown Menu 1</a>
+                        <ul class="dropdown">
+                            <li><a href="#">Menu Item 1</a></li>
+                            <li><a href="#">Menu Item 2</a></li>
+                            <li><a href="#">Menu Item 3</a></li>
+                            <li><a href="#">Menu Item 4</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#">DropDown Menu</a>
+                        <ul class="dropdown">
+                            <li><a href="#">Menu Item 1</a></li>
+                            <li><a href="#">Menu Item 2</a></li>
+                            <li><a href="#">Menu Item 3</a></li>
+                            <li><a href="#">Menu Item 4</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</nav>

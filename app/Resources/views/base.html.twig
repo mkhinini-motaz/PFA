@@ -1,13 +1,151 @@
 <!DOCTYPE html>
-<html>
+    <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+    <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+    <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+    <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Platform de publication et de gestion des évennement culturels en Tunisie" />
+    <meta name="keywords" content="Evennement, evennement, Evénnement, évennement, event, Event, events, Events, gestion events, gestion évennement, Gestion, gestion, Tunisie, tunisie, Tunisia, tunisia, EPI, epi" />
+    <meta name="author" content="Motaz Mkhinini" />
+
+    <title>
+        {% block title %}Event Home{% endblock %}
+    </title>
+
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content=""/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content=""/>
+    <meta property="og:description" content=""/>
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
+
+    {% block stylesheet %}
+
+        <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/css?family=Sacramento" rel="stylesheet">
+
+        <!-- Animate.css -->
+        <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
+        <!-- Icomoon Icon Fonts-->
+        <link rel="stylesheet" href="{{ asset('css/icomoon.css') }}">
+        <!-- Bootstrap  -->
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+
+        <!-- Magnific Popup -->
+        <link rel="stylesheet" href="{{ asset('css/magnific-popup.css') }}">
+
+        <!-- Owl Carousel  -->
+        <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
+
+        <!-- Theme style  -->
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    {% endblock %}
+
+        <!-- Modernizr JS -->
+        <script src="{{ asset('js/modernizr-2.6.2.min.js') }}"></script>
+        <!-- FOR IE9 below -->
+        <!--[if lt IE 9]>
+        <script src="js/respond.min.js"></script>
+        <![endif]-->
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
     </head>
+
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+
+    <div class="fh5co-loader"></div>
+    <div id="page">
+
+        {% include 'navbar.html.twig' %}
+
+        <!-- Conteneur qui va afficher le compte à rebous -->
+        <header id="fh5co-header" class="fh5co-cover" role="banner" style="background-image:url(images/img_bg_2.jpg);" data-stellar-background-ratio="0.5">
+            <!-- Cette div va contenir la navbar -->
+            <div class="overlay"></div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 text-center">
+                      <div class="display-t">
+                          {% block headcontainer %}
+
+                          {% endblock %}
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+            {% block body %}{% endblock %}
+
+        <footer id="fh5co-footer" role="contentinfo">
+            <div class="container">
+
+                <div class="row copyright">
+                    <div class="col-md-12 text-center">
+                        <p>
+                            <small class="block">&copy; Mkhinini Motaz - EPI. All Rights Reserved.</small>
+                            <small class="block">Designed by <a href="http://freehtml5.co/" target="_blank">EPI</a></small>
+                        </p>
+                        <p>
+                            <ul class="fh5co-social-icons">
+                                <li><a href="#"><i class="icon-twitter"></i></a></li>
+                                <li><a href="#"><i class="icon-facebook"></i></a></li>
+                                <li><a href="#"><i class="icon-linkedin"></i></a></li>
+                                <li><a href="#"><i class="icon-dribbble"></i></a></li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </footer>
+
+    </div>
+
+        {% block javascripts %}
+            <!-- jQuery -->
+            <script src="{{ asset('js/jquery.min.js') }}"></script>
+
+            <!-- jQuery Easing -->
+            <script src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
+
+            <!-- Bootstrap -->
+            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
+            <!-- Waypoints -->
+            <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
+
+            <!-- Carousel -->
+            <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+
+            <!-- countTo -->
+            <script src="{{ asset('js/jquery.countTo.js') }}"></script>
+
+            <!-- Stellar -->
+            <script src="{{ asset('js/jquery.stellar.min.js') }}"></script>
+
+            <!-- Magnific Popup -->
+            <script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+            <script src="{{ asset('js/magnific-popup-options.js') }}"></script>
+
+            <!-- // <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js"></script> -->
+            <script src="{{ asset('js/simplyCountdown.js') }}"></script>
+
+            <!-- Main -->
+            <script src="{{ asset('js/main.js') }}"></script>
+
+        {% endblock %}
+
     </body>
 </html>
