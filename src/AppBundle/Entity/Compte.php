@@ -7,7 +7,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CompteRepository")
  * @ORM\Table(name="compte")
  */
 class Compte extends BaseUser
@@ -22,6 +22,6 @@ class Compte extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        
+
     }
 }
