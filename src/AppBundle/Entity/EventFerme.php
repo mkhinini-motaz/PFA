@@ -21,7 +21,7 @@ class EventFerme extends Event
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var int
@@ -53,14 +53,10 @@ class EventFerme extends Event
 
     /**
      * Relation entre EventFerme et Abonne
-     * @ORM\ManyToMany(targetEntity="Abonne", inversedBy="reservations")
+     * @ORM\OneToMany(targetEntity="Reservations", mappedBy="eventsFerme")
      * @ORM\JoinTable(name="reservations")
      */
-    private $abonnes;
-
-    public function __construct() {
-        $this->abonnes = new ArrayCollection();
-    }
+    private $reservations;
 
     /**
      * Get id

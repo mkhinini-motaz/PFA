@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Reservations
  *
@@ -35,6 +37,21 @@ class Reservations
      */
     private $dateReservation;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="EventFerme", inversedBy="reservations")
+     * @ORM\JoinColumn(name="eventferme_id", referencedColumnName="id")
+     */
+    protected $eventsFerme;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Abonne", inversedBy="reservations")
+     * @ORM\JoinColumn(name="abonne_id", referencedColumnName="id")
+     */
+    protected $abonnes;
+
+    public function __construct() {
+        $this->abonnes = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -94,4 +111,3 @@ class Reservations
         return $this->dateReservation;
     }
 }
-

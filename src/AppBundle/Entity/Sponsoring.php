@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Eventsponsor
  *
- * @ORM\Table(name="eventsponsor")
+ * @ORM\Table(name="sponsoring")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventsponsorRepository")
  */
-class Eventsponsor
+class Sponsoring
 {
     /**
      * @var int
@@ -28,6 +28,22 @@ class Eventsponsor
      */
     private $montant;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="sponsoring")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     */
+    protected $events;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Sponsor", inversedBy="sponsoring")
+     * @ORM\JoinColumn(name="sponsor_id", referencedColumnName="id")
+     */
+    protected $sponsors;
+
+    public function __construct() {
+        $this->events = new ArrayCollection();
+        $this->sponsors = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -63,4 +79,3 @@ class Eventsponsor
         return $this->montant;
     }
 }
-

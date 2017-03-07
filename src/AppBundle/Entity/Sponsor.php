@@ -66,11 +66,11 @@ class Sponsor
     private $logo;
 
     /**
-     * Relation entre Sponsor et Event
-     * @ORM\ManyToMany(targetEntity="Event", mappedBy="sponsors")
-     * @ORM\JoinTable(name="eventsponsor")
+     * Relation entre Event et Sponsor
+     * @ORM\OneToMany(targetEntity="Sponsoring", mappedBy="sponsors")
+     * @ORM\JoinTable(name="sponsoring")
      */
-    private $events;
+    protected $sponsoring;
 
     public function __construct() {
         $this->events = new ArrayCollection();

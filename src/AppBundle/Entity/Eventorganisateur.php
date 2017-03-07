@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Eventorganisateur
  *
@@ -35,6 +37,22 @@ class Eventorganisateur
      */
     private $dateFin;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="eventorganisateur")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     */
+    private $events;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Organisateur", inversedBy="eventorganisateur")
+     * @ORM\JoinColumn(name="organisateur_id", referencedColumnName="id")
+     */
+    private $organisateurs;
+
+    public function __construct() {
+        $this->events = new ArrayCollection();
+        $this->organisateurs = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -94,4 +112,3 @@ class Eventorganisateur
         return $this->dateFin;
     }
 }
-

@@ -4,8 +4,6 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
 /**
  * Abonne
  *
@@ -60,14 +58,10 @@ class Abonne
 
     /**
      * Relation entre Abonne et EventFerme
-     * @ORM\ManyToMany(targetEntity="EventFerme", inversedBy="abonnes")
+     * @ORM\OneToMany(targetEntity="Reservations", mappedBy="abonnes")
      * @ORM\JoinTable(name="reservations")
      */
     protected $reservations;
-
-    public function __construct() {
-        $this->reservations = new ArrayCollection();
-    }
 
     /**
      * Get id

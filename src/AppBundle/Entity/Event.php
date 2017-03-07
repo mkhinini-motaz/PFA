@@ -11,6 +11,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table(name="event")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventRepository")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"event" = "Event", "eventferme" = "EventFerme"})
  */
 class Event
 {
@@ -60,7 +63,7 @@ class Event
 
     /**
      * Relation entre Event et Categorie
-     * @ORM\OneToMany(targetEntity="Categorie", inversedBy="events")
+     * @ORM\ManyToMany(targetEntity="Categorie", inversedBy="events")
      * @ORM\JoinTable(name="eventcategorie")
      */
     protected $categories;
@@ -68,22 +71,20 @@ class Event
 
     /**
      * Relation entre Event et Sponsor
-     * @ORM\ManyToMany(targetEntity="Sponsor", inversedBy="events")
-     * @ORM\JoinTable(name="eventsponsor")
+     * @ORM\OneToMany(targetEntity="Sponsoring", mappedBy="events")
+     * @ORM\JoinTable(name="sponsoring")
      */
-    protected $sponsors;
+    protected $sponsoring;
 
     /**
      * Relation entre Event et Organisateur
-     * @ORM\ManyToMany(targetEntity="Organisateur", inversedBy="events")
+     * @ORM\OneToMany(targetEntity="Eventorganisateur", mappedBy="events")
      * @ORM\JoinTable(name="eventorganisateur")
      */
-    protected $organisateurs;
+    protected $eventorganisateur;
 
     public function __construct() {
         $this->categories = new ArrayCollection();
-        $this->sponsors = new ArrayCollection();
-        $this->organisateurs = new ArrayCollection();
     }
 
     /**

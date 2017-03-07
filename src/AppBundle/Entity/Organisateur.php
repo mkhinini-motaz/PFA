@@ -19,7 +19,7 @@ class Organisateur extends Abonne
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -28,6 +28,12 @@ class Organisateur extends Abonne
      */
     private $nomSociete;
 
+    /**
+     * Relation entre Event et Organisateur
+     * @ORM\OneToMany(targetEntity="Eventorganisateur", mappedBy="organisateurs")
+     * @ORM\JoinTable(name="eventorganisateur")
+     */
+    protected $eventorganisateur;
 
     /**
      * Get id
