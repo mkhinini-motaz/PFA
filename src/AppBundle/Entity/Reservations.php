@@ -110,4 +110,52 @@ class Reservations
     {
         return $this->dateReservation;
     }
+
+    /**
+     * Set eventsFerme
+     *
+     * @param \AppBundle\Entity\EventFerme $eventsFerme
+     *
+     * @return Reservations
+     */
+    public function setEventsFerme(\AppBundle\Entity\EventFerme $eventsFerme = null)
+    {
+        $this->eventsFerme = $eventsFerme;
+
+        return $this;
+    }
+
+    /**
+     * Get eventsFerme
+     *
+     * @return \AppBundle\Entity\EventFerme
+     */
+    public function getEventsFerme()
+    {
+        return $this->eventsFerme;
+    }
+
+    /**
+     * Set abonnes
+     *
+     * @param \AppBundle\Entity\Abonne $abonnes
+     *
+     * @return Reservations
+     */
+    public function setAbonnes(\AppBundle\Entity\Abonne $abonnes = null)
+    {
+        $this->abonnes = $abonnes;
+
+        return $this;
+    }
+
+    /**
+     * Get abonnes
+     *
+     * @return \AppBundle\Entity\Abonne
+     */
+    public function getAbonnes()
+    {
+        return $this->abonnes;
+    }
 }

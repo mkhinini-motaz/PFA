@@ -163,4 +163,140 @@ class EventFerme extends Event
     {
         return $this->prix;
     }
+
+    /**
+     * Add reservation
+     *
+     * @param \AppBundle\Entity\Reservations $reservation
+     *
+     * @return EventFerme
+     */
+    public function addReservation(\AppBundle\Entity\Reservations $reservation)
+    {
+        $this->reservations[] = $reservation;
+
+        return $this;
+    }
+
+    /**
+     * Remove reservation
+     *
+     * @param \AppBundle\Entity\Reservations $reservation
+     */
+    public function removeReservation(\AppBundle\Entity\Reservations $reservation)
+    {
+        $this->reservations->removeElement($reservation);
+    }
+
+    /**
+     * Get reservations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReservations()
+    {
+        return $this->reservations;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \AppBundle\Entity\Categorie $category
+     *
+     * @return EventFerme
+     */
+    public function addCategory(\AppBundle\Entity\Categorie $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \AppBundle\Entity\Categorie $category
+     */
+    public function removeCategory(\AppBundle\Entity\Categorie $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * Add sponsoring
+     *
+     * @param \AppBundle\Entity\Sponsoring $sponsoring
+     *
+     * @return EventFerme
+     */
+    public function addSponsoring(\AppBundle\Entity\Sponsoring $sponsoring)
+    {
+        $this->sponsoring[] = $sponsoring;
+
+        return $this;
+    }
+
+    /**
+     * Remove sponsoring
+     *
+     * @param \AppBundle\Entity\Sponsoring $sponsoring
+     */
+    public function removeSponsoring(\AppBundle\Entity\Sponsoring $sponsoring)
+    {
+        $this->sponsoring->removeElement($sponsoring);
+    }
+
+    /**
+     * Get sponsoring
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSponsoring()
+    {
+        return $this->sponsoring;
+    }
+
+    /**
+     * Add eventorganisateur
+     *
+     * @param \AppBundle\Entity\Eventorganisateur $eventorganisateur
+     *
+     * @return EventFerme
+     */
+    public function addEventorganisateur(\AppBundle\Entity\Eventorganisateur $eventorganisateur)
+    {
+        $this->eventorganisateur[] = $eventorganisateur;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventorganisateur
+     *
+     * @param \AppBundle\Entity\Eventorganisateur $eventorganisateur
+     */
+    public function removeEventorganisateur(\AppBundle\Entity\Eventorganisateur $eventorganisateur)
+    {
+        $this->eventorganisateur->removeElement($eventorganisateur);
+    }
+
+    /**
+     * Get eventorganisateur
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventorganisateur()
+    {
+        return $this->eventorganisateur;
+    }
 }

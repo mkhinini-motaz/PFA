@@ -254,4 +254,38 @@ class Sponsor
     {
         return $this->email;
     }
+
+    /**
+     * Add sponsoring
+     *
+     * @param \AppBundle\Entity\Sponsoring $sponsoring
+     *
+     * @return Sponsor
+     */
+    public function addSponsoring(\AppBundle\Entity\Sponsoring $sponsoring)
+    {
+        $this->sponsoring[] = $sponsoring;
+
+        return $this;
+    }
+
+    /**
+     * Remove sponsoring
+     *
+     * @param \AppBundle\Entity\Sponsoring $sponsoring
+     */
+    public function removeSponsoring(\AppBundle\Entity\Sponsoring $sponsoring)
+    {
+        $this->sponsoring->removeElement($sponsoring);
+    }
+
+    /**
+     * Get sponsoring
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSponsoring()
+    {
+        return $this->sponsoring;
+    }
 }

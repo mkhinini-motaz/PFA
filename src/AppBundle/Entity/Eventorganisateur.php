@@ -111,4 +111,52 @@ class Eventorganisateur
     {
         return $this->dateFin;
     }
+
+    /**
+     * Set events
+     *
+     * @param \AppBundle\Entity\Event $events
+     *
+     * @return Eventorganisateur
+     */
+    public function setEvents(\AppBundle\Entity\Event $events = null)
+    {
+        $this->events = $events;
+
+        return $this;
+    }
+
+    /**
+     * Get events
+     *
+     * @return \AppBundle\Entity\Event
+     */
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    /**
+     * Set organisateurs
+     *
+     * @param \AppBundle\Entity\Organisateur $organisateurs
+     *
+     * @return Eventorganisateur
+     */
+    public function setOrganisateurs(\AppBundle\Entity\Organisateur $organisateurs = null)
+    {
+        $this->organisateurs = $organisateurs;
+
+        return $this;
+    }
+
+    /**
+     * Get organisateurs
+     *
+     * @return \AppBundle\Entity\Organisateur
+     */
+    public function getOrganisateurs()
+    {
+        return $this->organisateurs;
+    }
 }

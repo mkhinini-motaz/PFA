@@ -216,4 +216,106 @@ class Event
     {
         return $this->fichiers;
     }
+
+    /**
+     * Add category
+     *
+     * @param \AppBundle\Entity\Categorie $category
+     *
+     * @return Event
+     */
+    public function addCategory(\AppBundle\Entity\Categorie $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \AppBundle\Entity\Categorie $category
+     */
+    public function removeCategory(\AppBundle\Entity\Categorie $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * Add sponsoring
+     *
+     * @param \AppBundle\Entity\Sponsoring $sponsoring
+     *
+     * @return Event
+     */
+    public function addSponsoring(\AppBundle\Entity\Sponsoring $sponsoring)
+    {
+        $this->sponsoring[] = $sponsoring;
+
+        return $this;
+    }
+
+    /**
+     * Remove sponsoring
+     *
+     * @param \AppBundle\Entity\Sponsoring $sponsoring
+     */
+    public function removeSponsoring(\AppBundle\Entity\Sponsoring $sponsoring)
+    {
+        $this->sponsoring->removeElement($sponsoring);
+    }
+
+    /**
+     * Get sponsoring
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSponsoring()
+    {
+        return $this->sponsoring;
+    }
+
+    /**
+     * Add eventorganisateur
+     *
+     * @param \AppBundle\Entity\Eventorganisateur $eventorganisateur
+     *
+     * @return Event
+     */
+    public function addEventorganisateur(\AppBundle\Entity\Eventorganisateur $eventorganisateur)
+    {
+        $this->eventorganisateur[] = $eventorganisateur;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventorganisateur
+     *
+     * @param \AppBundle\Entity\Eventorganisateur $eventorganisateur
+     */
+    public function removeEventorganisateur(\AppBundle\Entity\Eventorganisateur $eventorganisateur)
+    {
+        $this->eventorganisateur->removeElement($eventorganisateur);
+    }
+
+    /**
+     * Get eventorganisateur
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventorganisateur()
+    {
+        return $this->eventorganisateur;
+    }
 }

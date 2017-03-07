@@ -91,4 +91,28 @@ class Compte
     {
         return $this->password;
     }
+
+    /**
+     * Set abonne
+     *
+     * @param \AppBundle\Entity\Abonne $abonne
+     *
+     * @return Compte
+     */
+    public function setAbonne(\AppBundle\Entity\Abonne $abonne = null)
+    {
+        $this->abonne = $abonne;
+
+        return $this;
+    }
+
+    /**
+     * Get abonne
+     *
+     * @return \AppBundle\Entity\Abonne
+     */
+    public function getAbonne()
+    {
+        return $this->abonne;
+    }
 }

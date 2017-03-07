@@ -68,4 +68,104 @@ class Organisateur extends Abonne
     {
         return $this->nomSociete;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->eventorganisateur = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add eventorganisateur
+     *
+     * @param \AppBundle\Entity\Eventorganisateur $eventorganisateur
+     *
+     * @return Organisateur
+     */
+    public function addEventorganisateur(\AppBundle\Entity\Eventorganisateur $eventorganisateur)
+    {
+        $this->eventorganisateur[] = $eventorganisateur;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventorganisateur
+     *
+     * @param \AppBundle\Entity\Eventorganisateur $eventorganisateur
+     */
+    public function removeEventorganisateur(\AppBundle\Entity\Eventorganisateur $eventorganisateur)
+    {
+        $this->eventorganisateur->removeElement($eventorganisateur);
+    }
+
+    /**
+     * Get eventorganisateur
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventorganisateur()
+    {
+        return $this->eventorganisateur;
+    }
+
+    /**
+     * Set compte
+     *
+     * @param \AppBundle\Entity\Compte $compte
+     *
+     * @return Organisateur
+     */
+    public function setCompte(\AppBundle\Entity\Compte $compte = null)
+    {
+        $this->compte = $compte;
+
+        return $this;
+    }
+
+    /**
+     * Get compte
+     *
+     * @return \AppBundle\Entity\Compte
+     */
+    public function getCompte()
+    {
+        return $this->compte;
+    }
+
+    /**
+     * Add reservation
+     *
+     * @param \AppBundle\Entity\Reservations $reservation
+     *
+     * @return Organisateur
+     */
+    public function addReservation(\AppBundle\Entity\Reservations $reservation)
+    {
+        $this->reservations[] = $reservation;
+
+        return $this;
+    }
+
+    /**
+     * Remove reservation
+     *
+     * @param \AppBundle\Entity\Reservations $reservation
+     */
+    public function removeReservation(\AppBundle\Entity\Reservations $reservation)
+    {
+        $this->reservations->removeElement($reservation);
+    }
+
+    /**
+     * Get reservations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReservations()
+    {
+        return $this->reservations;
+    }
 }

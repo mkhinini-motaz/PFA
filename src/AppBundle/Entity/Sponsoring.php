@@ -78,4 +78,52 @@ class Sponsoring
     {
         return $this->montant;
     }
+
+    /**
+     * Set events
+     *
+     * @param \AppBundle\Entity\Event $events
+     *
+     * @return Sponsoring
+     */
+    public function setEvents(\AppBundle\Entity\Event $events = null)
+    {
+        $this->events = $events;
+
+        return $this;
+    }
+
+    /**
+     * Get events
+     *
+     * @return \AppBundle\Entity\Event
+     */
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    /**
+     * Set sponsors
+     *
+     * @param \AppBundle\Entity\Sponsor $sponsors
+     *
+     * @return Sponsoring
+     */
+    public function setSponsors(\AppBundle\Entity\Sponsor $sponsors = null)
+    {
+        $this->sponsors = $sponsors;
+
+        return $this;
+    }
+
+    /**
+     * Get sponsors
+     *
+     * @return \AppBundle\Entity\Sponsor
+     */
+    public function getSponsors()
+    {
+        return $this->sponsors;
+    }
 }
