@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Event
  *
@@ -19,43 +21,70 @@ class Event
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=60)
      */
-    private $nom;
+    protected $nom;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
      */
-    private $description;
+    protected $description;
 
     /**
      * @var string
      *
      * @ORM\Column(name="lieu", type="string", length=100, nullable=true)
      */
-    private $lieu;
+    protected $lieu;
 
     /**
      * @var string
      *
      * @ORM\Column(name="photo", type="string", length=60, nullable=true)
      */
-    private $photo;
+    protected $photo;
 
     /**
      * @var array
      *
      * @ORM\Column(name="fichiers", type="array", nullable=true)
      */
-    private $fichiers;
+    protected $fichiers;
 
+    /**
+     * Relation entre Event et Categorie
+     * @ORM\OneToMany(targetEntity="Categorie", inversedBy="events")
+     * @ORM\JoinTable(name="eventcategorie")
+     */
+    protected $categories;
+
+
+    /**
+     * Relation entre Event et Sponsor
+     * @ORM\ManyToMany(targetEntity="Sponsor", inversedBy="events")
+     * @ORM\JoinTable(name="eventsponsor")
+     */
+    protected $sponsors;
+
+    /**
+     * Relation entre Event et Organisateur
+     * @ORM\ManyToMany(targetEntity="Organisateur", inversedBy="events")
+     * @ORM\JoinTable(name="eventorganisateur")
+     */
+    protected $organisateurs;
+
+    public function __construct() {
+        $this->categories = new ArrayCollection();
+        $this->sponsors = new ArrayCollection();
+        $this->organisateurs = new ArrayCollection();
+    }
 
     /**
      * Get id

@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Categorie
  *
@@ -27,6 +29,17 @@ class Categorie
      * @ORM\Column(name="nom", type="string", length=100, unique=true)
      */
     private $nom;
+
+    /**
+     * Relation entre Categorie et Event
+     * @ORM\ManyToMany(targetEntity="Event", mappedBy="categories")
+     * @ORM\JoinTable(name="eventcategorie")
+     */
+    private $events;
+
+    public function __construct() {
+        $this->events = new ArrayCollection();
+    }
 
 
     /**

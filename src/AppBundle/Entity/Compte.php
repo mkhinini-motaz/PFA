@@ -26,15 +26,13 @@ class Compte
      *
      * @ORM\Column(name="login", type="string", length=100, unique=true)
      */
-    private $login;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=100, unique=true)
+     * Relation entre Compte et l'Abonne propriétaire
+     * @ORM\OneToOne(targetEntity="Abonne", mappedBy="compte")
+     * @ORM\JoinColumn(name="abonne_id", referencedColumnName="id")
      */
-    private $password;
-
+    private $abonne;
 
     /**
      * Get id

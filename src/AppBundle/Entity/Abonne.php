@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Abonne
  *
@@ -19,36 +21,53 @@ class Abonne
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=60)
      */
-    private $nom;
+    protected $nom;
 
     /**
      * @var string
      *
      * @ORM\Column(name="prenom", type="string", length=60)
      */
-    private $prenom;
+    protected $prenom;
 
     /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=60, unique=true)
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string
      *
      * @ORM\Column(name="telephone", type="string", length=20, nullable=true)
      */
-    private $telephone;
+    protected $telephone;
 
+    /**
+     * Relation entre Abonne et son Compte
+     * @ORM\OneToOne(targetEntity="Compte", inversedBy="abonne")
+     * @ORM\JoinColumn(name="compte_id", referencedColumnName="id")
+     */
+    protected $compte;
+
+    /**
+     * Relation entre Abonne et EventFerme
+     * @ORM\ManyToMany(targetEntity="EventFerme", inversedBy="abonnes")
+     * @ORM\JoinTable(name="reservations")
+     */
+    protected $reservations;
+
+    public function __construct() {
+        $this->reservations = new ArrayCollection();
+    }
 
     /**
      * Get id

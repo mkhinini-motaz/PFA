@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Sponsor
  *
@@ -63,6 +65,17 @@ class Sponsor
      */
     private $logo;
 
+    /**
+     * Relation entre Sponsor et Event
+     * @ORM\ManyToMany(targetEntity="Event", mappedBy="sponsors")
+     * @ORM\JoinTable(name="eventsponsor")
+     */
+    private $events;
+
+    public function __construct() {
+        $this->events = new ArrayCollection();
+
+    }
 
     /**
      * Get id
