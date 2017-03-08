@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="abonne")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AbonneRepository")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({"abonne" = "Abonne", "organisateur" = "Organisateur"})
  */
 class Abonne
 {
