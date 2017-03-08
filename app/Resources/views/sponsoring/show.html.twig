@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Sponsoring</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ sponsoring.id }}</td>
+            </tr>
+            <tr>
+                <th>Montant</th>
+                <td>{{ sponsoring.montant }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('sponsoring_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('sponsoring_edit', { 'id': sponsoring.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
