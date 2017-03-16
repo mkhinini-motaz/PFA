@@ -13,9 +13,12 @@ class EventorganisateurType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('dateDebut')->add('dateFin')->add('events')->add('organisateurs')        ;
+        $builder->add('dateDebut')
+                ->add('dateFin')
+                ->add('events')
+                ->add('organisateurs');
     }
-    
+
     /**
      * {@inheritdoc}
      */

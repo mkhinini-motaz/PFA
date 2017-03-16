@@ -6,6 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 class SponsorType extends AbstractType
 {
     /**
@@ -13,9 +15,14 @@ class SponsorType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom')->add('telephone')->add('email')->add('siteWeb')->add('adresse')->add('logo')        ;
+        $builder->add('nom', TextType::class)
+                ->add('telephone', TextType::class)
+                ->add('email', EmailType::class)
+                ->add('siteWeb')
+                ->add('adresse', TextType::class)
+                ->add('logo');
     }
-    
+
     /**
      * {@inheritdoc}
      */

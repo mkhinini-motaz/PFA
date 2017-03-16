@@ -13,9 +13,11 @@ class SponsoringType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('montant')->add('events')->add('sponsors')        ;
+        $builder->add('montant')
+                ->add('events')
+                ->add('sponsors');
     }
-    
+
     /**
      * {@inheritdoc}
      */

@@ -5,7 +5,7 @@ imports:
     - { resource: "@AppBundle/Resources/config/services.yml" }
 
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi:             ~
@@ -61,7 +61,7 @@ swiftmailer:
     spool:     { type: memory }
 
 fos_user:
-    db_driver: orm 
+    db_driver: orm
     firewall_name: main
     user_class: AppBundle\Entity\Compte
     from_email:

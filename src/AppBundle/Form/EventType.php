@@ -6,6 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 class EventType extends AbstractType
 {
     /**
@@ -13,9 +15,14 @@ class EventType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom')->add('description')->add('lieu')->add('photo')->add('fichiers')->add('categories')        ;
+        $builder->add('nom', TextType::class)
+                ->add('description')
+                ->add('lieu', TextType::class)
+                ->add('categories')
+                ->add('photo')
+                ->add('fichiers');
     }
-    
+
     /**
      * {@inheritdoc}
      */
