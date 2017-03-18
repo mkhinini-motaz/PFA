@@ -7,6 +7,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class SponsorType extends AbstractType
 {
@@ -18,9 +20,10 @@ class SponsorType extends AbstractType
         $builder->add('nom', TextType::class)
                 ->add('telephone', TextType::class)
                 ->add('email', EmailType::class)
-                ->add('siteWeb')
+                ->add('siteWeb', TextType::class)
                 ->add('adresse', TextType::class)
-                ->add('logo');
+                ->add('logo', FileType::class, ["label" => "Logo"]);
+
     }
 
     /**

@@ -44,6 +44,28 @@ class EventFermeController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $path = $this->get('kernel')->getRootDir() . '/../web/images/events/' . $eventFerme->getName();
+
+            $photo = $eventFerme->getPhoto();
+            $photoName = md5(uniqid()).'.'.$photo->guessExtension();
+            move_uploaded_file($photo->getPathName() , $path . DIRECTORY_SEPARATOR . $photoName);
+            $eventFerme->setPhoto($photoName);
+
+              //String qui va contenir les noms des images séparés par " ; "
+            $filesnames = "";
+
+            foreach ($eventFerme->getFichiers() as &$file){
+              // Generate a unique name for the file before saving it
+              $fileName = md5(uniqid()).'.'.$file->guessExtension();
+
+              // Move the file to the directory where it is are stored
+              move_uploaded_file($file->getPathName() ,$path . DIRECTORY_SEPARATOR .$fileName);
+
+              $filesnames .= $fileName . ";";
+
+          }
+
+            $eventFerme->setFichiers($filesnames);
             $em = $this->getDoctrine()->getManager();
             $em->persist($eventFerme);
             $em->flush($eventFerme);

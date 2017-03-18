@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextAreaType;
 
 class EventType extends AbstractType
 {
@@ -16,11 +17,12 @@ class EventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nom', TextType::class)
-                ->add('description')
+                ->add('description', TextAreaType::class)
                 ->add('lieu', TextType::class)
                 ->add('categories')
-                ->add('photo')
-                ->add('fichiers');
+                ->add('photo', FileType::class, ["label" => "Photo de l'évennement"])
+                ->add('fichiers', FileType::class, ["multiple" => true, "label" => "Fichiers joints"]);
+
     }
 
     /**

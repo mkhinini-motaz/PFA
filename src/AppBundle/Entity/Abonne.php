@@ -40,11 +40,11 @@ class Abonne
     protected $prenom;
 
     /**
-     * @var string
+     * @var date
      *
-     * @ORM\Column(name="email", type="string", length=60, unique=true)
+     * @ORM\Column(name="date_naissance", type="date")
      */
-    protected $email;
+    protected $dateNaissance;
 
     /**
      * @var string
@@ -126,27 +126,27 @@ class Abonne
     }
 
     /**
-     * Set email
+     * Set dateNaissance
      *
-     * @param string $email
+     * @param \DateTime $dateNaissance
      *
      * @return Abonne
      */
-    public function setEmail($email)
+    public function setDateNaissance($dateNaissance)
     {
-        $this->email = $email;
+        $this->dateNaissance = $dateNaissance;
 
         return $this;
     }
 
     /**
-     * Get email
+     * Get dateNaissance
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getEmail()
+    public function getDateNaissance()
     {
-        return $this->email;
+        return $this->dateNaissance;
     }
 
     /**
@@ -260,7 +260,7 @@ class Abonne
           return false;
         if (strlen($tel) != 13)
           return false;
-          
+
         $tel = substr($tel,5);
       }
       else {
@@ -269,10 +269,11 @@ class Abonne
       }
       if (!ctype_digit($tel))
         return false;
-      if (in_array($tel[0], ['1', '6', '8']))
+      if (in_array($tel[0], ['0', '1', '6', '8']))
         return false;
 
       $this->setTelephone($tel);
       return true;
     }
+
 }

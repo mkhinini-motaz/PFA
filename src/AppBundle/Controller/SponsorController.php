@@ -44,6 +44,13 @@ class SponsorController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $path = $this->get('kernel')->getRootDir() . '/../web/images/sponsor/' . $event->getName();
+
+            $logo = $sponsor->getLogo();
+            $logoName = md5(uniqid()).'.'.$logo->guessExtension();
+            move_uploaded_file($logo->getPathName() , $path . DIRECTORY_SEPARATOR . $logoName);
+            $sponsor->setLogo($logoName);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($sponsor);
             $em->flush($sponsor);

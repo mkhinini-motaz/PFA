@@ -7,7 +7,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextAreaType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class EventFermeType extends AbstractType
 {
@@ -17,15 +19,15 @@ class EventFermeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nom', TextType::class)
-                ->add('description')
+                ->add('description', TestAreaType::class)
                 ->add('lieu', TextType::class)
                 ->add('categories')
                 ->add('capacite', IntegerType::class)
                 ->add('dateDebutInscri', DateType::class)
                 ->add('dateFinInscri', DateType::class)
                 ->add('prix', IntegerType::class)
-                ->add('photo')
-                ->add('fichiers');
+                ->add('photo', FileType::class, ["label" => "Photo de l'évennement"])
+                ->add('fichiers', FileType::class, ["multiple" => true, "label" => "Fichiers joints"]);
     }
 
     /**

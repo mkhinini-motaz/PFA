@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 
 class OrganisateurType extends AbstractType
 {
@@ -18,7 +19,7 @@ class OrganisateurType extends AbstractType
         $builder->add('nomSociete', TextType::class)
         ->add('nom', TextType::class)
         ->add('prenom', TextType::class)
-        ->add('email', TextType::class)
+        ->add('dateNaissance', BirthdayType::class, ["label" => "Date de Naissance"])
         ->add('telephone', TextType::class);
     }
 

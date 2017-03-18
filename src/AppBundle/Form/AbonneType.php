@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 
 class AbonneType extends AbstractType
 {
@@ -18,7 +19,7 @@ class AbonneType extends AbstractType
     {
         $builder->add('nom', TextType::class)
                 ->add('prenom', TextType::class)
-                ->add('email', EmailType::class)
+                ->add('dateNaissance', BirthdayType::class, ["label" => "Date de Naissance"])
                 ->add('telephone', TextType::class);
     }
 
