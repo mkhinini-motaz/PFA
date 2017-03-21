@@ -46,26 +46,23 @@ class EventController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $path = $this->get('kernel')->getRootDir() . '/../web/images/events/' . $event->getName();
 
+            // Déplacement de la photo
             $photo = $event->getPhoto();
-            $photoName = md5(uniqid()).'.'.$photo->guessExtension();
+            $photoName = md5(uniqid()) . '.' . $photo->guessExtension();
             move_uploaded_file($photo->getPathName() , $path . DIRECTORY_SEPARATOR . $photoName);
             $event->setPhoto($photoName);
 
-              //String qui va contenir les noms des images séparés par " ; "
+            // String qui va contenir les noms des images séparés par " ; "
             $filesnames = "";
 
+            // Déplacement des fichiers
             foreach ($event->getFichiers() as &$file){
-              // Generate a unique name for the file before saving it
               $fileName = md5(uniqid()).'.'.$file->guessExtension();
-
-              // Move the file to the directory where it is are stored
               move_uploaded_file($file->getPathName() ,$path . DIRECTORY_SEPARATOR .$fileName);
-
               $filesnames .= $fileName . ";";
-
             }
-
             $event->setFichiers($filesnames);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($event);
             $em->flush($event);
