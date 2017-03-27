@@ -21,8 +21,8 @@ class EventType extends AbstractType
                 ->add('description', TextareaType::class)
                 ->add('lieu', TextType::class)
                 ->add('categories')
-                ->add('photo', FileType::class, ["label" => "Photo de l'évennement"])
-                ->add('fichiers', FileType::class, ["multiple" => true, "label" => "Fichiers joints"]);
+                ->add('photo', FileType::class, ["label" => "Photo de l'évennement", "required" => false])
+                ->add('fichiers', FileType::class, ["multiple" => true, "label" => "Fichiers joints", "required" => false]);
 
     }
 

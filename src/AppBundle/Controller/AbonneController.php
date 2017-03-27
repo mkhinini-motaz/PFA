@@ -7,6 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use FOS\UserBundle\FOSUserEvents;
+use FOS\UserBundle\Event\FormEvent;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use FOS\UserBundle\Event\FilterUserResponseEvent;
+
 /**
  * Abonne controller.
  *
@@ -45,10 +51,29 @@ class AbonneController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $abonne->getCompte()->setEnabled(1);
+	        $abonne->getCompte()->setAbonne($abonne);
+            
+            $em->persist($abonne->getCompte());
             $em->persist($abonne);
             $em->flush($abonne);
 
-            return $this->redirectToRoute('abonne_show', array('id' => $abonne->getId()));
+            $dispatcher = $this->get('event_dispatcher');
+            $userManager = $this->get('fos_user.user_manager');
+
+            $event = new FormEvent($form, $request);
+            $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
+            $userManager->updateUser($abonne->getCompte());
+            if (null === $response = $event->getResponse()) {
+                $url = $this->generateUrl('fos_user_registration_confirmed');
+                $response = new RedirectResponse($url);
+            }
+
+            $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED
+                            , new FilterUserResponseEvent($abonne->getCompte(), $request, $response));
+
+            return $response;
         }
 
         return $this->render('abonne/new.html.twig', array(

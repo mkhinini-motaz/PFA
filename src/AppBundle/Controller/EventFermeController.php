@@ -44,7 +44,10 @@ class EventFermeController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $path = $this->get('kernel')->getRootDir() . '/../web/images/events/' . $eventFerme->getName();
+            $path = $this->get('kernel')->getRootDir() . '/../web/images/events/' . $eventFerme->getNom();
+            if ( ! is_dir($path) ) {
+              mkdir($path, 0777, true);
+            }
 
             // Déplacement de la photo
             $photo = $eventFerme->getPhoto();
@@ -61,7 +64,7 @@ class EventFermeController extends Controller
               move_uploaded_file($file->getPathName() ,$path . DIRECTORY_SEPARATOR .$fileName);
               $filesnames .= $fileName . ";";
             }
-            $eventFerme->setFichiers($filesnames);
+            $eventFerme->setFichiers(substr($filesnames, 0, -1));
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($eventFerme);

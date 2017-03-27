@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
+use Symfony\Component\HttpFoundation\File\File;
+
 /**
  * Event controller.
  *
@@ -44,7 +46,10 @@ class EventController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $path = $this->get('kernel')->getRootDir() . '/../web/images/events/' . $event->getName();
+            $path = $this->get('kernel')->getRootDir() . '/../web/images/events/' . $event->getNom();
+            if ( ! is_dir($path) ) {
+              mkdir($path, 0777, true);
+            }
 
             // Déplacement de la photo
             $photo = $event->getPhoto();
@@ -61,7 +66,7 @@ class EventController extends Controller
               move_uploaded_file($file->getPathName() ,$path . DIRECTORY_SEPARATOR .$fileName);
               $filesnames .= $fileName . ";";
             }
-            $event->setFichiers($filesnames);
+            $event->setFichiers(substr($filesnames, 0, -1));
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($event);
@@ -100,11 +105,32 @@ class EventController extends Controller
      */
     public function editAction(Request $request, Event $event)
     {
+
+        $photoName = $event->getPhoto();
+
+        $path = $this->get('kernel')->getRootDir() . '/../web/images/events/' . $event->getNom();
+        $photoPath = $path . DIRECTORY_SEPARATOR . $event->getPhoto();
+
+        $event->setPhoto(new File($photoPath));
+
+        $fichiers = [];
+        $nomFichiers = explode(";", $event->getFichiers());
+
+        foreach ( $nomFichiers as $file ){
+          $filePath = $path . DIRECTORY_SEPARATOR . $file;
+          $fichiers[] = new File($filePath);
+        }
+
+        $event->setFichiers($fichiers);
+
         $deleteForm = $this->createDeleteForm($event);
         $editForm = $this->createForm('AppBundle\Form\EventType', $event);
         $editForm->handleRequest($request);
-
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+          // Déplacement de la photo
+          $event->setPhoto($photoName);
+          $event->setFichiers(implode(";", $nomFichiers));
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('event_edit', array('id' => $event->getId()));
