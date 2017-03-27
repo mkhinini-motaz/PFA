@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class EventType extends AbstractType
 {
@@ -20,7 +21,8 @@ class EventType extends AbstractType
         $builder->add('nom', TextType::class)
                 ->add('description', TextareaType::class)
                 ->add('lieu', TextType::class)
-                ->add('categories')
+                ->add('categories', ChoiceType::class, [
+                                 'choices' => $options["categories"] ])
                 ->add('photo', FileType::class, ["label" => "Photo de l'évennement", "required" => false])
                 ->add('fichiers', FileType::class, ["multiple" => true, "label" => "Fichiers joints", "required" => false]);
 
@@ -32,7 +34,8 @@ class EventType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Event'
+            'data_class' => 'AppBundle\Entity\Event',
+            'categories' => null, 
         ));
     }
 

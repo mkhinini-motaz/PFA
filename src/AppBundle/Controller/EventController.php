@@ -42,7 +42,13 @@ class EventController extends Controller
     public function newAction(Request $request)
     {
         $event = new Event();
-        $form = $this->createForm('AppBundle\Form\EventType', $event);
+        $em = $this->getDoctrine()->getManager();
+        $categs = $em->getRepository('AppBundle:Categorie')->findAll();
+        $categories = [];
+        foreach ($categs as $categorie) {
+            $categories[$categorie->getNom()] = $categorie->getNom();
+        }
+        $form = $this->createForm('AppBundle\Form\EventType', $event, array("categories" => $categories));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -68,7 +74,6 @@ class EventController extends Controller
             }
             $event->setFichiers(substr($filesnames, 0, -1));
 
-            $em = $this->getDoctrine()->getManager();
             $em->persist($event);
             $em->flush($event);
 

@@ -21,7 +21,8 @@ class EventFermeType extends AbstractType
         $builder->add('nom', TextType::class)
                 ->add('description', TestareaType::class)
                 ->add('lieu', TextType::class)
-                ->add('categories')
+                ->add('categories', ChoiceType::class, [
+                                 'choices' => $options["categories"] ])
                 ->add('capacite', IntegerType::class)
                 ->add('dateDebutInscri', DateType::class)
                 ->add('dateFinInscri', DateType::class)
@@ -36,7 +37,8 @@ class EventFermeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\EventFerme'
+            'data_class' => 'AppBundle\Entity\EventFerme',
+            'categories' => null, 
         ));
     }
 
