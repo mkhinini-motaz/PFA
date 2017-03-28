@@ -17,14 +17,18 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Features <b class=" icon-angle-down"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Typography</a></li>
-                            <li><a href="#">Components</a></li>
-							<li><a href="#">Pricing box</a></li>
+                            <li><a href="{{ path('event_new') }}">Event</a></li>
+                            <li><a href="{{ path('eventferme_new') }}">Event Fermé</a></li>
+							<li><a href="{{ path('categorie_new') }}">Categorie</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Portfolio</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact</a></li>
+                    {% if app.user %}
+                        <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+                    {% else %}
+                        <li><a href="{{ path('fos_user_security_login') }}">login</a></li>
+                        <li><a href="{{ path('register') }}">Inscription</a></li>
+                    {% endif %}
+
                 </ul>
             </div>
         </div>

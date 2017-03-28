@@ -3,5 +3,9 @@ app:
     type:     annotation
     prefix:   /
 
+register:
+    path:      /register
+    defaults:  { _controller: AppBundle:Abonne:new }
+
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
