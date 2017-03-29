@@ -43,37 +43,39 @@ class EventController extends Controller
     {
         $event = new Event();
         $em = $this->getDoctrine()->getManager();
-        $categs = $em->getRepository('AppBundle:Categorie')->findAll();
-        $categories = [];
-        foreach ($categs as $categorie) {
-            $categories[$categorie->getNom()] = $categorie->getNom();
-        }
-        $form = $this->createForm('AppBundle\Form\EventType', $event, array("categories" => $categories));
+
+        $form = $this->createForm('AppBundle\Form\EventType', $event);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $path = $this->get('kernel')->getRootDir() . '/../web/images/events/' . $event->getNom();
-            if ( ! is_dir($path) ) {
-              mkdir($path, 0777, true);
+            if ( ($event->getPhoto() !== null) || ($event->getFichiers() !== null) ) {
+                $path = $this->get('kernel')->getRootDir() . '/../web/images/events/' . $event->getNom();
+                if ( ! is_dir($path) ) {
+                  mkdir($path, 0777, true);
+                }
+            }
+            if ($event->getPhoto() !== null) {
+                // Déplacement de la photo
+                $photo = $event->getPhoto();
+                $photoName = md5(uniqid()) . '.' . $photo->guessExtension();
+                move_uploaded_file($photo->getPathName() , $path . DIRECTORY_SEPARATOR . $photoName);
+                $event->setPhoto($photoName);
             }
 
-            // Déplacement de la photo
-            $photo = $event->getPhoto();
-            $photoName = md5(uniqid()) . '.' . $photo->guessExtension();
-            move_uploaded_file($photo->getPathName() , $path . DIRECTORY_SEPARATOR . $photoName);
-            $event->setPhoto($photoName);
+            if ($event->getFichiers() !== null) {
+                // String qui va contenir les noms des images séparés par " ; "
+                $filesnames = "";
 
-            // String qui va contenir les noms des images séparés par " ; "
-            $filesnames = "";
-
-            // Déplacement des fichiers
-            foreach ($event->getFichiers() as &$file){
-              $fileName = md5(uniqid()).'.'.$file->guessExtension();
-              move_uploaded_file($file->getPathName() ,$path . DIRECTORY_SEPARATOR .$fileName);
-              $filesnames .= $fileName . ";";
+                // Déplacement des fichiers
+                foreach ($event->getFichiers() as &$file){
+                  $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                  move_uploaded_file($file->getPathName() ,$path . DIRECTORY_SEPARATOR .$fileName);
+                  $filesnames .= $fileName . ";";
+                }
+                $event->setFichiers(substr($filesnames, 0, -1));
             }
-            $event->setFichiers(substr($filesnames, 0, -1));
 
+            $event->setDatePublication(new \DateTime("now", new \DateTimeZone("Africa/Tunis")));
             $em->persist($event);
             $em->flush($event);
 

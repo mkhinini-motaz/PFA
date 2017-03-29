@@ -49,6 +49,20 @@ class Event
     protected $lieu;
 
     /**
+     * @var datetime $date
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    protected $date;
+
+    /**
+     * @var datetime $date
+     *
+     * @ORM\Column(name="date_publication", type="datetime")
+     */
+    protected $datePublication;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="photo", type="string", length=60, nullable=true)
@@ -319,5 +333,53 @@ class Event
     public function getEventorganisateur()
     {
         return $this->eventorganisateur;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     *
+     * @return Event
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set datePublication
+     *
+     * @param \DateTime $datePublication
+     *
+     * @return Event
+     */
+    public function setDatePublication($datePublication)
+    {
+        $this->datePublication = $datePublication;
+
+        return $this;
+    }
+
+    /**
+     * Get datePublication
+     *
+     * @return \DateTime
+     */
+    public function getDatePublication()
+    {
+        return $this->datePublication;
     }
 }

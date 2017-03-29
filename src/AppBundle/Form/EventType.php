@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class EventType extends AbstractType
 {
@@ -21,10 +23,18 @@ class EventType extends AbstractType
         $builder->add('nom', TextType::class)
                 ->add('description', TextareaType::class)
                 ->add('lieu', TextType::class)
-                ->add('categories', ChoiceType::class, [
-                                 'choices' => $options["categories"] ])
-                ->add('photo', FileType::class, ["label" => "Photo de l'évennement", "required" => false])
-                ->add('fichiers', FileType::class, ["multiple" => true, "label" => "Fichiers joints", "required" => false]);
+                ->add('categories', EntityType::class, ['class' => 'AppBundle:Categorie',
+                                                        'choice_label' => 'nom',
+                                                        'multiple' => true,
+                                                        'expanded' => true,
+                ])
+                ->add('date', DateTimeType::class, ["years" => range(date("Y"), strval(intval(date("Y")) + 7))
+                                                   ,"label" => "Date de l'évennement"
+                                                   ])
+                ->add('photo', FileType::class, ["label" => "Photo de l'évennement", "required" => false
+                                                ,"attr" => ["accept" => ".png,.jpg,.jpeg"] ])
+                ->add('fichiers', FileType::class, ["multiple" => true, "label" => "Fichiers joints", "required" => false
+                                                    ,"attr" => ["accept" => ".png,.jpg,.jpeg,.pdf"]]);
 
     }
 
@@ -35,7 +45,6 @@ class EventType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Event',
-            'categories' => null, 
         ));
     }
 

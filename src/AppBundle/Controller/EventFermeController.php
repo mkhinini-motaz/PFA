@@ -51,28 +51,35 @@ class EventFermeController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $path = $this->get('kernel')->getRootDir() . '/../web/images/events/' . $eventFerme->getNom();
-            if ( ! is_dir($path) ) {
-              mkdir($path, 0777, true);
+            if ( ($eventFerme->getPhoto() !== null) || ($eventFerme->getFichiers() !== null) ) {
+                $path = $this->get('kernel')->getRootDir() . '/../web/images/events/' . $eventFerme->getNom();
+                if ( ! is_dir($path) ) {
+                  mkdir($path, 0777, true);
+                }
             }
 
-            // Déplacement de la photo
-            $photo = $eventFerme->getPhoto();
-            $photoName = md5(uniqid()).'.'.$photo->guessExtension();
-            move_uploaded_file($photo->getPathName() , $path . DIRECTORY_SEPARATOR . $photoName);
-            $eventFerme->setPhoto($photoName);
-
-            // String qui va contenir les noms des images séparés par " ; "
-            $filesnames = "";
-
-            // Déplacement des fichiers
-            foreach ($eventFerme->getFichiers() as &$file){
-              $fileName = md5(uniqid()).'.'.$file->guessExtension();
-              move_uploaded_file($file->getPathName() ,$path . DIRECTORY_SEPARATOR .$fileName);
-              $filesnames .= $fileName . ";";
+            if ($eventFerme->getPhoto() !== null) {
+                // Déplacement de la photo
+                $photo = $eventFerme->getPhoto();
+                $photoName = md5(uniqid()).'.'.$photo->guessExtension();
+                move_uploaded_file($photo->getPathName() , $path . DIRECTORY_SEPARATOR . $photoName);
+                $eventFerme->setPhoto($photoName);
             }
-            $eventFerme->setFichiers(substr($filesnames, 0, -1));
 
+            if ($eventFerme->getFichiers() !== null) {
+                // String qui va contenir les noms des images séparés par " ; "
+                $filesnames = "";
+
+                // Déplacement des fichiers
+                foreach ($eventFerme->getFichiers() as &$file){
+                  $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                  move_uploaded_file($file->getPathName() ,$path . DIRECTORY_SEPARATOR .$fileName);
+                  $filesnames .= $fileName . ";";
+                }
+                $eventFerme->setFichiers(substr($filesnames, 0, -1));
+            }
+
+            $eventFerme->setDatePublication(new \DateTime("now", new \DateTimeZone("Africa/Tunis")));
             $em->persist($eventFerme);
             $em->flush($eventFerme);
 
