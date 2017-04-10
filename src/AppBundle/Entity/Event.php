@@ -84,7 +84,6 @@ class Event
      */
     protected $categories;
 
-
     /**
      * Relation entre Event et Sponsor
      * @ORM\OneToMany(targetEntity="Sponsoring", mappedBy="events")
@@ -98,6 +97,14 @@ class Event
      * @ORM\JoinTable(name="eventorganisateur")
      */
     protected $eventorganisateur;
+
+    /**
+     * Relation entre Abonne et Event
+     * @ORM\ManyToMany(targetEntity="Abonne", mappedBy="eventsParticipe")
+     * @ORM\JoinTable(name="participations")
+     */
+    protected $participants;
+
 
     public function __construct() {
         $this->categories = new ArrayCollection();

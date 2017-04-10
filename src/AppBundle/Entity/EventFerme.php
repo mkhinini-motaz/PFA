@@ -299,4 +299,38 @@ class EventFerme extends Event
     {
         return $this->eventorganisateur;
     }
+
+    /**
+     * Add participant
+     *
+     * @param \AppBundle\Entity\Abonne $participant
+     *
+     * @return EventFerme
+     */
+    public function addParticipant(\AppBundle\Entity\Abonne $participant)
+    {
+        $this->participants[] = $participant;
+
+        return $this;
+    }
+
+    /**
+     * Remove participant
+     *
+     * @param \AppBundle\Entity\Abonne $participant
+     */
+    public function removeParticipant(\AppBundle\Entity\Abonne $participant)
+    {
+        $this->participants->removeElement($participant);
+    }
+
+    /**
+     * Get participants
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getParticipants()
+    {
+        return $this->participants;
+    }
 }

@@ -168,4 +168,38 @@ class Organisateur extends Abonne
     {
         return $this->reservations;
     }
+
+    /**
+     * Add eventsParticipe
+     *
+     * @param \AppBundle\Entity\Event $eventsParticipe
+     *
+     * @return Organisateur
+     */
+    public function addEventsParticipe(\AppBundle\Entity\Event $eventsParticipe)
+    {
+        $this->eventsParticipe[] = $eventsParticipe;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventsParticipe
+     *
+     * @param \AppBundle\Entity\Event $eventsParticipe
+     */
+    public function removeEventsParticipe(\AppBundle\Entity\Event $eventsParticipe)
+    {
+        $this->eventsParticipe->removeElement($eventsParticipe);
+    }
+
+    /**
+     * Get eventsParticipe
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventsParticipe()
+    {
+        return $this->eventsParticipe;
+    }
 }

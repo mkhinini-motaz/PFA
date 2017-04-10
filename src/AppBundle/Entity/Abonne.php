@@ -61,6 +61,13 @@ class Abonne
     protected $compte;
 
     /**
+     * Relation entre Abonne et Event
+     * @ORM\ManyToMany(targetEntity="Event", inversedBy="participants")
+     * @ORM\JoinTable(name="participations")
+     */
+    protected $eventsParticipe;
+
+    /**
      * Relation entre Abonne et EventFerme
      * @ORM\OneToMany(targetEntity="Reservations", mappedBy="abonnes")
      * @ORM\JoinTable(name="reservations")
@@ -302,4 +309,38 @@ class Abonne
 return true;
     }
 
+
+    /**
+     * Add eventsParticipe
+     *
+     * @param \AppBundle\Entity\Event $eventsParticipe
+     *
+     * @return Abonne
+     */
+    public function addEventsParticipe(\AppBundle\Entity\Event $eventsParticipe)
+    {
+        $this->eventsParticipe[] = $eventsParticipe;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventsParticipe
+     *
+     * @param \AppBundle\Entity\Event $eventsParticipe
+     */
+    public function removeEventsParticipe(\AppBundle\Entity\Event $eventsParticipe)
+    {
+        $this->eventsParticipe->removeElement($eventsParticipe);
+    }
+
+    /**
+     * Get eventsParticipe
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventsParticipe()
+    {
+        return $this->eventsParticipe;
+    }
 }
