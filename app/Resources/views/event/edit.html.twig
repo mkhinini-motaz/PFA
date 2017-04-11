@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Event edit</h1>
+
+
+    {{ form_start(edit_form) }}
+
+    <div class="col-xs-3" style="position: relative">
+      {{edit_form.vars.value.photo}}
+            <img src="{{edit_form.vars.value.photo}}" />
+            <img src="http://wecision.com/enterprise/images/icons/closeIcon.png" style="position: absolute; top: 4px; right: 5px"/>
+        </div>
+        {{ form_row(edit_form.nom) }}
+        {{ form_row(edit_form.description) }}
+        {{ form_row(edit_form.lieu) }}
+        {{ form_row(edit_form.categories) }}
+
+
+        <input type="submit" value="Edit" />
+    {{ form_end(edit_form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('event_index') }}">Back to the list</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

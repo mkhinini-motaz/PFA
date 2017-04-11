@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Abonnes list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+                <th>Telephone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for abonne in abonnes %}
+            <tr>
+                <td><a href="{{ path('abonne_show', { 'id': abonne.id }) }}">{{ abonne.id }}</a></td>
+                <td>{{ abonne.nom }}</td>
+                <td>{{ abonne.prenom }}</td>
+                <td>{{ abonne.email }}</td>
+                <td>{{ abonne.telephone }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('abonne_show', { 'id': abonne.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('abonne_edit', { 'id': abonne.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

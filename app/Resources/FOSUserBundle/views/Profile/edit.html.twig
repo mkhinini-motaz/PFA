@@ -1,0 +1,9 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% block fos_user_content %}
+  <div class="row">
+    <div class="col-md-6 col-md-push-3 col-xs-12">
+      {% include "@FOSUser/Profile/edit_content.html.twig" %}
+    </div>
+  </div>
+{% endblock fos_user_content %}

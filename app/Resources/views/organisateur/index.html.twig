@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Organisateurs list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nomsociete</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+                <th>Telephone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for organisateur in organisateurs %}
+            <tr>
+                <td><a href="{{ path('organisateur_show', { 'id': organisateur.id }) }}">{{ organisateur.id }}</a></td>
+                <td>{{ organisateur.nomSociete }}</td>
+                <td>{{ organisateur.nom }}</td>
+                <td>{{ organisateur.prenom }}</td>
+                <td>{{ organisateur.email }}</td>
+                <td>{{ organisateur.telephone }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('organisateur_show', { 'id': organisateur.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('organisateur_edit', { 'id': organisateur.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('organisateur_new') }}">Create a new organisateur</a>
+        </li>
+    </ul>
+{% endblock %}

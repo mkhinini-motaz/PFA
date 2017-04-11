@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Eventfermes list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Capacite</th>
+                <th>Datedebutinscri</th>
+                <th>Datefininscri</th>
+                <th>Prix</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Lieu</th>
+                <th>Photo</th>
+                <th>Fichiers</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for eventFerme in eventFermes %}
+            <tr>
+                <td><a href="{{ path('eventferme_show', { 'id': eventFerme.id }) }}">{{ eventFerme.id }}</a></td>
+                <td>{{ eventFerme.capacite }}</td>
+                <td>{% if eventFerme.dateDebutInscri %}{{ eventFerme.dateDebutInscri|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if eventFerme.dateFinInscri %}{{ eventFerme.dateFinInscri|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ eventFerme.prix }}</td>
+                <td>{{ eventFerme.nom }}</td>
+                <td>{{ eventFerme.description }}</td>
+                <td>{{ eventFerme.lieu }}</td>
+                <td>{{ eventFerme.photo }}</td>
+                <td>{% if eventFerme.fichiers %}{{ eventFerme.fichiers|join(', ') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('eventferme_show', { 'id': eventFerme.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('eventferme_edit', { 'id': eventFerme.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('eventferme_new') }}">Create a new eventFerme</a>
+        </li>
+    </ul>
+{% endblock %}

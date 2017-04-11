@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Eventorganisateurs list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Datedebut</th>
+                <th>Datefin</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for eventorganisateur in eventorganisateurs %}
+            <tr>
+                <td><a href="{{ path('eventorganisateur_show', { 'id': eventorganisateur.id }) }}">{{ eventorganisateur.id }}</a></td>
+                <td>{% if eventorganisateur.dateDebut %}{{ eventorganisateur.dateDebut|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if eventorganisateur.dateFin %}{{ eventorganisateur.dateFin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('eventorganisateur_show', { 'id': eventorganisateur.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('eventorganisateur_edit', { 'id': eventorganisateur.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('eventorganisateur_new') }}">Create a new eventorganisateur</a>
+        </li>
+    </ul>
+{% endblock %}
