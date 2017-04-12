@@ -3,13 +3,14 @@
 {% block body %}
     <h1>Abonnes list</h1>
 
-    <table>
+    <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
                 <th>Prenom</th>
                 <th>Email</th>
+                <th>Nom Société</th>
                 <th>Telephone</th>
                 <th>Actions</th>
             </tr>
@@ -21,6 +22,7 @@
                 <td>{{ abonne.nom }}</td>
                 <td>{{ abonne.prenom }}</td>
                 <td>{{ abonne.email }}</td>
+                <td>{{ abonne.nomSociete }}</td>
                 <td>{{ abonne.telephone }}</td>
                 <td>
                     <ul>

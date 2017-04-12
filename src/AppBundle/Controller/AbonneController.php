@@ -5,7 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Abonne;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use FOS\UserBundle\FOSUserEvents;
@@ -15,15 +16,13 @@ use FOS\UserBundle\Event\FilterUserResponseEvent;
 
 /**
  * Abonne controller.
- *
- * @Route("abonne")
  */
 class AbonneController extends Controller
 {
     /**
      * Lists all abonne entities.
      *
-     * @Route("/", name="abonne_index")
+     * @Route("/abonne/", name="abonne_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -40,7 +39,7 @@ class AbonneController extends Controller
     /**
      * Creates a new abonne entity.
      *
-     * @Route("/new", name="abonne_new")
+     * @Route("/inscription", name="abonne_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -54,7 +53,7 @@ class AbonneController extends Controller
 
             $abonne->getCompte()->setEnabled(1);
 	        $abonne->getCompte()->setAbonne($abonne);
-            
+
             $em->persist($abonne->getCompte());
             $em->persist($abonne);
             $em->flush($abonne);
@@ -85,7 +84,7 @@ class AbonneController extends Controller
     /**
      * Finds and displays a abonne entity.
      *
-     * @Route("/{id}", name="abonne_show")
+     * @Route("/abonne/{id}", name="abonne_show")
      * @Method("GET")
      */
     public function showAction(Abonne $abonne)
@@ -101,7 +100,7 @@ class AbonneController extends Controller
     /**
      * Displays a form to edit an existing abonne entity.
      *
-     * @Route("/{id}/edit", name="abonne_edit")
+     * @Route("abonne/{id}/edit", name="abonne_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Abonne $abonne)
@@ -126,7 +125,7 @@ class AbonneController extends Controller
     /**
      * Deletes a abonne entity.
      *
-     * @Route("/{id}", name="abonne_delete")
+     * @Route("/abonne/{id}", name="abonne_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Abonne $abonne)
