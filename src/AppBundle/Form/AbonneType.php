@@ -21,6 +21,7 @@ class AbonneType extends AbstractType
                 ->add('prenom', TextType::class, ["label" => "Prénom"])
                 ->add('dateNaissance', BirthdayType::class, ["label" => "Date de Naissance"])
                 ->add('telephone', TextType::class, ["required" => false, "label" => "Téléphone"])
+                ->add('nomSociete', TextType::class)
                 ->add('compte', CompteType::class, ["label" => false]);
     }
 

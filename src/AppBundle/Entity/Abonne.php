@@ -10,9 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="abonne")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AbonneRepository")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"abonne" = "Abonne", "organisateur" = "Organisateur"})
  */
 class Abonne
 {
@@ -23,56 +20,79 @@ class Abonne
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=60)
+     * @ORM\Column(name="nom", type="string", length=60, nullable=true)
      */
-    protected $nom;
+    private $nom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom", type="string", length=60)
+     * @ORM\Column(name="prenom", type="string", length=60, nullable=true)
      */
-    protected $prenom;
+    private $prenom;
 
     /**
      * @var date
      *
-     * @ORM\Column(name="date_naissance", type="date")
+     * @ORM\Column(name="date_naissance", type="date", nullable=true)
      */
-    protected $dateNaissance;
+    private $dateNaissance;
 
     /**
      * @var string
      *
      * @ORM\Column(name="telephone", type="string", length=20, nullable=true)
      */
-    protected $telephone;
+    private $telephone;
 
     /**
      * Relation entre Abonne et son Compte
      * @ORM\OneToOne(targetEntity="Compte", inversedBy="abonne")
      * @ORM\JoinColumn(name="compte_id", referencedColumnName="id")
      */
-    protected $compte;
+    private $compte;
 
     /**
      * Relation entre Abonne et Event
      * @ORM\ManyToMany(targetEntity="Event", inversedBy="participants")
      * @ORM\JoinTable(name="participations")
      */
-    protected $eventsParticipe;
+    private $eventsParticipe;
 
     /**
-     * Relation entre Abonne et EventFerme
+     * Relation entre Abonne et Event
      * @ORM\OneToMany(targetEntity="Reservations", mappedBy="abonnes")
      * @ORM\JoinTable(name="reservations")
      */
-    protected $reservations;
+    private $reservations;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nomSociete", type="string", length=60, nullable=true)
+     */
+    private $nomSociete;
+
+    /**
+     * Relation entre Event et Organisateur
+     * @ORM\OneToMany(targetEntity="Eventorganisateur", mappedBy="organisateurs")
+     * @ORM\JoinTable(name="eventorganisateur")
+     */
+    protected $eventorganisateur;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->eventorganisateur = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -179,13 +199,6 @@ class Abonne
     {
         return $this->telephone;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Set compte
@@ -270,6 +283,98 @@ class Abonne
     }
 
     /**
+     * Add eventsParticipe
+     *
+     * @param \AppBundle\Entity\Event $eventsParticipe
+     *
+     * @return Abonne
+     */
+    public function addEventsParticipe(\AppBundle\Entity\Event $eventsParticipe)
+    {
+        $this->eventsParticipe[] = $eventsParticipe;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventsParticipe
+     *
+     * @param \AppBundle\Entity\Event $eventsParticipe
+     */
+    public function removeEventsParticipe(\AppBundle\Entity\Event $eventsParticipe)
+    {
+        $this->eventsParticipe->removeElement($eventsParticipe);
+    }
+
+    /**
+     * Get eventsParticipe
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventsParticipe()
+    {
+        return $this->eventsParticipe;
+    }
+
+    /**
+     * Set nomSociete
+     *
+     * @param string $nomSociete
+     *
+     * @return Organisateur
+     */
+    public function setNomSociete($nomSociete)
+    {
+        $this->nomSociete = $nomSociete;
+
+        return $this;
+    }
+
+    /**
+     * Get nomSociete
+     * @return string
+     *
+     */
+    public function getNomSociete()
+    {
+        return $this->nomSociete;
+    }
+
+    /**
+     * Add eventorganisateur
+     *
+     * @param \AppBundle\Entity\Eventorganisateur $eventorganisateur
+     *
+     * @return Abonne
+     */
+    public function addEventorganisateur(\AppBundle\Entity\Eventorganisateur $eventorganisateur)
+    {
+        $this->eventorganisateur[] = $eventorganisateur;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventorganisateur
+     *
+     * @param \AppBundle\Entity\Eventorganisateur $eventorganisateur
+     */
+    public function removeEventorganisateur(\AppBundle\Entity\Eventorganisateur $eventorganisateur)
+    {
+        $this->eventorganisateur->removeElement($eventorganisateur);
+    }
+
+    /**
+     * Get eventorganisateur
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventorganisateur()
+    {
+        return $this->eventorganisateur;
+    }
+
+    /**
     * @Assert\IsTrue(message = "Le numéro de téléphone saisi est invalide")
     */
     public function isValidTel()
@@ -306,41 +411,7 @@ class Abonne
             return false;
 
         $this->setTelephone($tel);
-return true;
+        return true;
     }
 
-
-    /**
-     * Add eventsParticipe
-     *
-     * @param \AppBundle\Entity\Event $eventsParticipe
-     *
-     * @return Abonne
-     */
-    public function addEventsParticipe(\AppBundle\Entity\Event $eventsParticipe)
-    {
-        $this->eventsParticipe[] = $eventsParticipe;
-
-        return $this;
-    }
-
-    /**
-     * Remove eventsParticipe
-     *
-     * @param \AppBundle\Entity\Event $eventsParticipe
-     */
-    public function removeEventsParticipe(\AppBundle\Entity\Event $eventsParticipe)
-    {
-        $this->eventsParticipe->removeElement($eventsParticipe);
-    }
-
-    /**
-     * Get eventsParticipe
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEventsParticipe()
-    {
-        return $this->eventsParticipe;
-    }
 }

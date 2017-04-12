@@ -12,6 +12,9 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class EventType extends AbstractType
 {
@@ -31,11 +34,13 @@ class EventType extends AbstractType
                 ->add('date', DateTimeType::class, ["years" => range(date("Y"), strval(intval(date("Y")) + 7))
                                                    ,"label" => "Date de l'évennement"
                                                    ])
+                ->add('dateDebutInscri', DateType::class, ["years" => range(date("Y"), strval(intval(date("Y")) + 7))])
+                ->add('dateFinInscri', DateType::class, ["years" => range(date("Y"), strval(intval(date("Y")) + 7))])
+                ->add('prix', NumberType::class)
                 ->add('photo', FileType::class, ["label" => "Photo de l'évennement", "required" => false
                                                 ,"attr" => ["accept" => ".png,.jpg,.jpeg"] ])
                 ->add('fichiers', FileType::class, ["multiple" => true, "label" => "Fichiers joints", "required" => false
                                                     ,"attr" => ["accept" => ".png,.jpg,.jpeg,.pdf"]]);
-
     }
 
     /**

@@ -44,7 +44,7 @@ class Eventorganisateur
     private $events;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Organisateur", inversedBy="eventorganisateur")
+     * @ORM\ManyToOne(targetEntity="Abonne", inversedBy="eventorganisateur")
      * @ORM\JoinColumn(name="organisateur_id", referencedColumnName="id")
      */
     private $organisateurs;

@@ -12,9 +12,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  *
  * @ORM\Table(name="event")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventRepository")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"event" = "Event", "eventferme" = "EventFerme"})
  */
 class Event
 {
@@ -78,6 +75,34 @@ class Event
     protected $fichiers;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="capacite", type="integer", nullable=true)
+     */
+    private $capacite;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateDebutInscri", type="datetime", nullable=true)
+     */
+    private $dateDebutInscri;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateFinInscri", type="datetime", nullable=true)
+     */
+    private $dateFinInscri;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prix", type="decimal", precision=10, scale=3, nullable=true)
+     */
+    private $prix;
+
+    /**
      * Relation entre Event et Categorie
      * @ORM\ManyToMany(targetEntity="Categorie", inversedBy="events")
      * @ORM\JoinTable(name="eventcategorie")
@@ -104,6 +129,13 @@ class Event
      * @ORM\JoinTable(name="participations")
      */
     protected $participants;
+
+    /**
+     * Relation entre EventFerme et Abonne
+     * @ORM\OneToMany(targetEntity="Reservations", mappedBy="eventsFerme")
+     * @ORM\JoinTable(name="reservations")
+     */
+    private $reservations;
 
 
     public function __construct() {
@@ -388,5 +420,169 @@ class Event
     public function getDatePublication()
     {
         return $this->datePublication;
+    }
+
+    /**
+     * Set capacite
+     *
+     * @param integer $capacite
+     *
+     * @return Event
+     */
+    public function setCapacite($capacite)
+    {
+        $this->capacite = $capacite;
+
+        return $this;
+    }
+
+    /**
+     * Get capacite
+     *
+     * @return integer
+     */
+    public function getCapacite()
+    {
+        return $this->capacite;
+    }
+
+    /**
+     * Set dateDebutInscri
+     *
+     * @param \DateTime $dateDebutInscri
+     *
+     * @return Event
+     */
+    public function setDateDebutInscri($dateDebutInscri)
+    {
+        $this->dateDebutInscri = $dateDebutInscri;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDebutInscri
+     *
+     * @return \DateTime
+     */
+    public function getDateDebutInscri()
+    {
+        return $this->dateDebutInscri;
+    }
+
+    /**
+     * Set dateFinInscri
+     *
+     * @param \DateTime $dateFinInscri
+     *
+     * @return Event
+     */
+    public function setDateFinInscri($dateFinInscri)
+    {
+        $this->dateFinInscri = $dateFinInscri;
+
+        return $this;
+    }
+
+    /**
+     * Get dateFinInscri
+     *
+     * @return \DateTime
+     */
+    public function getDateFinInscri()
+    {
+        return $this->dateFinInscri;
+    }
+
+    /**
+     * Set prix
+     *
+     * @param string $prix
+     *
+     * @return Event
+     */
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * Get prix
+     *
+     * @return string
+     */
+    public function getPrix()
+    {
+        return $this->prix;
+    }
+
+    /**
+     * Add participant
+     *
+     * @param \AppBundle\Entity\Abonne $participant
+     *
+     * @return Event
+     */
+    public function addParticipant(\AppBundle\Entity\Abonne $participant)
+    {
+        $this->participants[] = $participant;
+
+        return $this;
+    }
+
+    /**
+     * Remove participant
+     *
+     * @param \AppBundle\Entity\Abonne $participant
+     */
+    public function removeParticipant(\AppBundle\Entity\Abonne $participant)
+    {
+        $this->participants->removeElement($participant);
+    }
+
+    /**
+     * Get participants
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getParticipants()
+    {
+        return $this->participants;
+    }
+
+    /**
+     * Add reservation
+     *
+     * @param \AppBundle\Entity\Reservations $reservation
+     *
+     * @return Event
+     */
+    public function addReservation(\AppBundle\Entity\Reservations $reservation)
+    {
+        $this->reservations[] = $reservation;
+
+        return $this;
+    }
+
+    /**
+     * Remove reservation
+     *
+     * @param \AppBundle\Entity\Reservations $reservation
+     */
+    public function removeReservation(\AppBundle\Entity\Reservations $reservation)
+    {
+        $this->reservations->removeElement($reservation);
+    }
+
+    /**
+     * Get reservations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReservations()
+    {
+        return $this->reservations;
     }
 }

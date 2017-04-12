@@ -38,8 +38,8 @@ class Reservations
     private $dateReservation;
 
     /**
-     * @ORM\ManyToOne(targetEntity="EventFerme", inversedBy="reservations")
-     * @ORM\JoinColumn(name="eventferme_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="reservations")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     protected $eventsFerme;
 
