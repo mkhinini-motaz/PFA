@@ -14,17 +14,14 @@
             <div class="navbar-collapse collapse ">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="{{ path('homepage') }}">Home</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle " data-toggle="dropdown" data-hover="dropdown" data-delay="0" data-close-others="false">Features <b class=" icon-angle-down"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Typography</a></li>
-                            <li><a href="#">Components</a></li>
-							<li><a href="#">Pricing box</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Portfolio</a></li>
-                    <li><a href="#">Blog</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Organiser votre Event</a></li>
+                    {% if app.user %}
+                        <li><a href="#">Mes Events</a></li>
+                    {% endif %}
+                    {% if not app.user %}
+                        <li><a href="#">Inscription</a></li>
+                        <li><a href="#">Connexion</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

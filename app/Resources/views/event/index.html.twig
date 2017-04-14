@@ -1,47 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Events list</h1>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Lieu</th>
-                <th>Photo</th>
-                <th>Fichiers</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for event in events %}
-            <tr>
-                <td><a href="{{ path('event_show', { 'id': event.id }) }}">{{ event.id }}</a></td>
-                <td>{{ event.nom }}</td>
-                <td>{{ event.description }}</td>
-                <td>{{ event.lieu }}</td>
-                <td>{{ event.photo }}</td>
-                <td>{% if event.fichiers %}{{ event.fichiers|join(', ') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('event_show', { 'id': event.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('event_edit', { 'id': event.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            {% for event in events %}
+                <a href="{{ path('event_show', { 'id': event.id }) }}">
+                    <div class="row">
 
-    <ul>
-        <li>
-            <a href="{{ path('event_new') }}">Create a new event</a>
-        </li>
-    </ul>
+                            <div class="col-xs-3">
+                                <img class="event_photo" height="150" width="150" src="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}" alt="no image for {{ event.nom }}">
+                            </div>
+                        <div class="col-xs-9">
+                            <h3 class="h3">{{ event.nom }} à {{ event.lieu }} le {{ event.date|date('d/m/Y') }}</h3>
+
+                            <p>{{ event.description }}</p>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+
 {% endblock %}

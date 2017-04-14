@@ -10,4 +10,12 @@ namespace AppBundle\Repository;
  */
 class EventRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAllDistinctLieu()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT DISTINCT e.lieu FROM AppBundle:Event e'
+            )
+            ->getResult();
+    }
 }
