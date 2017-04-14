@@ -39,7 +39,7 @@ class AbonneController extends Controller
     /**
      * Creates a new abonne entity.
      *
-     * @Route("/inscription", name="abonne_new")
+     * @Route("/inscription", name="inscription")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)

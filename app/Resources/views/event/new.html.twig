@@ -1,11 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Event creation</h1>
+    <h1>Création d'un nouveau évennement</h1>
+
+    <p>Votre évennement est : </br>
+        <input type="checkbox" name="ouvert-check" id="ouvert-check" checked> Ouvert (Sans Inscription)
+        <input type="checkbox" name="gratuit-check" id="gratuit-check" checked> Gratuit
+    </p>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        <input type="submit" value="Créer" />
     {{ form_end(form) }}
 
     <ul>
@@ -13,4 +18,38 @@
             <a href="{{ path('event_index') }}">Back to the list</a>
         </li>
     </ul>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        var fields = $("#appbundle_event_dateDebutInscri, #appbundle_event_dateFinInscri");
+        var field = $("#appbundle_event_prix");
+        fields.hide();
+        fields.prev().hide();
+        field.hide();
+        field.prev().hide();
+
+        $("#ouvert-check").click(function(){
+            if($(this).is(":checked")){
+                fields.hide();
+                fields.prev().hide();
+            }else{
+                fields.show();
+                fields.prev().show();
+            }
+        });
+
+        $("#gratuit-check").click(function(){
+            if($(this).is(":checked")){
+                field.hide();
+                field.prev().hide();
+            }else{
+                field.show();
+                field.prev().show();
+            }
+        });
+    </script>
+
 {% endblock %}

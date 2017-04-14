@@ -13,14 +13,26 @@
             </div>
             <div class="navbar-collapse collapse ">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="{{ path('homepage') }}">Home</a></li>
-                    <li><a href="#">Organiser votre Event</a></li>
+                    <li {{ (app.request.attributes.get('_route') == 'homepage') ? ' class="active"' }} >
+                        <a href="{{ path('homepage') }}">Home</a>
+                    </li>
+                    <li {{ (app.request.attributes.get('_route') == 'event_new') ? ' class="active"' }} >
+                        <a href="{{ path('event_new') }}">Organiser votre Event</a>
+                    </li>
                     {% if app.user %}
-                        <li><a href="#">Mes Events</a></li>
-                    {% endif %}
-                    {% if not app.user %}
-                        <li><a href="#">Inscription</a></li>
-                        <li><a href="#">Connexion</a></li>
+                        <li>
+                            <a href="#">Mes Events</a>
+                        </li>
+                        <li>
+                            <a href="#">Mon Compte</a>
+                        </li>
+                    {% else %}
+                        <li {{ (app.request.attributes.get('_route') == 'inscription') ? ' class="active"' }} >
+                            <a href="{{ path('inscription') }}">Inscription</a>
+                        </li>
+                        <li {{ (app.request.attributes.get('_route') == 'fos_user_security_login') ? ' class="active"' }} >
+                            <a href="{{ path('fos_user_security_login') }}">Connexion</a>
+                        </li>
                     {% endif %}
                 </ul>
             </div>

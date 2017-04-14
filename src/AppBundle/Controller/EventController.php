@@ -43,6 +43,10 @@ class EventController extends Controller
     public function newAction(Request $request)
     {
         $event = new Event();
+        $event->setDateDebutInscri(null);
+        $event->setDateFinInscri(null);
+        $event->setPrix(null);
+        
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm('AppBundle\Form\EventType', $event);

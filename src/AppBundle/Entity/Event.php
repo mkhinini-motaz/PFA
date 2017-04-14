@@ -49,6 +49,7 @@ class Event
      * @var datetime $date
      *
      * @ORM\Column(name="date", type="datetime")
+     * @Assert\GreaterThanOrEqual("today UTC")
      */
     protected $date;
 
@@ -85,6 +86,7 @@ class Event
      * @var \DateTime
      *
      * @ORM\Column(name="dateDebutInscri", type="datetime", nullable=true)
+     * @Assert\GreaterThanOrEqual("today UTC")
      */
     private $dateDebutInscri;
 
@@ -92,6 +94,7 @@ class Event
      * @var \DateTime
      *
      * @ORM\Column(name="dateFinInscri", type="datetime", nullable=true)
+     * @Assert\GreaterThanOrEqual("today UTC")
      */
     private $dateFinInscri;
 

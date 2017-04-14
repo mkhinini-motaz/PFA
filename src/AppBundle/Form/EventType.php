@@ -24,23 +24,40 @@ class EventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nom', TextType::class)
+
                 ->add('description', TextareaType::class)
+
                 ->add('lieu', TextType::class)
+
                 ->add('categories', EntityType::class, ['class' => 'AppBundle:Categorie',
                                                         'choice_label' => 'nom',
                                                         'multiple' => true,
                                                         'expanded' => true,
                 ])
+
                 ->add('date', DateTimeType::class, ["years" => range(date("Y"), strval(intval(date("Y")) + 7))
                                                    ,"label" => "Date de l'évennement"
-                                                   ])
-                ->add('dateDebutInscri', DateType::class, ["years" => range(date("Y"), strval(intval(date("Y")) + 7))])
-                ->add('dateFinInscri', DateType::class, ["years" => range(date("Y"), strval(intval(date("Y")) + 7))])
-                ->add('prix', NumberType::class)
+                ])
+
+                ->add('dateDebutInscri', DateType::class, ["years" => range(date("Y"), strval(intval(date("Y")) + 7))
+                                                          ,"required" => false
+                                                           ])
+
+                ->add('dateFinInscri', DateType::class, ["years" => range(date("Y"), strval(intval(date("Y")) + 7))
+                                                          ,"required" => false
+                                                        ])
+
+                ->add('prix', NumberType::class, ["required" => false])
+
                 ->add('photo', FileType::class, ["label" => "Photo de l'évennement", "required" => false
-                                                ,"attr" => ["accept" => ".png,.jpg,.jpeg"] ])
-                ->add('fichiers', FileType::class, ["multiple" => true, "label" => "Fichiers joints", "required" => false
-                                                    ,"attr" => ["accept" => ".png,.jpg,.jpeg,.pdf"]]);
+                                                ,"attr" => ["accept" => ".png,.jpg,.jpeg"]
+                ])
+
+                ->add('fichiers', FileType::class, ["multiple" => true,
+                                                    "label" => "Fichiers joints",
+                                                    "required" => false
+                                                    ,"attr" => ["accept" => ".png,.jpg,.jpeg,.pdf"]
+                ]);
     }
 
     /**
