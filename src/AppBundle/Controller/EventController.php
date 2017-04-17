@@ -46,13 +46,15 @@ class EventController extends Controller
         $event->setDateDebutInscri(null);
         $event->setDateFinInscri(null);
         $event->setPrix(null);
-        
+        $event->setOuvertCheck(true);
+        $event->setGratuitCheck(true);
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm('AppBundle\Form\EventType', $event);
-        $form->handleRequest($request);
 
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
             if ( ($event->getPhoto() !== null) || ($event->getFichiers() !== null) ) {
                 $path = $this->get('kernel')->getRootDir() . '/../web/images/events/' . $event->getNom();
                 if ( ! is_dir($path) ) {

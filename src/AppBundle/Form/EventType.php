@@ -15,6 +15,9 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+
+use Symfony\Component\Form\FormInterface;
 
 class EventType extends AbstractType
 {
@@ -23,7 +26,15 @@ class EventType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom', TextType::class)
+        $builder->add('ouvertCheck', CheckboxType::class, ['label' => 'Ouvert (Nombre de place illimité)'
+                                                           ,'required' => false
+                ])
+
+                ->add('gratuitCheck', CheckboxType::class, ['label' => 'Gratuit'
+                                                            ,'required' => false
+                ])
+
+                ->add('nom', TextType::class)
 
                 ->add('description', TextareaType::class)
 
@@ -41,10 +52,12 @@ class EventType extends AbstractType
 
                 ->add('dateDebutInscri', DateType::class, ["years" => range(date("Y"), strval(intval(date("Y")) + 7))
                                                           ,"required" => false
+                                                          ,"label" => "Date debut de l'inscription"
                                                            ])
 
                 ->add('dateFinInscri', DateType::class, ["years" => range(date("Y"), strval(intval(date("Y")) + 7))
                                                           ,"required" => false
+                                                          ,"label" => "Date fin de l'inscription"
                                                         ])
 
                 ->add('prix', NumberType::class, ["required" => false])

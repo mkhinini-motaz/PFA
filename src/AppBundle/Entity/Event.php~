@@ -6,16 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\GroupSequenceProviderInterface;
 
 /**
  * Event
  *
  * @ORM\Table(name="event")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventRepository")
- * @Assert\GroupSequenceProvider
  */
-class Event implements GroupSequenceProviderInterface
+class Event
 {
     /**
      * @var int
@@ -30,7 +28,6 @@ class Event implements GroupSequenceProviderInterface
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=60)
-     * @Assert\NotNull(message = "Un évennement ne peut pas être sans nom")
      */
     protected $nom;
 
@@ -52,7 +49,7 @@ class Event implements GroupSequenceProviderInterface
      * @var datetime $date
      *
      * @ORM\Column(name="date", type="datetime")
-     * @Assert\GreaterThanOrEqual(value = "+0 hours UTC")
+     * @Assert\GreaterThanOrEqual("today UTC")
      */
     protected $date;
 
@@ -105,7 +102,11 @@ class Event implements GroupSequenceProviderInterface
      * @var string
      *
      * @ORM\Column(name="prix", type="decimal", precision=10, scale=3, nullable=true)
-     * @Assert\GreaterThan(value = 0, message = "Le prix ne peut pas être négatif", groups = {"eventpayant"})
+     * @Assert\GreaterThan(
+     *     value = 18,
+     *     message = "Le prix ne peut pas être négatif",
+     *     groups = {"eventpayant"}
+     * )
      */
     private $prix;
 
@@ -145,12 +146,12 @@ class Event implements GroupSequenceProviderInterface
     private $reservations;
 
     /**
-     * @ORM\Column(name="ouvertCheck", type="boolean", nullable=true)
+     * @ORM\Column(name="ouvertCheck", type="boolean")
      */
     private $ouvertCheck;
 
     /**
-    * @ORM\Column(name="gratuitCheck", type="boolean", nullable=true)
+    * @ORM\Column(name="gratuitCheck", type="boolean")
     */
     private $gratuitCheck;
 
@@ -600,69 +601,5 @@ class Event implements GroupSequenceProviderInterface
     public function getReservations()
     {
         return $this->reservations;
-    }
-
-    /**
-     * Set ouvertCheck
-     *
-     * @param boolean $ouvertCheck
-     *
-     * @return Event
-     */
-    public function setOuvertCheck($ouvertCheck)
-    {
-        $this->ouvertCheck = $ouvertCheck;
-
-        return $this;
-    }
-
-    /**
-     * Get ouvertCheck
-     *
-     * @return boolean
-     */
-    public function getOuvertCheck()
-    {
-        return $this->ouvertCheck;
-    }
-
-    /**
-     * Set gratuitCheck
-     *
-     * @param boolean $gratuitCheck
-     *
-     * @return Event
-     */
-    public function setGratuitCheck($gratuitCheck)
-    {
-        $this->gratuitCheck = $gratuitCheck;
-
-        return $this;
-    }
-
-    /**
-     * Get gratuitCheck
-     *
-     * @return boolean
-     */
-    public function getGratuitCheck()
-    {
-        return $this->gratuitCheck;
-    }
-
-    public function getGroupSequence(){
-            $groups = ['Default', 'Event'];
-
-            if(!$this->getOuvertCheck())
-            {
-                $groups[] = 'eventferme';
-            }
-
-            if(!$this->getGratuitCheck())
-            {
-                $groups[] = 'eventpayant';
-            }
-
-            return $groups;
     }
 }

@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Création d'un évennement
+{% endblock %}
+
 {% block body %}
     <h1>Création d'un nouveau évennement</h1>
 
-    <p>Votre évennement est : </br>
-        <input type="checkbox" name="ouvert-check" id="ouvert-check" checked> Ouvert (Sans Inscription)
-        <input type="checkbox" name="gratuit-check" id="gratuit-check" checked> Gratuit
-    </p>
+    Votre évennement est : </br>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
@@ -18,6 +19,7 @@
             <a href="{{ path('event_index') }}">Back to the list</a>
         </li>
     </ul>
+
 {% endblock %}
 
 {% block javascripts %}
@@ -26,12 +28,18 @@
     <script type="text/javascript">
         var fields = $("#appbundle_event_dateDebutInscri, #appbundle_event_dateFinInscri");
         var field = $("#appbundle_event_prix");
-        fields.hide();
-        fields.prev().hide();
-        field.hide();
-        field.prev().hide();
 
-        $("#ouvert-check").click(function(){
+        {% if form.ouvertCheck.vars.checked %}
+            fields.hide();
+            fields.prev().hide();
+        {% endif %}
+
+        {% if form.gratuitCheck.vars.checked %}
+            field.hide();
+            field.prev().hide();
+        {% endif %}
+
+        $("#appbundle_event_ouvertCheck").click(function(){
             if($(this).is(":checked")){
                 fields.hide();
                 fields.prev().hide();
@@ -41,7 +49,7 @@
             }
         });
 
-        $("#gratuit-check").click(function(){
+        $("#appbundle_event_gratuitCheck").click(function(){
             if($(this).is(":checked")){
                 field.hide();
                 field.prev().hide();
