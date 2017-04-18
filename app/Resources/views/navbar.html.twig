@@ -26,6 +26,9 @@
                         <li>
                             <a href="#">Mon Compte</a>
                         </li>
+                        <li>
+                            <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+                        </li>
                     {% else %}
                         <li {{ (app.request.attributes.get('_route') == 'inscription') ? ' class="active"' }} >
                             <a href="{{ path('inscription') }}">Inscription</a>

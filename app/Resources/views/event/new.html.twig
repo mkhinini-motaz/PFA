@@ -5,21 +5,21 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Création d'un nouveau évennement</h1>
+    <div class="row">
 
-    Votre évennement est : </br>
+        <div class="col-sm-6 col-sm-offset-3 col-xs-12">
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Créer" />
-    {{ form_end(form) }}
+            <h1 class="h1">Création d'un nouveau évennement</h1>
 
-    <ul>
-        <li>
-            <a href="{{ path('event_index') }}">Back to the list</a>
-        </li>
-    </ul>
+            Votre évennement est : </br>
 
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <input type="submit" value="Créer" />
+            {{ form_end(form) }}
+
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

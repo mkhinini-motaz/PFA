@@ -288,4 +288,18 @@ class Sponsor
     {
         return $this->sponsoring;
     }
+
+    /**
+     * Set sponsoring
+     *
+     * @param string $sponsoring
+     *
+     * @return Sponsor
+     */
+    public function setSponsoring($sponsoring)
+    {
+        $this->sponsoring = $sponsoring;
+
+        return $this;
+    }
 }

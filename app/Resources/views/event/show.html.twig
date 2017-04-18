@@ -1,48 +1,71 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    {{event.nom}}
+{% endblock %}
+
 {% block body %}
-    <h1>Event</h1>
+    <div class="row">
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ event.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ event.nom }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ event.description }}</td>
-            </tr>
-            <tr>
-                <th>Lieu</th>
-                <td>{{ event.lieu }}</td>
-            </tr>
-            <tr>
-                <th>Photo</th>
-                <td>{{ event.photo }}</td>
-            </tr>
-            <tr>
-                <th>Fichiers</th>
-                <td>{% if event.fichiers %}{{ event.fichiers|join(', ') }}{% endif %}</td>
-            </tr>
-        </tbody>
-    </table>
+        <div class="col-sm-6 col-sm-offset-3 col-xs-12">
 
-    <ul>
-        <li>
-            <a href="{{ path('event_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('event_edit', { 'id': event.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+            <h1 class="h1">{{ event.nom }} : </h1>
+
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ event.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>{{ event.description }}</td>
+                    </tr>
+                    <tr>
+                        <th>Lieu</th>
+                        <td>{{ event.lieu }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date</th>
+                        <td>{{ event.date|date("d-m-Y") }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date de Publication</th>
+                        <td>{{ event.datePublication|date("d-m-Y H:m") }}</td>
+                    </tr>
+                    {% if not event.ouvertCheck %}
+                        <tr>
+                            <th>Date de debut d'inscription</th>
+                            <td>{{ event.dateDebutInscri|date("d-m-Y H:m") }}</td>
+                        </tr>
+                        <tr>
+                            <th>Date de fin d'inscription</th>
+                            <td>{{ event.datefinInscri|date("d-m-Y H:m") }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if event.prix %}
+                        <tr>
+                            <th>Prix d'inscription</th>
+                            <td>{{ event.prix }}</td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <th>Photo</th>
+                        <td><img src="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}"
+                                 alt="Pas d'image" width="300" height="300"></td>
+                    </tr>
+                    <tr>
+                        <th>Fichiers</th>
+                        <td>{% if event.fichiers %}{{ event.fichiers|join(', ') }}{% endif %}</td>
+                    </tr>
+                    {% if not event.ouvertCheck %}
+                        <tr>
+                            <td><a href="#" class="btn btn-success">Réserver votre place</a></td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
 {% endblock %}

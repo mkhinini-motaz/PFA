@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Créer Sponsor
+{% endblock %}
+
+{% block body %}
+<div class="row">
+
+    <div class="col-sm-6 col-sm-offset-3 col-xs-12">
+
+            <h1>Ajouter des sponsors à votre évennement</h1>
+
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <input type="submit" value="Create" onclick="function() { ('#form_creer_autre_0')[0].checked = confirm('Ajouter un autre sponsor ?') } " />
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+{% endblock %}

@@ -49,7 +49,6 @@ class EventController extends Controller
         $event->setOuvertCheck(true);
         $event->setGratuitCheck(true);
         $em = $this->getDoctrine()->getManager();
-
         $form = $this->createForm('AppBundle\Form\EventType', $event);
 
         $form->handleRequest($request);
@@ -86,7 +85,7 @@ class EventController extends Controller
             $em->persist($event);
             $em->flush($event);
 
-            return $this->redirectToRoute('event_show', array('id' => $event->getId()));
+            return $this->redirectToRoute('sponsor_new_for_event', array('id' => $event->getId()));
         }
 
         return $this->render('event/new.html.twig', array(
@@ -177,6 +176,17 @@ class EventController extends Controller
         return $this->redirectToRoute('event_index');
     }
 
+    /**
+     * Réservation pour un évennement fermé
+     *
+     * @Route("/{id}/reserver", name="event_reserver")
+     * @Method({"GET", "POST"})
+     *//*
+    public function reserverAction(Request $request, Event $event)
+    {
+
+    }
+*/
     /**
      * Creates a form to delete a event entity.
      *

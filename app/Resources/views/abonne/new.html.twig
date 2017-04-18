@@ -1,11 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1 class="h1">Inscription</h1>
+    <div class="row">
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="S'inscrire" />
-    {{ form_end(form) }}
+        <div class="col-sm-6 col-sm-offset-3 col-xs-12">
 
+            <h1 class="h1">Inscription</h1>
+
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <input type="submit" value="S'inscrire" />
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}

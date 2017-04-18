@@ -5,7 +5,13 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Sponsor;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use AppBundle\Entity\Event;
+
 
 /**
  * Sponsor controller.
@@ -63,6 +69,43 @@ class SponsorController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    /**
+     * Créer une nouvelle entité Sponsor et l'associe à l'objet Event passé en paramétre
+     *
+     * @Route("/new/{id}", name="sponsor_new_for_event")
+     * @Method({"GET", "POST"})
+     * @ParamConverter("event", class="AppBundle:Event")
+     */
+    public function newForEventAction(Request $request, Event $event)
+    {
+        $sponsor = new Sponsor();
+        $form = $this->createForm('AppBundle\Form\SponsorType', $sponsor);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $path = $this->get('kernel')->getRootDir() . '/../web/images/sponsor/' . $event->getName();
+
+            $logo = $sponsor->getLogo();
+            $logoName = md5(uniqid()).'.'.$logo->guessExtension();
+            move_uploaded_file($logo->getPathName() , $path . DIRECTORY_SEPARATOR . $logoName);
+            $sponsor->setLogo($logoName);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($sponsor);
+            $em->flush($sponsor);
+
+        //    if($hiddenform['creer']->getData())
+            return $this->redirectToRoute('sponsor_show', array('id' => $sponsor->getId()));
+        }
+
+        return $this->render('sponsor/new_for_event.html.twig', array(
+            'sponsor' => $sponsor,
+            'form' => $form->createView(),
+        ));
+    }
+
 
     /**
      * Finds and displays a sponsor entity.
