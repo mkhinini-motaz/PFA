@@ -34,17 +34,16 @@ class Sponsoring
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="sponsoring")
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
-    protected $events;
+    protected $event;
 
     /**
      * @ORM\ManyToOne(targetEntity="Sponsor", inversedBy="sponsoring")
      * @ORM\JoinColumn(name="sponsor_id", referencedColumnName="id")
      */
-    protected $sponsors;
+    protected $sponsor;
 
     public function __construct() {
-        $this->events = new ArrayCollection();
-        $this->sponsors = new ArrayCollection();
+
     }
 
     /**
@@ -84,48 +83,48 @@ class Sponsoring
     /**
      * Set events
      *
-     * @param \AppBundle\Entity\Event $events
+     * @param \AppBundle\Entity\Event $event
      *
      * @return Sponsoring
      */
-    public function setEvents(\AppBundle\Entity\Event $events = null)
+    public function setEvent(\AppBundle\Entity\Event $event = null)
     {
-        $this->events = $events;
+        $this->event = $event;
 
         return $this;
     }
 
     /**
-     * Get events
+     * Get event
      *
      * @return \AppBundle\Entity\Event
      */
-    public function getEvents()
+    public function getEvent()
     {
-        return $this->events;
+        return $this->event;
     }
 
     /**
-     * Set sponsors
+     * Set sponsor
      *
-     * @param \AppBundle\Entity\Sponsor $sponsors
+     * @param \AppBundle\Entity\Sponsor $sponsor
      *
      * @return Sponsoring
      */
-    public function setSponsors(\AppBundle\Entity\Sponsor $sponsors = null)
+    public function setSponsor(\AppBundle\Entity\Sponsor $sponsor = null)
     {
-        $this->sponsors = $sponsors;
+        $this->sponsor = $sponsor;
 
         return $this;
     }
 
     /**
-     * Get sponsors
+     * Get sponsor
      *
      * @return \AppBundle\Entity\Sponsor
      */
-    public function getSponsors()
+    public function getSponsor()
     {
-        return $this->sponsors;
+        return $this->sponsor;
     }
 }

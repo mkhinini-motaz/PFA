@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Sponsor;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -10,7 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use AppBundle\Entity\Sponsor;
 use AppBundle\Entity\Event;
+use AppBundle\Entity\Sponsoring;
+
 
 
 /**
@@ -85,19 +87,39 @@ class SponsorController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $path = $this->get('kernel')->getRootDir() . '/../web/images/sponsor/' . $event->getName();
+            $path = $this->get('kernel')->getRootDir() . '/../web/images/sponsor';
 
-            $logo = $sponsor->getLogo();
-            $logoName = md5(uniqid()).'.'.$logo->guessExtension();
-            move_uploaded_file($logo->getPathName() , $path . DIRECTORY_SEPARATOR . $logoName);
-            $sponsor->setLogo($logoName);
+            if($sponsor->getLogo() !== null){
+                $logo = $sponsor->getLogo();
+                $logoName = md5(uniqid()).'.'.$logo->guessExtension();
+                move_uploaded_file($logo->getPathName() , $path . DIRECTORY_SEPARATOR . $logoName);
+                $sponsor->setLogo($logoName);
+            }
+
+            $sponsoring = new Sponsoring();
+            $sponsoring->setSponsor($sponsor);
+            $sponsoring->setEvent($event);
+            $sponsoring->setMontant($form['montant']->getData());
 
             $em = $this->getDoctrine()->getManager();
+            $em->persist($sponsoring);
             $em->persist($sponsor);
+            $em->persist($event);
             $em->flush($sponsor);
 
-        //    if($hiddenform['creer']->getData())
-            return $this->redirectToRoute('sponsor_show', array('id' => $sponsor->getId()));
+            /* Condition pour vérifer la valeur du checkbox ne marche pas */
+                    /* || */
+                    /* \/ */
+            if($form['creer']->getData()){
+                $sponsor = new Sponsor();
+                return $this->render('sponsor/new_for_event.html.twig', array(
+                    'sponsor' => $sponsor,
+                    'form' => $form->createView(),
+                ));
+
+            }else {
+                return $this->redirectToRoute('sponsor_show', array('id' => $sponsor->getId()));
+            }
         }
 
         return $this->render('sponsor/new_for_event.html.twig', array(

@@ -73,7 +73,7 @@ class Sponsor
     protected $sponsoring;
 
     public function __construct() {
-        $this->events = new ArrayCollection();
+        $this->sponsoring = new ArrayCollection();
 
     }
 

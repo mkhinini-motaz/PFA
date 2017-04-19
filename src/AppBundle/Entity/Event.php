@@ -156,6 +156,7 @@ class Event implements GroupSequenceProviderInterface
 
     public function __construct() {
         $this->categories = new ArrayCollection();
+        $this->sponsoring = new ArrayCollection();
     }
 
     /**
