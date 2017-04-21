@@ -60,6 +60,11 @@ class EventType extends AbstractType
                                                           ,"label" => "Date fin de l'inscription"
                                                         ])
 
+                ->add('capacite', IntegerType::class, ["label" => "Capacité de l'évennement"
+                                                      ,"required" => false
+                                                      ,"attr" => ["min" => 1]
+                ])
+
                 ->add('prix', NumberType::class, ["required" => false])
 
                 ->add('photo', FileType::class, ["label" => "Photo de l'évennement", "required" => false

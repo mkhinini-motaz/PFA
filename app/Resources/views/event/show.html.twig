@@ -35,12 +35,8 @@
                     </tr>
                     {% if not event.ouvertCheck %}
                         <tr>
-                            <th>Date de debut d'inscription</th>
-                            <td>{{ event.dateDebutInscri|date("d-m-Y H:m") }}</td>
-                        </tr>
-                        <tr>
-                            <th>Date de fin d'inscription</th>
-                            <td>{{ event.datefinInscri|date("d-m-Y H:m") }}</td>
+                            <th>Date d'inscription</th>
+                            <td> Du {{ event.dateDebutInscri|date("d-m-Y H") }}h jusqu'à {{ event.datefinInscri|date("d-m-Y H") }}h</td>
                         </tr>
                     {% endif %}
                     {% if event.prix %}
@@ -51,8 +47,11 @@
                     {% endif %}
                     <tr>
                         <th>Photo</th>
-                        <td><img src="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}"
-                                 alt="Pas d'image" width="300" height="300"></td>
+                        <td><a href="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}">
+                                <img src="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}"
+                                 alt="Pas d'image" width="300" height="300">
+                             </a>
+                        </td>
                     </tr>
                     <tr>
                         <th>Fichiers</th>

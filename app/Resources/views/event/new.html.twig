@@ -15,7 +15,7 @@
 
             {{ form_start(form) }}
                 {{ form_widget(form) }}
-                <input type="submit" value="Créer" />
+                <button type="submit" name="creer" class="btn btn-success">Créer</button>
             {{ form_end(form) }}
 
         </div>
@@ -26,7 +26,7 @@
     {{ parent() }}
 
     <script type="text/javascript">
-        var fields = $("#appbundle_event_dateDebutInscri, #appbundle_event_dateFinInscri");
+        var fields = $("#appbundle_event_dateDebutInscri, #appbundle_event_dateFinInscri, #appbundle_event_capacite");
         var field = $("#appbundle_event_prix");
 
         {% if form.ouvertCheck.vars.checked %}

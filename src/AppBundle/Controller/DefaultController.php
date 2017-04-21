@@ -22,13 +22,14 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $events = $em->getRepository('AppBundle:Event')->findBy(array(), array('datePublication'=>'asc'));
+        $events = $em->getRepository('AppBundle:Event')->findAllRecent();
 
         $data = $em->getRepository('AppBundle:Event')->findAllDistinctLieu();
         $lieux = array();
         foreach ($data as $value) {
             $lieux[$value['lieu']] = $value['lieu'];
         }
+
         $data = array();
         $form = $this->createFormBuilder($data)
             ->add('motcle', TextType::class, ['label' => 'Mot Clé', 'required' => false,])
@@ -43,13 +44,15 @@ class DefaultController extends Controller
                                               'choices' => $lieux,
                                               'required' => false,
             ])
-            ->add('rechercher', SubmitType::class)
             ->getForm();
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // data is an array with "name", "email", and "message" keys
             $data = $form->getData();
+            $events = $em->getRepository('AppBundle:Event')->findAllRecherche($data["motcle"]
+                                                                            , $data["lieu"]
+                                                                            , $data["categories"]);
         }
 
         return $this->render('default/index.html.twig', array('events' => $events, 'searchForm' => $form->createView()) );

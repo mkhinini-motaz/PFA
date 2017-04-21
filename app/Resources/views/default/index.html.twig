@@ -8,7 +8,8 @@
         <div class="col-sm-3 col-xs-12">
             <h2 class="h2">Trouver un évennement :</h2>
             {{ form_start(searchForm) }}
-            {{ form_widget(searchForm.rechercher) }}
+            <button type="submit" name="rechercher" class="btn btn-success">Rechercher</button>
+            {{ form_widget(searchForm) }}
             {{ form_end(searchForm) }}
         </div>
 

@@ -82,6 +82,7 @@ class Event implements GroupSequenceProviderInterface
      * @var int
      *
      * @ORM\Column(name="capacite", type="integer", nullable=true)
+     * @Assert\GreaterThanOrEqual("0", groups = {"eventferme"})
      */
     private $capacite;
 
