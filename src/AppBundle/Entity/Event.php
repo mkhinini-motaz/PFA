@@ -129,7 +129,7 @@ class Event implements GroupSequenceProviderInterface
      * @ORM\OneToMany(targetEntity="Eventorganisateur", mappedBy="events")
      * @ORM\JoinTable(name="eventorganisateur")
      */
-    protected $eventorganisateur;
+    protected $eventorganisateurs;
 
     /**
      * Relation entre Abonne et Event

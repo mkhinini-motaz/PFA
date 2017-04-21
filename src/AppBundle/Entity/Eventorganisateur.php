@@ -41,13 +41,13 @@ class Eventorganisateur
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="eventorganisateur")
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
-    private $events;
+    private $event;
 
     /**
      * @ORM\ManyToOne(targetEntity="Abonne", inversedBy="eventorganisateur")
      * @ORM\JoinColumn(name="organisateur_id", referencedColumnName="id")
      */
-    private $organisateurs;
+    private $organisateur;
 
     public function __construct() {
         $this->events = new ArrayCollection();

@@ -16,19 +16,22 @@
         <div class="col-sm-9 col-xs-12">
         <div class="container-fluid">
             {% for event in events %}
-                <a href="{{ path('event_show', { 'id': event.id }) }}">
-                    <div class="row event">
+                <div class="row event">
 
-                            <div class="col-sm-3 col-xs-12">
-                                <img class="event_photo" src="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}" alt="no image for {{ event.nom }}">
-                            </div>
+                        <div class="col-sm-3 col-xs-12">
+                            {% if event.photo %}
+                                <img class="event_photo" src="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}" alt="image non disponible">
+                            {% else %}
+                                <img class="event_photo" src="{{ asset('/images/events/no-img.png') }}" alt="image non disponible">
+                            {% endif %}
+                        </div>
+                    <a href="{{ path('event_show', { 'id': event.id }) }}">
                         <div class="col-sm-9 col-xs-12">
                             <h3 class="h3">{{ event.nom }} à {{ event.lieu }} le {{ event.date|date('d/m/Y') }}</h3>
-
                             <p class="description">{{ event.description }}</p>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             {% endfor %}
         </div>
         </div>

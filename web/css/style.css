@@ -1982,6 +1982,11 @@ article img.pull-right, article .align-right{
 	width: 100%;
 }
 
+.event_show_photo {
+	height: 300px;
+	width: 100%;
+}
+
 .event{
 	border-bottom: 1px solid #efefef;
 }

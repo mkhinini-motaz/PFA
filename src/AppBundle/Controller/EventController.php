@@ -45,34 +45,6 @@ class EventController extends Controller
      */
     public function newAction(Request $request)
     {
-        /* Etape pour créer un Event sponsorisé
-        $event2 = new Event();
-        $event2->setDateDebutInscri(null);
-        $event2->setDateFinInscri(null);
-        $event2->setPrix(null);
-        $event2->setOuvertCheck(true);
-        $event2->setGratuitCheck(true);
-        $event2->setNom("eventSponsorise2");
-        $event2->setDate(new \DateTime("now", new \DateTimeZone("Africa/Tunis")));
-        $event2->setDatePublication(new \DateTime("now", new \DateTimeZone("Africa/Tunis")));
-        $sponsor = new Sponsor();
-        $sponsor->setNom("sponsor2");
-        $sponsor->setEmail("email2@gmail.com");
-
-        $sponsoring = new Sponsoring();
-        $sponsoring->setSponsor($sponsor);
-
-        $sponsoring->setMontant(700);
-        $event2->addSponsoring($sponsoring);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($sponsoring);
-        $em->persist($sponsor);
-        $em->persist($event2);
-        $em->flush();
-
-        */
-
         $event = new Event();
         $event->setDateDebutInscri(null);
         $event->setDateFinInscri(null);
@@ -113,6 +85,7 @@ class EventController extends Controller
             }
 
             $event->setDatePublication(new \DateTime("now", new \DateTimeZone("Africa/Tunis")));
+            
             $em->persist($event);
             $em->flush($event);
 

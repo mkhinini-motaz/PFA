@@ -9,6 +9,14 @@
 
         <div class="col-sm-6 col-sm-offset-3 col-xs-12">
 
+            {% if event.photo %}
+                <a href="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}">
+                    <img src="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}"
+                     alt="image non disponible" class="event_show_photo">
+                </a>
+            {% else %}
+                <img src="{{ asset('/images/events/no-img.png') }}" alt="image non disponible" class="event_show_photo">
+            {% endif %}
             <h1 class="h1">{{ event.nom }} : </h1>
 
             <table class="table table-striped">
@@ -27,7 +35,7 @@
                     </tr>
                     <tr>
                         <th>Date</th>
-                        <td>{{ event.date|date("d-m-Y") }}</td>
+                        <td>{{ event.date|date("d-m-Y H") }}h</td>
                     </tr>
                     <tr>
                         <th>Date de Publication</th>
@@ -36,7 +44,7 @@
                     {% if not event.ouvertCheck %}
                         <tr>
                             <th>Date d'inscription</th>
-                            <td> Du {{ event.dateDebutInscri|date("d-m-Y H") }}h jusqu'à {{ event.datefinInscri|date("d-m-Y H") }}h</td>
+                            <td> Du <strong>{{ event.dateDebutInscri|date("d-m-Y H") }}h</strong> jusqu'à <strong>{{ event.datefinInscri|date("d-m-Y H") }}h</strong></td>
                         </tr>
                     {% endif %}
                     {% if event.prix %}
@@ -45,14 +53,16 @@
                             <td>{{ event.prix }}</td>
                         </tr>
                     {% endif %}
-                    <tr>
-                        <th>Photo</th>
-                        <td><a href="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}">
-                                <img src="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}"
-                                 alt="Pas d'image" width="300" height="300">
-                             </a>
-                        </td>
-                    </tr>
+                    {% if event.categories %}
+                        <tr>
+                            <th>Categories :</th>
+                            <td>
+                                {% for item in event.categories %}
+                                    <input type="checkbox" name="{{ item.nom }}" value="{{ item.nom }}" disabled="true" checked="true">{{ item.nom }} 
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endif %}
                     <tr>
                         <th>Fichiers</th>
                         <td>{% if event.fichiers %}{{ event.fichiers|join(', ') }}{% endif %}</td>
