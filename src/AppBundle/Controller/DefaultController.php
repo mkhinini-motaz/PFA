@@ -36,11 +36,11 @@ class DefaultController extends Controller
             ->add('categories', EntityType::class, ['class' => 'AppBundle:Categorie',
                                                     'choice_label' => 'nom',
                                                     'multiple' => true,
-
+                                                    'expanded' => true,
                                                     'required' => false,
             ])
             ->add('lieu', ChoiceType::class, ['multiple' => true,
-
+                                              'expanded' => true,
                                               'choices' => $lieux,
                                               'required' => false,
             ])

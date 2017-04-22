@@ -14,7 +14,7 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT DISTINCT e.lieu FROM AppBundle:Event e'
+                'SELECT DISTINCT e.lieu FROM AppBundle:Event e WHERE e.lieu IS NOT NULL'
             )
             ->getResult();
     }
@@ -23,7 +23,7 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT e FROM AppBundle:Event e WHERE e.date > CURRENT_DATE()'
+                'SELECT e FROM AppBundle:Event e WHERE e.date > CURRENT_DATE() ORDER BY e.datePublication DESC'
             )
             ->getResult();
     }

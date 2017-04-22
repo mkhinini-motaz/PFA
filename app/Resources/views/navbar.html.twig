@@ -14,7 +14,7 @@
             <div class="navbar-collapse collapse ">
                 <ul class="nav navbar-nav">
                     <li {{ (app.request.attributes.get('_route') == 'homepage') ? ' class="active"' }} >
-                        <a href="{{ path('homepage') }}">Home</a>
+                        <a href="{{ path('homepage') }}">Accueil</a>
                     </li>
                     <li {{ (app.request.attributes.get('_route') == 'event_new') ? ' class="active"' }} >
                         <a href="{{ path('event_new') }}">Organiser votre Event</a>

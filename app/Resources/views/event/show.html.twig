@@ -7,8 +7,8 @@
 {% block body %}
     <div class="row">
 
-        <div class="col-sm-6 col-sm-offset-3 col-xs-12">
-
+        <div class="col-sm-6 col-sm-offset-3 col-xs-12 event_show">
+        </br>
             {% if event.photo %}
                 <a href="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}">
                     <img src="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}"
@@ -44,7 +44,13 @@
                     {% if not event.ouvertCheck %}
                         <tr>
                             <th>Date d'inscription</th>
-                            <td> Du <strong>{{ event.dateDebutInscri|date("d-m-Y H") }}h</strong> jusqu'à <strong>{{ event.datefinInscri|date("d-m-Y H") }}h</strong></td>
+                            <td>
+                            {% if "now"|date() > event.datefinInscri|date() %}
+                                <strong>L'inscription est fermé pour cet évennement </strong>
+                            {% else %}
+                                Du <strong>{{ event.dateDebutInscri|date("d-m-Y H") }}h</strong> jusqu'à <strong>{{ event.datefinInscri|date("d-m-Y H") }}h</strong>
+                            {% endif %}
+                             </td>
                         </tr>
                     {% endif %}
                     {% if event.prix %}
@@ -58,16 +64,18 @@
                             <th>Categories :</th>
                             <td>
                                 {% for item in event.categories %}
-                                    <input type="checkbox" name="{{ item.nom }}" value="{{ item.nom }}" disabled="true" checked="true">{{ item.nom }} 
+                                    <input type="checkbox" name="{{ item.nom }}" value="{{ item.nom }}" disabled="true" checked="true">{{ item.nom }}
                                 {% endfor %}
                             </td>
                         </tr>
                     {% endif %}
-                    <tr>
-                        <th>Fichiers</th>
-                        <td>{% if event.fichiers %}{{ event.fichiers|join(', ') }}{% endif %}</td>
-                    </tr>
-                    {% if not event.ouvertCheck %}
+                    {% if event.fichiers %}
+                        <tr>
+                            <th>Fichiers</th>
+                            <td>{{ event.fichiers|join(', ') }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if not event.ouvertCheck and "now"|date() < event.datefinInscri|date() %}
                         <tr>
                             <td><a href="#" class="btn btn-success">Réserver votre place</a></td>
                         </tr>
