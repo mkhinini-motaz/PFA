@@ -1974,34 +1974,3 @@ article img.pull-right, article .align-right{
 @media (max-width: 360px) {
 
 }
-
-/******************************************************************************/
-
-.event_photo {
-	height: 200px;
-	width: 100%;
-}
-
-.event_show_photo {
-	height: 300px;
-	width: 100%;
-}
-
-.event_show {
-	background-color: #EEEEEF;
-}
-
-.event{
-	border-bottom: 1px solid #efefef;
-	position: relative;
-}
-
-.description {
-	color: black;
-}
-
-.event_date_publication {
-	position : absolute;
-	bottom: 0;
-	right: 0;
-}

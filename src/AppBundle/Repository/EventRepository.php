@@ -59,7 +59,6 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
             }
 
             $query .= ")";
-            var_dump($query);
         }
 
         $resultat = $this->getEntityManager()

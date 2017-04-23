@@ -44,13 +44,12 @@
                         {% endif %}
                      {% elseif difference.d == 1 %}
                         il y a 1 jour
-                     {% elseif difference.d < 15 %}
+                     {% elseif difference.d < 8 %}
                         il y a {{ difference.d }} jours
                      {% else %}
                          le {{event.datePublication|date("d/m/Y à H:m")}}
                      {% endif %}
                      </span>
-
                 </div>
             {% endfor %}
         </div>

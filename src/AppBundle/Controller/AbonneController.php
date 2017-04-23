@@ -52,6 +52,7 @@ class AbonneController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $abonne->getCompte()->setEnabled(1);
+            $abonne->getCompte()->addRole("ROLE_USER");
 	        $abonne->getCompte()->setAbonne($abonne);
 
             $em->persist($abonne->getCompte());

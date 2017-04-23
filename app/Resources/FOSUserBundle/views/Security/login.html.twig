@@ -1,9 +1,12 @@
 {% extends "@FOSUser/layout.html.twig" %}
 
+{% block title %}Connexion{% endblock %}
+
 {% block fos_user_content %}
   <div class="row">
-    <div class="col-md-6 col-md-push-3 col-xs-12">
+    <div class="col-md-6 col-md-push-3 col-xs-12 login_form">
       {{ include('@FOSUser/Security/login_content.html.twig') }}
+        </br>
     </div>
   </div>
 {% endblock fos_user_content %}

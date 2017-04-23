@@ -3,6 +3,6 @@
 {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
     {{ form_widget(form) }}
     <div class="form-group">
-        <input type="submit" class="form-control" value="{{ 'registration.submit'|trans }}" />
+        <button type="submit" class="form-control" class="btn btn-primary"> {{ 'registration.submit'|trans }} </button>
     </div>
 {{ form_end(form) }}
