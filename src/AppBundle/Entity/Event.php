@@ -59,6 +59,15 @@ class Event implements GroupSequenceProviderInterface
     /**
      * @var datetime $date
      *
+     * @ORM\Column(name="date_fin", type="datetime", nullable=true)
+     * @Assert\GreaterThanOrEqual(value = "+0 hours UTC")
+     */
+    protected $dateFin;
+
+
+    /**
+     * @var datetime $date
+     *
      * @ORM\Column(name="date_publication", type="datetime")
      */
     protected $datePublication;
@@ -119,17 +128,17 @@ class Event implements GroupSequenceProviderInterface
 
     /**
      * Relation entre Event et Sponsor
-     * @ORM\OneToMany(targetEntity="Sponsoring", mappedBy="events")
+     * @ORM\OneToMany(targetEntity="Sponsoring", mappedBy="event")
      * @ORM\JoinTable(name="sponsoring")
      */
     protected $sponsoring;
 
     /**
      * Relation entre Event et Organisateur
-     * @ORM\OneToMany(targetEntity="Eventorganisateur", mappedBy="events")
+     * @ORM\ManyToOne(targetEntity="Abonne", inversedBy="events")
      * @ORM\JoinTable(name="eventorganisateur")
      */
-    protected $eventorganisateurs;
+    protected $organisateur;
 
     /**
      * Relation entre Abonne et Event
@@ -158,6 +167,7 @@ class Event implements GroupSequenceProviderInterface
     public function __construct() {
         $this->categories = new ArrayCollection();
         $this->sponsoring = new ArrayCollection();
+        $this->eventorganisateurs = new ArrayCollection();
     }
 
     /**
@@ -356,40 +366,6 @@ class Event implements GroupSequenceProviderInterface
     public function getSponsoring()
     {
         return $this->sponsoring;
-    }
-
-    /**
-     * Add eventorganisateur
-     *
-     * @param \AppBundle\Entity\Eventorganisateur $eventorganisateur
-     *
-     * @return Event
-     */
-    public function addEventorganisateur(\AppBundle\Entity\Eventorganisateur $eventorganisateur)
-    {
-        $this->eventorganisateur[] = $eventorganisateur;
-
-        return $this;
-    }
-
-    /**
-     * Remove eventorganisateur
-     *
-     * @param \AppBundle\Entity\Eventorganisateur $eventorganisateur
-     */
-    public function removeEventorganisateur(\AppBundle\Entity\Eventorganisateur $eventorganisateur)
-    {
-        $this->eventorganisateur->removeElement($eventorganisateur);
-    }
-
-    /**
-     * Get eventorganisateur
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEventorganisateur()
-    {
-        return $this->eventorganisateur;
     }
 
     /**
@@ -666,5 +642,54 @@ class Event implements GroupSequenceProviderInterface
             }
 
             return $groups;
+    }
+
+
+    /**
+     * Set dateFin
+     *
+     * @param \DateTime $dateFin
+     *
+     * @return Event
+     */
+    public function setDateFin($dateFin)
+    {
+        $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
+    /**
+     * Get dateFin
+     *
+     * @return \DateTime
+     */
+    public function getDateFin()
+    {
+        return $this->dateFin;
+    }
+
+    /**
+     * Set organisateur
+     *
+     * @param \AppBundle\Entity\Abonne $organisateur
+     *
+     * @return Event
+     */
+    public function setOrganisateur(\AppBundle\Entity\Abonne $organisateur = null)
+    {
+        $this->organisateur = $organisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get organisateur
+     *
+     * @return \AppBundle\Entity\Abonne
+     */
+    public function getOrganisateur()
+    {
+        return $this->organisateur;
     }
 }

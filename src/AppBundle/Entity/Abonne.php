@@ -80,17 +80,17 @@ class Abonne
 
     /**
      * Relation entre Event et Organisateur
-     * @ORM\OneToMany(targetEntity="Eventorganisateur", mappedBy="organisateurs")
+     * @ORM\OneToMany(targetEntity="Event", mappedBy="organisateur")
      * @ORM\JoinTable(name="eventorganisateur")
      */
-    protected $eventorganisateur;
+    protected $events;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->eventorganisateur = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
         $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -341,40 +341,6 @@ class Abonne
     }
 
     /**
-     * Add eventorganisateur
-     *
-     * @param \AppBundle\Entity\Eventorganisateur $eventorganisateur
-     *
-     * @return Abonne
-     */
-    public function addEventorganisateur(\AppBundle\Entity\Eventorganisateur $eventorganisateur)
-    {
-        $this->eventorganisateur[] = $eventorganisateur;
-
-        return $this;
-    }
-
-    /**
-     * Remove eventorganisateur
-     *
-     * @param \AppBundle\Entity\Eventorganisateur $eventorganisateur
-     */
-    public function removeEventorganisateur(\AppBundle\Entity\Eventorganisateur $eventorganisateur)
-    {
-        $this->eventorganisateur->removeElement($eventorganisateur);
-    }
-
-    /**
-     * Get eventorganisateur
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEventorganisateur()
-    {
-        return $this->eventorganisateur;
-    }
-
-    /**
     * @Assert\IsTrue(message = "Le numéro de téléphone saisi est invalide")
     */
     public function isValidTel()
@@ -414,4 +380,38 @@ class Abonne
         return true;
     }
 
+
+    /**
+     * Add event
+     *
+     * @param \AppBundle\Entity\Event $event
+     *
+     * @return Abonne
+     */
+    public function addEvent(\AppBundle\Entity\Event $event)
+    {
+        $this->events[] = $event;
+
+        return $this;
+    }
+
+    /**
+     * Remove event
+     *
+     * @param \AppBundle\Entity\Event $event
+     */
+    public function removeEvent(\AppBundle\Entity\Event $event)
+    {
+        $this->events->removeElement($event);
+    }
+
+    /**
+     * Get events
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEvents()
+    {
+        return $this->events;
+    }
 }

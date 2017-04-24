@@ -118,7 +118,7 @@ class SponsorController extends Controller
                 ));
 
             }else {
-                return $this->redirectToRoute('sponsor_show', array('id' => $sponsor->getId()));
+                return $this->redirectToRoute('event_show', array('id' => $event->getId()));
             }
         }
 

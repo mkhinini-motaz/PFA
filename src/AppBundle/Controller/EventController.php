@@ -85,7 +85,8 @@ class EventController extends Controller
             }
 
             $event->setDatePublication(new \DateTime("now", new \DateTimeZone("Africa/Tunis")));
-            
+            $event->setOrganisateur($this->getUser()->getAbonne());
+
             $em->persist($event);
             $em->flush($event);
 

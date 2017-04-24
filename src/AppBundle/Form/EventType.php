@@ -47,7 +47,10 @@ class EventType extends AbstractType
                 ])
 
                 ->add('date', DateTimeType::class, ["years" => range(date("Y"), strval(intval(date("Y")) + 7))
-                                                   ,"label" => "Date de l'évennement"
+                                                   ,"label" => "Date debut de l'évennement"
+                ])
+                ->add('dateFin', DateTimeType::class, ["years" => range(date("Y"), strval(intval(date("Y")) + 7))
+                                                   ,"label" => "Date fin de l'évennement"
                 ])
 
                 ->add('dateDebutInscri', DateType::class, ["years" => range(date("Y"), strval(intval(date("Y")) + 7))

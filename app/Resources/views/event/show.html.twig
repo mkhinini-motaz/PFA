@@ -35,7 +35,7 @@
                     </tr>
                     <tr>
                         <th>Date</th>
-                        <td>{{ event.date|date("d-m-Y H") }}h</td>
+                        <td>Du <strong>{{ event.date|date("d-m-Y H") }}h</strong> jusqu'à <strong>{{ event.dateFin|date("d-m-Y H") }}</strong></td>
                     </tr>
                     <tr>
                         <th>Date de Publication</th>
@@ -78,6 +78,22 @@
                     {% if not event.ouvertCheck and "now"|date() < event.datefinInscri|date() %}
                         <tr>
                             <td><a href="#" class="btn btn-success">Réserver votre place</a></td>
+                        </tr>
+                    {% endif %}
+                    {% if event.sponsoring %}
+                        <tr>
+                            <th>Sponsors :</th>
+                            <td>
+                                {% for sponsoring in event.sponsoring %}
+                                    {% if sponsoring.sponsor.logo %}
+                                        {% set url = asset('/images/sponsor/'~sponsoring.sponsor.logo) %}
+                                    {% else %}
+                                        {% set url = asset('/images/events/no-img.png') %}
+                                    {% endif %}
+                                    <img src="{{url}}" alt="Impossible de charger l'image" height="50" width="50">
+                                    <strong>{{ sponsoring.sponsor.nom }}</strong>
+                                {% endfor %}
+                            </td>
                         </tr>
                     {% endif %}
                 </tbody>

@@ -26,12 +26,12 @@
                         {% endif %}
                     </div>
                     <a href="{{ path('event_show', { 'id': event.id }) }}">
-                        <div class="col-sm-9 col-xs-12">
+                        <div class="col-sm-9 col-xs-12 event_description">
                             <h3 class="h3">{{ event.nom }} à {{ event.lieu }} le {{ event.date|date('d/m/Y') }}</h3>
                             <p class="description">{{ event.description }}</p>
                         </div>
                     </a>
-                    {% set difference = date("now").diff(date(event.datePublication)) %}
+                    {% set difference = date("now", "Africa/Tunis").diff(date(event.datePublication)) %}
                      <span class="event_date_publication">Publiée
                      {% if difference.d == 0 %}
                         il y a
