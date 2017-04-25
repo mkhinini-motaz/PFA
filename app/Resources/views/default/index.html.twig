@@ -29,6 +29,7 @@
                         <div class="col-sm-9 col-xs-12 event_description">
                             <h3 class="h3">{{ event.nom }} à {{ event.lieu }} le {{ event.date|date('d/m/Y') }}</h3>
                             <p class="description">{{ event.description }}</p>
+                            <i class=""></i>
                         </div>
                     </a>
                     {% set difference = date("now", "Africa/Tunis").diff(date(event.datePublication)) %}
@@ -50,6 +51,11 @@
                          le {{event.datePublication|date("d/m/Y à H:m")}}
                      {% endif %}
                      </span>
+                     {% set difference = date("now", "Africa/Tunis").diff(date(event.date)) %}
+                      <span class="date_event">
+                          Reste {{ difference.days }} jours
+                      </span>
+
                 </div>
             {% endfor %}
         </div>

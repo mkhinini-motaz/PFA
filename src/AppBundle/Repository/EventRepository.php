@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Abonne;
+
 /**
  * EventRepository
  *
@@ -16,6 +18,16 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
             ->createQuery(
                 'SELECT DISTINCT e.lieu FROM AppBundle:Event e WHERE e.lieu IS NOT NULL'
             )
+            ->getResult();
+    }
+
+    public function findByAbonne(Abonne $abonne)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT e FROM AppBundle:Event e WHERE e.organisateur = :abonne'
+            )
+            ->setParameter("abonne", $abonne)
             ->getResult();
     }
 

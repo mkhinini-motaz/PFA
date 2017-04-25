@@ -20,8 +20,8 @@
                         <a href="{{ path('event_new') }}">Organiser votre Event</a>
                     </li>
                     {% if app.user %}
-                        <li>
-                            <a href="#">Mes Events</a>
+                        <li {{ (app.request.attributes.get('_route') == 'mes_events') ? ' class="active"' }} >
+                            <a href="{{ path('mes_events') }}">Mes Events</a>
                         </li>
                         <li>
                             <a href="#">Mon Compte</a>

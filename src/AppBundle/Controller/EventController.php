@@ -23,16 +23,16 @@ class EventController extends Controller
     /**
      * Lists all event entities.
      *
-     * @Route("/", name="event_index")
+     * @Route("/", name="mes_events")
      * @Method("GET")
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $events = $em->getRepository('AppBundle:Event')->findBy(array(), array('datePublication'=>'asc'));
+        $events = $em->getRepository('AppBundle:Event')->findByAbonne($this->getUser()->getAbonne());
 
-        return $this->render('event/index.html.twig', array(
+        return $this->render('event/mesevents.html.twig', array(
             'events' => $events,
         ));
     }
@@ -51,6 +51,8 @@ class EventController extends Controller
         $event->setPrix(null);
         $event->setOuvertCheck(true);
         $event->setGratuitCheck(true);
+        $event->setDate(new \DateTime("now", new \DateTimeZone("Africa/Tunis")));
+        $event->setDateFin(new \DateTime("now", new \DateTimeZone("Africa/Tunis")));
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm('AppBundle\Form\EventType', $event);
 
@@ -192,6 +194,7 @@ class EventController extends Controller
 
     }
 */
+
     /**
      * Creates a form to delete a event entity.
      *
@@ -207,4 +210,5 @@ class EventController extends Controller
             ->getForm()
         ;
     }
+
 }

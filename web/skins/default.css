@@ -236,11 +236,13 @@ footer{
 
 .event_show {
 	background-color: #eeeeef;
+	padding: 1%;
 }
 
 .event{
-	border-bottom: 1px solid #efefef;
+	border: 1px solid #eeccee;
 	position: relative;
+	padding: 1%;
 }
 
 .description {
@@ -250,6 +252,12 @@ footer{
 .event_date_publication {
 	position : absolute;
 	bottom: 0;
+	right: 0;
+}
+
+.date_event {
+	position: absolute;
+	top: 0;
 	right: 0;
 }
 
@@ -284,7 +292,7 @@ footer{
 
 .description {
     display:inline-block;
-    width:300px;
+    width:100%;
     white-space: nowrap;
     overflow:hidden !important;
     text-overflow: ellipsis;

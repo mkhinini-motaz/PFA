@@ -3,5 +3,88 @@
 {% block title %}Mes Events{% endblock %}
 
 {% block body %}
+    <div class="row">
+        <div class="col-xs-12">
+
+            <table class="table table-bordered table-responsive">
+                <thead>
+                    <th class="center">Nom</th>
+                    <th class="center">Description</th>
+                    <th class="center">Lieu</th>
+                    <th class="center">Date</th>
+                    <th class="center">Date Publication</th>
+                    <th class="center">Inscription</th>
+                    <th class="center">Prix</th>
+                    <th class="center">Categories</th>
+                    <th class="center">Fichiers</th>
+                    <th class="center">Sponsoring</th>
+                </thead>
+                <tbody>
+                    {% for event in events %}
+                        <tr>
+                            <td>{{ event.nom }}</td>
+
+                            <td>{{ event.description }}</td>
+
+                            <td>{{ event.lieu }}</td>
+
+                            <td>Du <strong>{{ event.date|date("d-m-Y H") }}h</strong> jusqu'à <strong>{{ event.dateFin|date("d-m-Y H") }}</strong></td>
+
+                            <td>{{ event.datePublication|date("d-m-Y H:m") }}</td>
+                            <td>
+                                {% if not event.ouvertCheck %}
+                                    {% if "now"|date() > event.datefinInscri|date() %}
+                                        <strong>Inscription fermé</strong>
+                                    {% else %}
+                                        Du <strong>{{ event.dateDebutInscri|date("d-m-Y H") }}h</strong> jusqu'à <strong>{{ event.datefinInscri|date("d-m-Y H") }}h</strong>
+                                    {% endif %}
+
+                                {% else %}
+                                        <strong>Sans inscription</strong>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if event.prix %}
+                                    {{ event.prix }}
+                                {% else %}
+                                    <strong>Gratuit</strong>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if event.categories %}
+                                    {% for item in event.categories %}
+                                        {{ item.nom }}
+                                    {% endfor %}
+                                {% else %}
+                                    <strong>Aucune categorie</strong>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if event.fichiers %}
+                                        <td>{{ event.fichiers|join(', ') }}</td>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if event.sponsoring %}
+                                    {% for sponsoring in event.sponsoring %}
+                                        {% if sponsoring.sponsor.logo %}
+                                            {% set url = asset('/images/sponsor/'~sponsoring.sponsor.logo) %}
+                                        {% else %}
+                                            {% set url = asset('/images/events/no-img.png') %}
+                                        {% endif %}
+                                        <img src="{{url}}" alt="Impossible de charger l'image" height="50" width="50">
+                                        <strong>{{ sponsoring.sponsor.nom }}</strong>
+                                    {% endfor %}
+                                {% else %}
+                                    <strong>Pas de sponsors</strong>
+                                {% endif %}
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 {% endblock %}

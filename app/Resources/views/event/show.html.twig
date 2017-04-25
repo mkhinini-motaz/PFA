@@ -75,11 +75,6 @@
                             <td>{{ event.fichiers|join(', ') }}</td>
                         </tr>
                     {% endif %}
-                    {% if not event.ouvertCheck and "now"|date() < event.datefinInscri|date() %}
-                        <tr>
-                            <td><a href="#" class="btn btn-success">Réserver votre place</a></td>
-                        </tr>
-                    {% endif %}
                     {% if event.sponsoring %}
                         <tr>
                             <th>Sponsors :</th>
@@ -98,7 +93,9 @@
                     {% endif %}
                 </tbody>
             </table>
-
+            {% if not event.ouvertCheck and "now"|date() < event.datefinInscri|date() %}
+                <a href="#" class="btn btn-success">Réserver votre place</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
