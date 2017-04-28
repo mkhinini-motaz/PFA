@@ -297,3 +297,8 @@ footer{
     overflow:hidden !important;
     text-overflow: ellipsis;
 }
+
+.sposor_index_img {
+	width: 100%;
+	height: 100%;
+}

@@ -5,41 +5,44 @@
 
     <div class="col-sm-6 col-sm-offset-3 col-xs-12">
 
-    <h1>Sponsors list</h1>
+    <h1>List des Sponsors</h1>
 
-    <table>
+    <table class="table table-responsive table-striped">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Telephone</th>
-                <th>Email</th>
-                <th>Siteweb</th>
-                <th>Adresse</th>
-                <th>Logo</th>
-                <th>Actions</th>
+                <th class="text-center">Logo</th>
+                <th class="text-center">Nom</th>
+                <th class="text-center">Telephone</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Siteweb</th>
+                <th class="text-center">Adresse</th>
+                <th class="text-center">Events sponsorisé</th>
             </tr>
         </thead>
         <tbody>
         {% for sponsor in sponsors %}
             <tr>
-                <td><a href="{{ path('sponsor_show', { 'id': sponsor.id }) }}">{{ sponsor.id }}</a></td>
-                <td>{{ sponsor.nom }}</td>
+                <td>
+                    {% if sponsor.logo %}
+                        <a href="{{ asset('/images/sponsor/'~sponsor.nom~'/'~sponsor.logo) }}">
+                            <img src="{{ asset('/images/sponsor/'~sponsor.nom~'/'~sponsor.logo) }}"
+                             alt="image non disponible" class="sposor_index_img">
+                        </a>
+                    {% else %}
+                        <img src="{{ asset('/images/no-img.png') }}" alt="image non disponible" class="sposor_index_img">
+                    {% endif %}
+                </td>
+                <td><a href="{{ path('sponsor_show', { 'id': sponsor.id }) }}">{{ sponsor.nom }}</a></td>
                 <td>{{ sponsor.telephone }}</td>
                 <td>{{ sponsor.email }}</td>
                 <td>{{ sponsor.siteWeb }}</td>
                 <td>{{ sponsor.adresse }}</td>
-                <td>{{ sponsor.logo }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('sponsor_show', { 'id': sponsor.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('sponsor_edit', { 'id': sponsor.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
+                <td>{{ sponsor.sponsoring|length }}</td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td>
+                        <a class="btn btn-warning" href="{{ path('sponsor_edit', { 'id': sponsor.id }) }}">Modifier</a>
+                    </td>
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>
@@ -47,7 +50,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('sponsor_new') }}">Create a new sponsor</a>
+            <a href="{{ path('sponsor_new') }}">Ajouter un nouveau Sponsor</a>
         </li>
     </ul>
 </div>

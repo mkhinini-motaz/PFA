@@ -16,7 +16,7 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->getEntityManager()
             ->createQuery(
-                'SELECT DISTINCT e.lieu FROM AppBundle:Event e WHERE e.lieu IS NOT NULL'
+                'SELECT DISTINCT e.lieu, COUNT(e.lieu) AS nombre FROM AppBundle:Event e WHERE e.lieu IS NOT NULL GROUP BY e.lieu'
             )
             ->getResult();
     }
@@ -28,6 +28,15 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
                 'SELECT e FROM AppBundle:Event e WHERE e.organisateur = :abonne'
             )
             ->setParameter("abonne", $abonne)
+            ->getResult();
+    }
+
+    public function findAllPasse()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT e FROM AppBundle:Event e WHERE e.date < CURRENT_DATE() ORDER BY e.datePublication DESC'
+            )
             ->getResult();
     }
 
