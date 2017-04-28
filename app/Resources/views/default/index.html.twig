@@ -14,51 +14,11 @@
         </div>
 
         <div class="col-sm-9 col-xs-12">
-        <div class="container-fluid">
-            {% for event in events %}
-                <div class="row event">
-
-                    <div class="col-sm-3 col-xs-12">
-                        {% if event.photo %}
-                            <img class="event_photo" src="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}" alt="image non disponible">
-                        {% else %}
-                            <img class="event_photo" src="{{ asset('/images/events/no-img.png') }}" alt="image non disponible">
-                        {% endif %}
-                    </div>
-                    <a href="{{ path('event_show', { 'id': event.id }) }}">
-                        <div class="col-sm-9 col-xs-12 event_description">
-                            <h3 class="h3">{{ event.nom }} à {{ event.lieu }} le {{ event.date|date('d/m/Y') }}</h3>
-                            <p class="description">{{ event.description }}</p>
-                            <i class=""></i>
-                        </div>
-                    </a>
-                    {% set difference = date("now", "Africa/Tunis").diff(date(event.datePublication)) %}
-                     <span class="event_date_publication">Publiée
-                     {% if difference.d == 0 %}
-                        il y a
-                        {% if difference.h == 0 %}
-                            {{ difference.i }} minutes
-                        {% elseif difference.h == 1 %}
-                            1 heure
-                        {% else %}
-                            {{ difference.h }} heures
-                        {% endif %}
-                     {% elseif difference.d == 1 %}
-                        il y a 1 jour
-                     {% elseif difference.d < 8 %}
-                        il y a {{ difference.d }} jours
-                     {% else %}
-                         le {{event.datePublication|date("d/m/Y à H:m")}}
-                     {% endif %}
-                     </span>
-                     {% set difference = date("now", "Africa/Tunis").diff(date(event.date)) %}
-                      <span class="date_event">
-                          Reste {{ difference.days }} jours
-                      </span>
-
-                </div>
-            {% endfor %}
-        </div>
+            <div class="container-fluid">
+                {% for event in events %}
+                    {% include 'event/affiche_events.html.twig' %}
+                {% endfor %}
+            </div>
         </div>
 
     </div>

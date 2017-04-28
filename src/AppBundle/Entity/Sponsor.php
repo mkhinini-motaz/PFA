@@ -67,7 +67,7 @@ class Sponsor
 
     /**
      * Relation entre Event et Sponsor
-     * @ORM\OneToMany(targetEntity="Sponsoring", mappedBy="sponsors")
+     * @ORM\OneToMany(targetEntity="Sponsoring", mappedBy="sponsor")
      * @ORM\JoinTable(name="sponsoring")
      */
     protected $sponsoring;

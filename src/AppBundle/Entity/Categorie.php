@@ -109,4 +109,9 @@ class Categorie
     {
         return $this->events;
     }
+
+    public function getNomAndCount()
+    {
+        return $this->getNom() . " (" . $this->getEvents()->count() .")";
+    }
 }

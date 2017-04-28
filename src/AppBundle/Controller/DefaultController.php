@@ -21,10 +21,11 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Event');
 
-        $events = $em->getRepository('AppBundle:Event')->findAllRecent();
+        $events = $repo->findAllRecent();
 
-        $data = $em->getRepository('AppBundle:Event')->findAllDistinctLieu();
+        $data = $repo->findAllDistinctLieu();
         $lieux = array();
         foreach ($data as $value) {
             $lieux[$value['lieu']] = $value['lieu'];
@@ -34,7 +35,7 @@ class DefaultController extends Controller
         $form = $this->createFormBuilder($data)
             ->add('motcle', TextType::class, ['label' => 'Mot Clé', 'required' => false,])
             ->add('categories', EntityType::class, ['class' => 'AppBundle:Categorie',
-                                                    'choice_label' => 'nom',
+                                                    'choice_label' => 'getNomAndCount',
                                                     'multiple' => true,
                                                     'expanded' => true,
                                                     'required' => false,
@@ -49,9 +50,7 @@ class DefaultController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $events = $em->getRepository('AppBundle:Event')->findAllRecherche($data["motcle"]
-                                                                            , $data["lieu"]
-                                                                            , $data["categories"]);
+            $events = $repo->findAllRecherche($data["motcle"], $data["lieu"], $data["categories"]);
         }
 
         return $this->render('default/index.html.twig', array('events' => $events, 'searchForm' => $form->createView()) );

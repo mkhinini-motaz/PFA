@@ -7,7 +7,7 @@
 {% block body %}
     <div class="row">
 
-        <div class="col-sm-6 col-sm-offset-3 col-xs-12 event_show">
+        <div class="col-sm-6 col-sm-push-3 col-xs-12 event_show">
         </br>
             {% if event.photo %}
                 <a href="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}">
@@ -63,8 +63,10 @@
                         <tr>
                             <th>Categories :</th>
                             <td>
-                                {% for item in event.categories %}
-                                    <input type="checkbox" name="{{ item.nom }}" value="{{ item.nom }}" disabled="true" checked="true">{{ item.nom }}
+                                {% for categorie in event.categories %}
+                                    <a href="{{ path('categorie_show', {'id' : categorie.id}) }}">
+                                        {{ categorie.nom }}
+                                    </a>
                                 {% endfor %}
                             </td>
                         </tr>
@@ -85,8 +87,10 @@
                                     {% else %}
                                         {% set url = asset('/images/events/no-img.png') %}
                                     {% endif %}
-                                    <img src="{{url}}" alt="Impossible de charger l'image" height="50" width="50">
-                                    <strong>{{ sponsoring.sponsor.nom }}</strong>
+                                    <a href="{{ path('sponsor_show', {'id' : sponsoring.sponsor.id}) }}">
+                                        <img src="{{url}}" alt="Impossible de charger l'image" height="50" width="50">
+                                        <strong>{{ sponsoring.sponsor.nom }}</strong>
+                                    </a>
                                 {% endfor %}
                             </td>
                         </tr>

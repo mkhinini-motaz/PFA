@@ -137,11 +137,8 @@ class SponsorController extends Controller
      */
     public function showAction(Sponsor $sponsor)
     {
-        $deleteForm = $this->createDeleteForm($sponsor);
-
         return $this->render('sponsor/show.html.twig', array(
             'sponsor' => $sponsor,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
