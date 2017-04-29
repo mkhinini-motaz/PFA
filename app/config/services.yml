@@ -8,3 +8,10 @@ services:
         class: AppBundle\Form\CompteType
         tags:
             - { name: form.type, alias: app_user_registration }
+
+    hwi_oauth.user.provider.entity:
+        class: HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider
+
+    my.custom.user_provider:
+        class:        AppBundle\Security\Core\User\FOSUBUserProvider
+        arguments: ['@fos_user.user_manager', { facebook: facebook_id }]

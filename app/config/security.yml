@@ -1,6 +1,6 @@
 security:
     encoders:
-        FOS\UserBundle\Model\UserInterface: bcrypt
+        FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
@@ -22,10 +22,18 @@ security:
                 csrf_token_generator: security.csrf.token_manager
             logout:       true
             anonymous:    true
+            oauth:
+                resource_owners:
+                    facebook:      /login/check-facebook
+                login_path:        /login
+                failure_path:      /login
+                oauth_user_provider:
+                    service: my.custom.user_provider
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/event/new, role: ROLE_USER }

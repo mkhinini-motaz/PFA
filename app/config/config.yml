@@ -72,3 +72,18 @@ fos_user:
     registration:
         form:
             type: AppBundle\Form\CompteType
+
+hwi_oauth:
+    connect:
+        account_connector: my.custom.user_provider
+    firewall_names: [main]
+    fosub:
+        username_iterations: 30
+        properties:
+            facebook:    facebook_id
+    resource_owners:
+        facebook:
+            type:                facebook
+            client_id:           "117658048796394"
+            client_secret:       "584269b0c86f5d376b5fdad24813c78a"
+            scope:               scope
