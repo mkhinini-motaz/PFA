@@ -7,12 +7,26 @@
             <img class="event_photo" src="{{ asset('/images/events/no-img.png') }}" alt="image non disponible">
         {% endif %}
     </div>
-    <a href="{{ path('event_show', { 'id': event.id }) }}">
-        <div class="col-sm-9 col-xs-12 event_description">
-            <h3 class="h3">{{ event.nom }} à {{ event.lieu }} le {{ event.date|date('d/m/Y') }}</h3>
-            <p class="description">{{ event.description }}</p>
+    <div class="col-sm-9 col-xs-12">
+        <div class="row">
+
+            <a href="{{ path('event_show', { 'id': event.id }) }}">
+                <div class="col-xs-12 event_description">
+                    <h3 class="h3">{{ event.nom }} à {{ event.lieu }}</h3>
+                    <p class="description">{{ event.description }}</p>
+                </div>
+            </a>
+            <div class="col-xs-12">
+
+            </div>
+            {% if event.organisateur.compte == app.user %}
+                <div class="col-xs-12">
+                    <p class="nbr-reservation">{{ event.reservations.count }} reservations</p>
+                </div>
+            {% endif %}
+
         </div>
-    </a>
+    </div>
     {% set difference = date("now", "Africa/Tunis").diff(date(event.datePublication)) %}
      <span class="event_date_publication">Publiée
          {% if difference.d == 0 %}

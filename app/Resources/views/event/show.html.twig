@@ -98,17 +98,28 @@
                 </tbody>
             </table>
             {% if event.organisateur.compte != app.user %}
-            {% if not event.ouvertCheck and "now"|date() < event.datefinInscri|date() %}
-                <a href="{{ path('event_reserver', {'id' : event.id}) }}" class="reservation-button btn btn-success">Réserver votre place</a>
-            {% endif %}
-            <div class="reservation-form">
-                {% if reservationForm %}
-                    {{ form_start(reservationForm) }}
-                    {{ form_widget(reservationForm) }}
-                    <button type="submit" name="creer" class="btn btn-success">Réserver votre place</button>
-                    {{ form_end(reservationForm) }}
+                {% if not event.ouvertCheck and "now"|date() < event.datefinInscri %}
+                    <a href="{{ path('event_reserver', {'id' : event.id}) }}" class="reservation-button btn btn-success">Réserver votre place</a>
                 {% endif %}
-            </div>
+                <div class="reservation-form">
+                    {% if reservationForm %}
+                        {{ form_start(reservationForm) }}
+                        {{ form_widget(reservationForm) }}
+                        <button type="submit" name="creer" class="btn btn-success">Réserver votre place</button>
+                        {{ form_end(reservationForm) }}
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            {% if event.organisateur.compte == app.user and not event.ouvertCheck %}
+                {% for reservation in event.reservations %}
+                    le <strong>{{ reservation.dateReservation }}</strong> :
+                    <strong>{{ reservation.abonne.nom }}</strong> a réservé
+                    <strong>{{ reservation.nbrPlaces }}</strong> places
+                    à collecté le <strong>{{ reservation.dateCollecte }}</strong>
+                {% else %}
+                    <strong>Personne n'a encore réservé pour cet évennement</strong>
+                {% endfor %}
             {% endif %}
         </div>
     </div>
