@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -209,5 +210,17 @@ class Reservation
     public function getAbonne()
     {
         return $this->abonne;
+    }
+
+    /**
+    * @Assert\IsTrue(message = "La date de collecte des billets doit être supérieur à la date actuel")
+    */
+    public function isdateCollectValid()
+    {
+        if ($this->getEventFerme()->getGratuitCheck()) {
+            return true;
+        } else {
+            return $this->getDateCollecte() > new \DateTime("now");
+        }
     }
 }

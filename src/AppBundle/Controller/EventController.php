@@ -108,33 +108,26 @@ class EventController extends Controller
      */
     public function showAction(Event $event, Request $request)
     {
-
-        return $this->render('event/show.html.twig', array('event' => $event, 'reservationForm' => null));
-    }
-
-    /**
-     * Réservation pour un évennement fermé
-     *
-     * @Route("/reserver/{id}", name="event_reserver")
-     * @Method({"GET", "POST"})
-     */
-    public function reserverAction(Request $request, Event $event)
-    {
         $em = $this->getDoctrine()->getManager();
 
         $reservationForm = null;
         if(!$event->getOuvertCheck())
         {
             $reservation = new Reservation();
-            $reservation->setDateCollecte($event->getDateDebutInscri());
+            $reservation->setAbonne($this->getUser()->getAbonne());
+            $reservation->setEventFerme($event);
+            if ($event->getGratuitCheck()) {
+                $reservation->setDateCollecte(new \DateTime("2010-01-01"));
+            } else {
+                $reservation->setDateCollecte($event->getDateDebutInscri());
+            }
+
             $reservationForm = $this->createForm('AppBundle\Form\ReservationType', $reservation);
 
             $reservationForm->handleRequest($request);
             if ($reservationForm->isSubmitted() && $reservationForm->isValid())
             {
                 $reservation->setDateReservation(new \DateTime("now", new \DateTimeZone("Africa/Tunis")));
-                $reservation->setAbonne($this->getUser()->getAbonne());
-                $reservation->setEventFerme($event);
 
                 $event->addReservation($reservation);
 
@@ -148,7 +141,6 @@ class EventController extends Controller
             'event' => $event,
             'reservationForm' => $reservationForm == null ? $reservationForm : $reservationForm->createView(),
         ));
-
 
     }
 
@@ -221,14 +213,20 @@ class EventController extends Controller
     /**
      * Réservation pour un évennement fermé
      *
-     * @Route("/{id}/reserver", name="event_reserver")
+     * @Route("/supprimer/reservation/{id}", name="event_supprimer_reservation")
      * @Method({"GET", "POST"})
-     *//*
-    public function reserverAction(Request $request, Event $event)
+     */
+    public function supprimerReservationAction(Request $request, Reservation $reservation)
     {
-
+        $event = $reservation->getEventFerme();
+        $event->removeReservation($reservation);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($reservation);
+        $em->persist($event);
+        $em->flush();
+        return $this->showAction($event, $request);
     }
-    */
+
 
 
     /**

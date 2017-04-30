@@ -693,4 +693,16 @@ class Event implements GroupSequenceProviderInterface
     {
         return $this->organisateur;
     }
+
+    public function checkReservation(\AppBundle\Entity\Abonne $abonne)
+    {
+        $reservations = $this->getReservations();
+        foreach ($reservations as $reservation) {
+            if ($reservation->getAbonne() == $abonne) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

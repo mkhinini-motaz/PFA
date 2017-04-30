@@ -97,26 +97,38 @@
                     {% endif %}
                 </tbody>
             </table>
-            {% if event.organisateur.compte != app.user %}
-                {% if not event.ouvertCheck and "now"|date() < event.datefinInscri %}
-                    <a href="{{ path('event_reserver', {'id' : event.id}) }}" class="reservation-button btn btn-success">Réserver votre place</a>
-                {% endif %}
-                <div class="reservation-form">
-                    {% if reservationForm %}
-                        {{ form_start(reservationForm) }}
-                        {{ form_widget(reservationForm) }}
-                        <button type="submit" name="creer" class="btn btn-success">Réserver votre place</button>
-                        {{ form_end(reservationForm) }}
+            {% if app.user %}
+                {% if event.checkReservation(app.user.abonne) %}
+                    <div class="btn btn-success deja-reserve">
+                        Déja réservé
+                    </div>
+                {% elseif event.organisateur.compte != app.user %}
+
+                    {% if not event.ouvertCheck and "now"|date() < event.datefinInscri %}
+                        <button onClick="afficherForm();" class="reservation-button btn btn-success">Réserver votre place</button>
                     {% endif %}
-                </div>
+
+                    <div class="reservation-form">
+                        {% if reservationForm %}
+                            {{ form_start(reservationForm) }}
+                            {{ form_widget(reservationForm) }}
+                            <button type="submit" name="creer" class="btn btn-success">Réserver votre place</button>
+                            {{ form_end(reservationForm) }}
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}" class="btn btn-success">Connecter vous pour réserver votre place</a>
             {% endif %}
 
             {% if event.organisateur.compte == app.user and not event.ouvertCheck %}
                 {% for reservation in event.reservations %}
-                    le <strong>{{ reservation.dateReservation }}</strong> :
+                    le <strong>{{ reservation.dateReservation|date("d/m/Y") }}</strong> :
                     <strong>{{ reservation.abonne.nom }}</strong> a réservé
                     <strong>{{ reservation.nbrPlaces }}</strong> places
-                    à collecté le <strong>{{ reservation.dateCollecte }}</strong>
+                    à collecté le <strong>{{ reservation.dateCollecte|date("d/m/Y h") }}H</strong>
+                    <a class="btn btn-danger" href="{{ path('event_supprimer_reservation', {'id' : reservation.id}) }}" >Supprimer cet reservation</a>
+                    </br>
                 {% else %}
                     <strong>Personne n'a encore réservé pour cet évennement</strong>
                 {% endfor %}
@@ -127,11 +139,19 @@
 
 {% block javascripts %}
     {{ parent() }}
+    {% if event.gratuitCheck %}
+        <script>
+            $("#appbundle_reservation_dateCollecte").hide();
+            $("#appbundle_reservation_dateCollecte").prev().hide();
+        </script>
+    {% endif %}
+
     <script>
-
-        {% if reservationForm %}
+        $(".reservation-form").hide();
+        function afficherForm() {
             $(".reservation-button").hide();
-        {% endif %}
-
+            $(".reservation-form").show();
+        }
     </script>
+
 {% endblock %}
