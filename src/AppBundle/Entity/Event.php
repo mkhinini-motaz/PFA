@@ -149,7 +149,7 @@ class Event implements GroupSequenceProviderInterface
 
     /**
      * Relation entre EventFerme et Abonne
-     * @ORM\OneToMany(targetEntity="Reservations", mappedBy="eventsFerme")
+     * @ORM\OneToMany(targetEntity="Reservation", mappedBy="eventFerme")
      * @ORM\JoinTable(name="reservations")
      */
     private $reservations;
@@ -168,6 +168,7 @@ class Event implements GroupSequenceProviderInterface
         $this->categories = new ArrayCollection();
         $this->sponsoring = new ArrayCollection();
         $this->eventorganisateurs = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
     /**
@@ -549,11 +550,11 @@ class Event implements GroupSequenceProviderInterface
     /**
      * Add reservation
      *
-     * @param \AppBundle\Entity\Reservations $reservation
+     * @param \AppBundle\Entity\Reservation $reservation
      *
      * @return Event
      */
-    public function addReservation(\AppBundle\Entity\Reservations $reservation)
+    public function addReservation(\AppBundle\Entity\Reservation $reservation)
     {
         $this->reservations[] = $reservation;
 
@@ -563,15 +564,15 @@ class Event implements GroupSequenceProviderInterface
     /**
      * Remove reservation
      *
-     * @param \AppBundle\Entity\Reservations $reservation
+     * @param \AppBundle\Entity\Reservation $reservation
      */
-    public function removeReservation(\AppBundle\Entity\Reservations $reservation)
+    public function removeReservation(\AppBundle\Entity\Reservation $reservation)
     {
         $this->reservations->removeElement($reservation);
     }
 
     /**
-     * Get reservations
+     * Get reservation
      *
      * @return \Doctrine\Common\Collections\Collection
      */

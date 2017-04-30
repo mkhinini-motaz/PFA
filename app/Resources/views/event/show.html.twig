@@ -97,9 +97,30 @@
                     {% endif %}
                 </tbody>
             </table>
+            {% if event.organisateur.compte != app.user %}
             {% if not event.ouvertCheck and "now"|date() < event.datefinInscri|date() %}
-                <a href="#" class="btn btn-success">Réserver votre place</a>
+                <a href="{{ path('event_reserver', {'id' : event.id}) }}" class="reservation-button btn btn-success">Réserver votre place</a>
+            {% endif %}
+            <div class="reservation-form">
+                {% if reservationForm %}
+                    {{ form_start(reservationForm) }}
+                    {{ form_widget(reservationForm) }}
+                    <button type="submit" name="creer" class="btn btn-success">Réserver votre place</button>
+                    {{ form_end(reservationForm) }}
+                {% endif %}
+            </div>
             {% endif %}
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        {% if reservationForm %}
+            $(".reservation-button").hide();
+        {% endif %}
+
+    </script>
 {% endblock %}

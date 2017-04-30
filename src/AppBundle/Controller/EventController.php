@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Sponsor;
 use AppBundle\Entity\Sponsoring;
-
+use AppBundle\Entity\Reservation;
 
 /**
  * Event controller.
@@ -105,16 +105,51 @@ class EventController extends Controller
      * Finds and displays a event entity.
      *
      * @Route("/{id}", name="event_show")
-     * @Method("GET")
      */
-    public function showAction(Event $event)
+    public function showAction(Event $event, Request $request)
     {
-        $deleteForm = $this->createDeleteForm($event);
+
+        return $this->render('event/show.html.twig', array('event' => $event, 'reservationForm' => null));
+    }
+
+    /**
+     * Réservation pour un évennement fermé
+     *
+     * @Route("/reserver/{id}", name="event_reserver")
+     * @Method({"GET", "POST"})
+     */
+    public function reserverAction(Request $request, Event $event)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $reservationForm = null;
+        if(!$event->getOuvertCheck())
+        {
+            $reservation = new Reservation();
+            $reservation->setDateCollecte($event->getDateDebutInscri());
+            $reservationForm = $this->createForm('AppBundle\Form\ReservationType', $reservation);
+
+            $reservationForm->handleRequest($request);
+            if ($reservationForm->isSubmitted() && $reservationForm->isValid())
+            {
+                $reservation->setDateReservation(new \DateTime("now", new \DateTimeZone("Africa/Tunis")));
+                $reservation->setAbonne($this->getUser()->getAbonne());
+                $reservation->setEventFerme($event);
+
+                $event->addReservation($reservation);
+
+                $em->persist($reservation);
+                $em->persist($event);
+                $em->flush();
+            }
+        }
 
         return $this->render('event/show.html.twig', array(
             'event' => $event,
-            'delete_form' => $deleteForm->createView(),
+            'reservationForm' => $reservationForm == null ? $reservationForm : $reservationForm->createView(),
         ));
+
+
     }
 
     /**
@@ -193,7 +228,8 @@ class EventController extends Controller
     {
 
     }
-*/
+    */
+
 
     /**
      * Creates a form to delete a event entity.

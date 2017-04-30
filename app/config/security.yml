@@ -29,3 +29,5 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/event/new, role: ROLE_USER }
+        - { path: ^/catgegorie/new, role: ROLE_USER }
+        - { path: ^/sponsor/new, role: ROLE_USER }

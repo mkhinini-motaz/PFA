@@ -7,12 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Reservations
+ * Reservation
  *
  * @ORM\Table(name="reservations")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ReservationsRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ReservationRepository")
  */
-class Reservations
+class Reservation
 {
     /**
      * @var int
@@ -33,25 +33,29 @@ class Reservations
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateReservation", type="datetime")
+     * @ORM\Column(name="dateCollecte", type="datetime")
      */
-    private $dateReservation;
+     private $dateCollecte;
+
+     /**
+      * @var \DateTime
+      *
+      * @ORM\Column(name="dateReservation", type="datetime")
+      */
+      private $dateReservation;
 
     /**
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="reservations")
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
-    protected $eventsFerme;
+    protected $eventFerme;
 
     /**
      * @ORM\ManyToOne(targetEntity="Abonne", inversedBy="reservations")
      * @ORM\JoinColumn(name="abonne_id", referencedColumnName="id")
      */
-    protected $abonnes;
+    protected $abonne;
 
-    public function __construct() {
-        $this->abonnes = new ArrayCollection();
-    }
 
     /**
      * Get id
@@ -68,7 +72,7 @@ class Reservations
      *
      * @param integer $nbrPlaces
      *
-     * @return Reservations
+     * @return Reservation
      */
     public function setNbrPlaces($nbrPlaces)
     {
@@ -92,7 +96,7 @@ class Reservations
      *
      * @param \DateTime $dateReservation
      *
-     * @return Reservations
+     * @return Reservation
      */
     public function setDateReservation($dateReservation)
     {
@@ -114,25 +118,25 @@ class Reservations
     /**
      * Set eventsFerme
      *
-     * @param \AppBundle\Entity\EventFerme $eventsFerme
+     * @param \AppBundle\Entity\Event $eventFerme
      *
-     * @return Reservations
+     * @return Reservation
      */
-    public function setEventsFerme(\AppBundle\Entity\EventFerme $eventsFerme = null)
+    public function setEventFerme(\AppBundle\Entity\Event $eventFerme = null)
     {
-        $this->eventsFerme = $eventsFerme;
+        $this->eventFerme = $eventFerme;
 
         return $this;
     }
 
     /**
-     * Get eventsFerme
+     * Get eventFerme
      *
-     * @return \AppBundle\Entity\EventFerme
+     * @return \AppBundle\Entity\Event
      */
-    public function getEventsFerme()
+    public function getEventFerme()
     {
-        return $this->eventsFerme;
+        return $this->eventFerme;
     }
 
     /**
@@ -140,7 +144,7 @@ class Reservations
      *
      * @param \AppBundle\Entity\Abonne $abonnes
      *
-     * @return Reservations
+     * @return Reservation
      */
     public function setAbonnes(\AppBundle\Entity\Abonne $abonnes = null)
     {
@@ -157,5 +161,53 @@ class Reservations
     public function getAbonnes()
     {
         return $this->abonnes;
+    }
+
+    /**
+     * Set dateCollecte
+     *
+     * @param \DateTime $dateCollecte
+     *
+     * @return Reservation
+     */
+    public function setDateCollecte($dateCollecte)
+    {
+        $this->dateCollecte = $dateCollecte;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCollecte
+     *
+     * @return \DateTime
+     */
+    public function getDateCollecte()
+    {
+        return $this->dateCollecte;
+    }
+
+    /**
+     * Set abonne
+     *
+     * @param \AppBundle\Entity\Abonne $abonne
+     *
+     * @return Reservation
+     */
+    public function setAbonne(\AppBundle\Entity\Abonne $abonne = null)
+    {
+        $this->abonne = $abonne;
+
+        return $this;
+    }
+
+    /**
+     * Get abonne
+     *
+     * @return \AppBundle\Entity\Abonne
+     */
+    public function getAbonne()
+    {
+        return $this->abonne;
     }
 }

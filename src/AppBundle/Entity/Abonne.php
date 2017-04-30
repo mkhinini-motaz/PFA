@@ -66,7 +66,7 @@ class Abonne
 
     /**
      * Relation entre Abonne et Event
-     * @ORM\OneToMany(targetEntity="Reservations", mappedBy="abonnes")
+     * @ORM\OneToMany(targetEntity="Reservation", mappedBy="abonne")
      * @ORM\JoinTable(name="reservations")
      */
     private $reservations;
@@ -227,11 +227,11 @@ class Abonne
     /**
      * Add reservation
      *
-     * @param \AppBundle\Entity\Reservations $reservation
+     * @param \AppBundle\Entity\Reservation $reservation
      *
      * @return Abonne
      */
-    public function addReservation(\AppBundle\Entity\Reservations $reservation)
+    public function addReservation(\AppBundle\Entity\Reservation $reservation)
     {
         $this->reservations[] = $reservation;
 
@@ -241,9 +241,9 @@ class Abonne
     /**
      * Remove reservation
      *
-     * @param \AppBundle\Entity\Reservations $reservation
+     * @param \AppBundle\Entity\Reservation $reservation
      */
-    public function removeReservation(\AppBundle\Entity\Reservations $reservation)
+    public function removeReservation(\AppBundle\Entity\Reservation $reservation)
     {
         $this->reservations->removeElement($reservation);
     }
