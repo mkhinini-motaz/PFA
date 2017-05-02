@@ -74,7 +74,7 @@ class Abonne
     /**
      * @var string
      *
-     * @ORM\Column(name="nomSociete", type="string", length=60, nullable=true)
+     * @ORM\Column(name="nom_societe", type="string", length=60, nullable=true)
      */
     private $nomSociete;
 

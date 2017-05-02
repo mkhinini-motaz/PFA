@@ -41,7 +41,6 @@ class Categorie
         $this->events = new ArrayCollection();
     }
 
-
     /**
      * Get id
      *

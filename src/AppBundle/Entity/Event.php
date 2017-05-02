@@ -98,7 +98,7 @@ class Event implements GroupSequenceProviderInterface
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateDebutInscri", type="datetime", nullable=true)
+     * @ORM\Column(name="date_debut_inscri", type="datetime", nullable=true)
      * @Assert\GreaterThanOrEqual("today UTC", groups = {"eventferme"})
      */
     private $dateDebutInscri;
@@ -106,7 +106,7 @@ class Event implements GroupSequenceProviderInterface
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateFinInscri", type="datetime", nullable=true)
+     * @ORM\Column(name="date_fin_inscri", type="datetime", nullable=true)
      * @Assert\GreaterThanOrEqual("today UTC", groups = {"eventferme"})
      */
     private $dateFinInscri;
@@ -163,6 +163,11 @@ class Event implements GroupSequenceProviderInterface
     * @ORM\Column(name="gratuitCheck", type="boolean", nullable=true)
     */
     private $gratuitCheck;
+
+    /**
+    * @ORM\Column(name="nbr_vue", type="integer", nullable=true)
+    */
+    private $nbrVue = 0;
 
     public function __construct() {
         $this->categories = new ArrayCollection();
@@ -703,6 +708,11 @@ class Event implements GroupSequenceProviderInterface
             }
         }
         return false;
+    }
+
+    public function incrementNbrVue()
+    {
+        $this->nbrVue++;
     }
 
 }

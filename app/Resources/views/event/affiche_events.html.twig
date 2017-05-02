@@ -1,18 +1,22 @@
 <div class="row event">
 
     <div class="col-sm-3 col-xs-12">
+        <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+            </br>
+        </div>
         {% if event.photo %}
             <img class="event_photo" src="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}" alt="image non disponible">
         {% else %}
             <img class="event_photo" src="{{ asset('/images/events/no-img.png') }}" alt="image non disponible">
         {% endif %}
     </div>
+
     <div class="col-sm-9 col-xs-12">
         <div class="row">
 
             <a href="{{ path('event_show', { 'id': event.id }) }}">
                 <div class="col-xs-12 event_description">
-                    <h3 class="h3">{{ event.nom }} à {{ event.lieu }}</h3>
+                    <h3 class="h3">{{ event.nom }}</h3>
                     <p class="description">{{ event.description }}</p>
                 </div>
             </a>
@@ -25,7 +29,8 @@
 
         </div>
     </div>
-    <div class="col-sm-6 col-xs-12">
+
+    <div class="col-sm-4 col-xs-12">
 
             {% if event.ouvertCheck %}
                 <span class="btn-success">
@@ -36,7 +41,8 @@
             {% endif %}
             </span>
     </div>
-    <div class="col-sm-6 col-xs-12">
+
+    <div class="col-sm-4 col-xs-12">
             {% if event.gratuitCheck  %}
                 <span class="btn-success">
                     Gratuit
@@ -44,8 +50,14 @@
                 <span class="btn-primary">{{ event.prix }} TND
             {% endif %}
             </span>
-
     </div>
+
+    {% if event.nbrVue > 0 %}
+        <div class="col-sm-4 col-xs-12">
+            {{ event.nbrVue }} vues
+        </div>
+    {% endif %}
+
     {% set difference = date("now", "Africa/Tunis").diff(date(event.datePublication)) %}
      <span class="event_date_publication">Publiée
          {% if difference.d == 0 %}

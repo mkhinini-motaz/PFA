@@ -27,21 +27,21 @@ class Reservation
     /**
      * @var int
      *
-     * @ORM\Column(name="nbrPlaces", type="integer")
+     * @ORM\Column(name="nbr_places", type="integer")
      */
     private $nbrPlaces;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateCollecte", type="datetime")
+     * @ORM\Column(name="date_collecte", type="datetime")
      */
      private $dateCollecte;
 
      /**
       * @var \DateTime
       *
-      * @ORM\Column(name="dateReservation", type="datetime")
+      * @ORM\Column(name="date_reservation", type="datetime")
       */
       private $dateReservation;
 

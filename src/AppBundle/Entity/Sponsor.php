@@ -47,7 +47,7 @@ class Sponsor
     /**
      * @var string
      *
-     * @ORM\Column(name="siteWeb", type="string", length=70, nullable=true)
+     * @ORM\Column(name="site_web", type="string", length=70, nullable=true)
      */
     private $siteWeb;
 

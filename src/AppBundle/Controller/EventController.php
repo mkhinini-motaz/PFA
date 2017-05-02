@@ -109,7 +109,7 @@ class EventController extends Controller
     public function showAction(Event $event, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $event->incrementNbrVue();
         $reservationForm = null;
         if($this->getUser() !== null && !$event->getOuvertCheck())
         {
