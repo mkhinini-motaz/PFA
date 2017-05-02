@@ -12,6 +12,7 @@ use AppBundle\Entity\Event;
 use AppBundle\Entity\Sponsor;
 use AppBundle\Entity\Sponsoring;
 use AppBundle\Entity\Reservation;
+use AppBundle\Entity\Vue;
 
 /**
  * Event controller.
@@ -109,7 +110,19 @@ class EventController extends Controller
     public function showAction(Event $event, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $event->incrementNbrVue();
+
+        if( $this->getUser() !== null && !$event->checkDejaVu($this->getUser()->getAbonne()) )
+        {
+            $vue = new Vue();
+            $vue->setAbonne($this->getUser()->getAbonne());
+            $vue->setEvent($event);
+            $event->addVue($vue);
+
+            $em->persist($vue);
+            $em->persist($event);
+            $em->flush();
+        }
+
         $reservationForm = null;
         if($this->getUser() !== null && !$event->getOuvertCheck())
         {

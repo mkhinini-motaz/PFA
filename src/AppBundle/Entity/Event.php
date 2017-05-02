@@ -165,15 +165,17 @@ class Event implements GroupSequenceProviderInterface
     private $gratuitCheck;
 
     /**
-    * @ORM\Column(name="nbr_vue", type="integer", nullable=true)
-    */
-    private $nbrVue = 0;
+     * Relation entre Event et Vue
+     * @ORM\OneToMany(targetEntity="Vue", mappedBy="event")
+     */
+    protected $vues;
 
     public function __construct() {
         $this->categories = new ArrayCollection();
         $this->sponsoring = new ArrayCollection();
         $this->eventorganisateurs = new ArrayCollection();
         $this->reservations = new ArrayCollection();
+        $this->vues = new ArrayCollection();
     }
 
     /**
@@ -699,6 +701,11 @@ class Event implements GroupSequenceProviderInterface
         return $this->organisateur;
     }
 
+    /**
+    * Vérifier si l'abonne a déjà réservé sa place dans l'évenement
+    *
+    * @param \AppBundle\Entity\Abonne $abonne
+    */
     public function checkReservation(\AppBundle\Entity\Abonne $abonne)
     {
         $reservations = $this->getReservations();
@@ -710,9 +717,54 @@ class Event implements GroupSequenceProviderInterface
         return false;
     }
 
-    public function incrementNbrVue()
+    /**
+    * Vérifier si l'abonne a déjà vu l'évenement
+    *
+    * @param \AppBundle\Entity\Abonne $abonne
+    */
+    public function checkDejaVu(\AppBundle\Entity\Abonne $abonne)
     {
-        $this->nbrVue++;
+        $vues = $this->getVues();
+        foreach ($vues as $vue) {
+            if ($vue->getAbonne() == $abonne) {
+                return true;
+            }
+        }
+        return false;
     }
 
+
+    /**
+     * Add vue
+     *
+     * @param \AppBundle\Entity\Vue $vue
+     *
+     * @return Event
+     */
+    public function addVue(\AppBundle\Entity\Vue $vue)
+    {
+        $this->vues[] = $vue;
+
+        return $this;
+    }
+
+    /**
+     * Remove vue
+     *
+     * @param \AppBundle\Entity\Vue $vue
+     */
+    public function removeVue(\AppBundle\Entity\Vue $vue)
+    {
+        $this->vues->removeElement($vue);
+    }
+
+    /**
+     * Get vues
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVues()
+    {
+        return $this->vues;
+    }
 }

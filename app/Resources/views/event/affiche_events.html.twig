@@ -28,35 +28,41 @@
             {% endif %}
 
         </div>
-    </div>
+        <div class="row">
+            <div class="col-sm-2 col-xs-12">
 
-    <div class="col-sm-4 col-xs-12">
+                    {% if event.ouvertCheck %}
+                        <span class="btn-success">
+                            Ouvert
+                    {% else %}
+                        <span class="btn-warning">
+                        {{ event.capacite - event.reservations|length }} places disponibles
+                    {% endif %}
+                    </span>
+            </div>
 
-            {% if event.ouvertCheck %}
-                <span class="btn-success">
-                    Ouvert
-            {% else %}
-                <span class="btn-warning">
-                {{ event.capacite - event.reservations|length }} places disponibles
+            <div class="col-sm-2 col-xs-6">
+                    {% if event.gratuitCheck  %}
+                        <span class="btn-success">
+                            Gratuit
+                    {% else %}
+                        <span class="btn-danger">
+                            {{ event.prix }} TND
+                    {% endif %}
+                    </span>
+            </div>
+
+            {% if event.vues|length > 0 %}
+                <div class="col-sm-2 col-xs-6">
+                    <span class="nbr-vue">
+                        {{ event.vues|length }} Vue{% if event.vues|length > 1 %}s{% endif %}
+                    </span>
+                </div>
             {% endif %}
-            </span>
-    </div>
-
-    <div class="col-sm-4 col-xs-12">
-            {% if event.gratuitCheck  %}
-                <span class="btn-success">
-                    Gratuit
-            {% else %}
-                <span class="btn-primary">{{ event.prix }} TND
-            {% endif %}
-            </span>
-    </div>
-
-    {% if event.nbrVue > 0 %}
-        <div class="col-sm-4 col-xs-12">
-            {{ event.nbrVue }} vues
         </div>
-    {% endif %}
+    </div>
+
+
 
     {% set difference = date("now", "Africa/Tunis").diff(date(event.datePublication)) %}
      <span class="event_date_publication">Publiée
