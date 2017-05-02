@@ -105,25 +105,14 @@ class SponsorController extends Controller
             $em->persist($sponsoring);
             $em->persist($sponsor);
             $em->persist($event);
-            $em->flush($sponsor);
+            $em->flush();
 
-            /* Condition pour vérifer la valeur du checkbox ne marche pas */
-                    /* || */
-                    /* \/ */
-            if($form['creer']->getData()){
-                $sponsor = new Sponsor();
-                return $this->render('sponsor/new_for_event.html.twig', array(
-                    'sponsor' => $sponsor,
-                    'form' => $form->createView(),
-                ));
-
-            }else {
-                return $this->redirectToRoute('event_show', array('id' => $event->getId()));
-            }
+            return $this->redirectToRoute('event_show', array('id' => $event->getId()));
         }
 
         return $this->render('sponsor/new_for_event.html.twig', array(
             'sponsor' => $sponsor,
+            'eventId' => $event->getId(),
             'form' => $form->createView(),
         ));
     }

@@ -7,7 +7,7 @@
 {% block body %}
     <div class="row">
 
-        <div class="col-sm-6 col-sm-push-3 col-xs-12 event_show">
+        <div class="col-sm-8 col-sm-push-2 col-xs-12 event_show">
         </br>
             {% if event.photo %}
                 <a href="{{ asset('/images/events/'~event.nom~'/'~event.photo) }}">
@@ -92,6 +92,10 @@
                                         <strong>{{ sponsoring.sponsor.nom }}</strong>
                                     </a>
                                 {% endfor %}
+                                {% if app.user == event.organisateur.compte %}
+                                    <a href="{{ path('sponsor_new_for_event', {'id' : event.id}) }}" class="btn btn-primary">Ajouter Sponsor</a>
+
+                                {% endif %}
                             </td>
                         </tr>
                     {% endif %}
@@ -118,7 +122,9 @@
                     </div>
                 {% endif %}
             {% else %}
-                <a href="{{ path('fos_user_security_login') }}" class="btn btn-success">Connecter vous pour réserver votre place</a>
+                {% if not event.ouvertCheck and "now"|date() < event.datefinInscri %}
+                    <a href="{{ path('event_reserver', { 'id': event.id }) }}" class="btn btn-success">Connecter vous pour réserver votre place</a>
+                {% endif %}
             {% endif %}
 
             {% if event.organisateur.compte == app.user and not event.ouvertCheck %}

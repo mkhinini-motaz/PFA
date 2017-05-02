@@ -9,7 +9,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class SponsorType extends AbstractType
@@ -28,11 +27,7 @@ class SponsorType extends AbstractType
                 ])
                 ->add('adresse', TextType::class, ["required" => false])
                 ->add('logo', FileType::class, ["label" => "Logo", "required" => false])
-                ->add('creer', ChoiceType::class, array('choices' => array("true" => true),
-                                                        "expanded" => true, "multiple" => true,
-                                                        "attr" => array("hidden" => true),
-                                                        "label" => false,"mapped" => false)
-                );
+        ;
 
     }
 

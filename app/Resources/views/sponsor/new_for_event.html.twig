@@ -9,22 +9,14 @@
 
     <div class="col-sm-6 col-sm-offset-3 col-xs-12">
 
-            <h1>Ajouter des sponsors à votre évennement</h1>
+            <h1>Ajouter un sponsor à votre évennement</h1>
 
-            {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-                {{ form_widget(form) }}
-                <button type="submit" onclick="creerAutreSponsor()" class="btn btn-success">Créer</button>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-success">Créer</button>
+            <a href="{{ path('event_show', {'id' : eventId}) }}" class="btn btn-primary">Passer cet étape</a>
             {{ form_end(form) }}
 
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script type="text/javascript">
-        function creerAutreSponsor() {
-            ('#form_creer_autre_0')[0].checked = confirm('Ajouter un autre sponsor ?');
-        }
-    </script>
 {% endblock %}

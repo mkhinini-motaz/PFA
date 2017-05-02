@@ -24,8 +24,8 @@
             <tr>
                 <td>
                     {% if sponsor.logo %}
-                        <a href="{{ asset('/images/sponsor/'~sponsor.nom~'/'~sponsor.logo) }}">
-                            <img src="{{ asset('/images/sponsor/'~sponsor.nom~'/'~sponsor.logo) }}"
+                        <a href="{{ asset('/images/sponsor/'~sponsor.logo) }}">
+                            <img src="{{ asset('/images/sponsor/'~sponsor.logo) }}"
                              alt="image non disponible" class="sposor_index_img">
                         </a>
                     {% else %}

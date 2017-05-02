@@ -16,9 +16,7 @@
                     <p class="description">{{ event.description }}</p>
                 </div>
             </a>
-            <div class="col-xs-12">
 
-            </div>
             {% if event.organisateur.compte == app.user %}
                 <div class="col-xs-12">
                     <p class="nbr-reservation">{{ event.reservations.count }} reservations</p>
@@ -26,6 +24,27 @@
             {% endif %}
 
         </div>
+    </div>
+    <div class="col-sm-6 col-xs-12">
+
+            {% if event.ouvertCheck %}
+                <span class="btn-success">
+                    Ouvert
+            {% else %}
+                <span class="btn-warning">
+                {{ event.capacite - event.reservations|length }} places disponibles
+            {% endif %}
+            </span>
+    </div>
+    <div class="col-sm-6 col-xs-12">
+            {% if event.gratuitCheck  %}
+                <span class="btn-success">
+                    Gratuit
+            {% else %}
+                <span class="btn-primary">{{ event.prix }} TND
+            {% endif %}
+            </span>
+
     </div>
     {% set difference = date("now", "Africa/Tunis").diff(date(event.datePublication)) %}
      <span class="event_date_publication">Publiée

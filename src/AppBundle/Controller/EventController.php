@@ -111,7 +111,7 @@ class EventController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $reservationForm = null;
-        if(!$event->getOuvertCheck())
+        if($this->getUser() !== null && !$event->getOuvertCheck())
         {
             $reservation = new Reservation();
             $reservation->setAbonne($this->getUser()->getAbonne());
@@ -142,6 +142,16 @@ class EventController extends Controller
             'reservationForm' => $reservationForm == null ? $reservationForm : $reservationForm->createView(),
         ));
 
+    }
+
+    /**
+     * Finds and displays a event entity.
+     *
+     * @Route("/reserver/{id}", name="event_reserver")
+     */
+    public function reserverAction(Event $event, Request $request)
+    {
+        return $this->showAction($event, $request);
     }
 
     /**
