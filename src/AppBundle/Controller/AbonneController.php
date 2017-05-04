@@ -57,7 +57,7 @@ class AbonneController extends Controller
 
             $em->persist($abonne->getCompte());
             $em->persist($abonne);
-            $em->flush($abonne);
+            $em->flush();
 
             $dispatcher = $this->get('event_dispatcher');
             $userManager = $this->get('fos_user.user_manager');
