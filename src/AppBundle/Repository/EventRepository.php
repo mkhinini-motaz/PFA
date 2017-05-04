@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Abonne;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * EventRepository
@@ -40,13 +41,22 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function findAllRecent()
+    public function findAllRecent($page = 1, $nbMaxParPage = 20)
     {
-        return $this->getEntityManager()
+        $premierResultat = ($page - 1) * $nbMaxParPage;
+        $qb = $this->createQueryBuilder('post');
+        $qb = $this->getEntityManager()
+            ->createQuery(
+                'SELECT e FROM AppBundle:Event e WHERE e.date > CURRENT_DATE() ORDER BY e.datePublication DESC'
+            );
+
+        $pag = new Paginator($qb);
+        return $pag;
+        /*return $this->getEntityManager()
             ->createQuery(
                 'SELECT e FROM AppBundle:Event e WHERE e.date > CURRENT_DATE() ORDER BY e.datePublication DESC'
             )
-            ->getResult();
+            ->getResult();*/
     }
 
     public function findAllRecherche($motcle = null, $lieux = null, $categories = null)

@@ -16,9 +16,9 @@ use Doctrine\ORM\EntityRepository;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/{page}", requirements={"page" = "\d+"}, defaults={"page" = 1}, name="homepage")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, $page)
     {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:Event');
@@ -54,7 +54,17 @@ class DefaultController extends Controller
             $events = $repo->findAllRecherche($data["motcle"], $data["lieu"], $data["categories"]);
         }
 
-        return $this->render('default/index.html.twig', array('events' => $events, 'searchForm' => $form->createView()) );
+        $pagination = array(
+            'page' => $page,
+            'nbPages' => ceil(count($events) / 15),
+            'nomRoute' => 'homepage',
+            'paramsRoute' => array()
+        );
+
+        return $this->render('default/index.html.twig', array('events' => $events
+                                                             ,'searchForm' => $form->createView()
+                                                             ,'pagination' => $pagination
+                                                         ));
     }
 
     /**
