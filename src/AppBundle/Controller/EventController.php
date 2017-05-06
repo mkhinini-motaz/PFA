@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\File\File;
+use Ob\HighchartsBundle\Highcharts\Highchart;
+
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Sponsor;
 use AppBundle\Entity\Sponsoring;
@@ -114,6 +116,7 @@ class EventController extends Controller
         if( $this->getUser() !== null && !$event->checkDejaVu($this->getUser()->getAbonne()) )
         {
             $vue = new Vue();
+            $vue->setDateVue(new \DateTime("now", new \DateTimeZone("Africa/Tunis")));
             $vue->setAbonne($this->getUser()->getAbonne());
             $vue->setEvent($event);
             $event->addVue($vue);
@@ -150,9 +153,44 @@ class EventController extends Controller
             }
         }
 
+        $ob = null;
+        if($this->getUser()->getAbonne()->getId() == $event->getOrganisateur()->getId())
+        {
+
+            $data = array();
+            $vues = $event->getVues();
+
+            foreach ($vues as $vue) {
+                $week = $vue->getDateVue()->format('W');
+                $ancienValeur = isset($data[$week]) ? $data[$week] : 0;
+                $data[$vue->getDateVue()->format('W')] = $ancienValeur + 1;
+            }
+
+            $data2 = array();
+            foreach ($data as $key => $value) {
+                $data2[] = [intval($key), $value];
+            }
+
+            // Chart
+            $series = array(
+                array("name" => "Reservations",    "data" => $data2)
+            );
+
+
+            $ob = new Highchart();
+            $ob->chart->renderTo('linechart');  // The #id of the div where to render the chart
+            $ob->title->text('Nombre des interessées par semaine de l\'année');
+            $ob->xAxis->title(array('text'  => "Semaine"));
+            $ob->xAxis->allowDecimals(false);
+            $ob->yAxis->allowDecimals(false);
+            $ob->yAxis->title(array('text'  => "Nombre des interessées"));
+            $ob->series($series);
+        }
+
         return $this->render('event/show.html.twig', array(
             'event' => $event,
             'reservationForm' => $reservationForm == null ? $reservationForm : $reservationForm->createView(),
+            'chart' => $ob
         ));
 
     }
@@ -181,9 +219,9 @@ class EventController extends Controller
         $path = $this->get('kernel')->getRootDir() . '/../web/images/events/' . $event->getNom();
         $photoPath = $path . DIRECTORY_SEPARATOR . $event->getPhoto();
 
-        $event->setPhoto(new File($photoPath));
+//        $event->setPhoto(new File($photoPath));
 
-        $fichiers = [];
+/*        $fichiers = [];
         $nomFichiers = explode(";", $event->getFichiers());
 
         foreach ( $nomFichiers as $file ){
@@ -192,14 +230,14 @@ class EventController extends Controller
         }
 
         $event->setFichiers($fichiers);
-
+*/
         $deleteForm = $this->createDeleteForm($event);
         $editForm = $this->createForm('AppBundle\Form\EventType', $event);
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
           // Déplacement de la photo
-          $event->setPhoto($photoName);
-          $event->setFichiers(implode(";", $nomFichiers));
+        //  $event->setPhoto($photoName);
+        //  $event->setFichiers(implode(";", $nomFichiers));
 
             $this->getDoctrine()->getManager()->flush();
 

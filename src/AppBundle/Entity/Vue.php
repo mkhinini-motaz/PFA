@@ -22,6 +22,13 @@ class Vue
     private $id;
 
     /**
+     * @var DateTime
+     *
+     * @ORM\Column(name="date_vue", type="date", nullable=true)
+     */
+    private $dateVue;
+
+    /**
      * Relation entre Vue et Event
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="vues")
      */
@@ -29,7 +36,7 @@ class Vue
 
     /**
      * Relation entre Vue et Abonne
-     * @ORM\OneToOne(targetEntity="Abonne")
+     * @ORM\ManyToOne(targetEntity="Abonne")
      * @ORM\JoinColumn(name="abonne_id", referencedColumnName="id")
      */
     private $abonne;
@@ -90,5 +97,29 @@ class Vue
     public function getAbonne()
     {
         return $this->abonne;
+    }
+
+    /**
+     * Set dateVue
+     *
+     * @param \DateTime $dateVue
+     *
+     * @return Vue
+     */
+    public function setDateVue($dateVue)
+    {
+        $this->dateVue = $dateVue;
+
+        return $this;
+    }
+
+    /**
+     * Get dateVue
+     *
+     * @return \DateTime
+     */
+    public function getDateVue()
+    {
+        return $this->dateVue;
     }
 }

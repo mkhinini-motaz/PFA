@@ -21,9 +21,18 @@
                 </div>
             </a>
 
+
+            {% set nbrReservations = 0 %}
+            {% for item in event.reservations %}
+                {% set nbrReservations = nbrReservations + item.nbrPlaces %}
+            {% endfor %}
+
             {% if event.organisateur.compte == app.user %}
                 <div class="col-xs-12">
                     <p class="nbr-reservation">{{ event.reservations.count }} reservations</p>
+                </div>
+                <div class="col-xs-12">
+                    <p class="nbr-places-reservation">{{ nbrReservations }} places reservées</p>
                 </div>
             {% endif %}
 
@@ -36,7 +45,7 @@
                             Ouvert
                     {% else %}
                         <span class="btn-warning">
-                        {{ event.capacite - event.reservations|length }} places disponibles
+                        {{ event.capacite - nbrReservations }} places disponibles
                     {% endif %}
                     </span>
             </div>
@@ -55,7 +64,7 @@
             {% if event.vues|length > 0 %}
                 <div class="col-sm-2 col-xs-6">
                     <span class="nbr-vue">
-                        {{ event.vues|length }} Vue{% if event.vues|length > 1 %}s{% endif %}
+                        {{ event.vues|length }} interessé{% if event.vues|length > 1 %}s{% endif %}
                     </span>
                 </div>
             {% endif %}
