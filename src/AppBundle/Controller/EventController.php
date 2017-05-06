@@ -155,7 +155,7 @@ class EventController extends Controller
 
         $obVue = null;
         /***** Création des courbe de statistique ******/
-        if($this->getUser()->getAbonne()->getId() == $event->getOrganisateur()->getId())
+        if($this->getUser()->getAbonne()->getId() == $event->getOrganisateur()->getId() || $this->getUser()->hasRole("ROLE_ADMIN"))
         {
             /**** Courbe de nombre de vues ******/
             $data = array();
@@ -188,6 +188,7 @@ class EventController extends Controller
 
 
             /******* Courbe de nombre de réservations ********/
+            $obReservations = null;
             $data = array();
             $reservations = $event->getReservations();
 
@@ -207,14 +208,16 @@ class EventController extends Controller
                 array("name" => "Reservations",    "data" => $data2)
             );
 
-            $obReservations = new Highchart();
-            $obReservations->chart->renderTo('linechartReservation');  // The #id of the div where to render the chart
-            $obReservations->title->text('Nombre de places reservé par semaine de l\'année');
-            $obReservations->xAxis->title(array('text'  => "Semaine"));
-            $obReservations->xAxis->allowDecimals(false);
-            $obReservations->yAxis->allowDecimals(false);
-            $obReservations->yAxis->title(array('text'  => "Nombre de places réservé"));
-            $obReservations->series($series);
+            if(!empty($data2)) {
+                $obReservations = new Highchart();
+                $obReservations->chart->renderTo('linechartReservation');  // The #id of the div where to render the chart
+                $obReservations->title->text('Nombre de places reservé par semaine de l\'année');
+                $obReservations->xAxis->title(array('text'  => "Semaine"));
+                $obReservations->xAxis->allowDecimals(false);
+                $obReservations->yAxis->allowDecimals(false);
+                $obReservations->yAxis->title(array('text'  => "Nombre de places réservé"));
+                $obReservations->series($series);
+            }
         }
 
         return $this->render('event/show.html.twig', array(

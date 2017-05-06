@@ -159,11 +159,15 @@
                 <script src="//code.highcharts.com/4.1.8/modules/exporting.js"></script>
                 <script type="text/javascript">
                     {{ chart(chartVue) }}
-                    {{ chart(chartReservation) }}
+                    {% if chartReservation %}
+                        {{ chart(chartReservation) }}
+                    {% endif %}
                 </script>
 
                 <div id="linechartVue" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
-                <div id="linechartReservation" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+                {% if chartReservation %}
+                    <div id="linechartReservation" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+                {% endif %}
             {% endif %}
         </div>
 
