@@ -153,17 +153,48 @@ class EventController extends Controller
             }
         }
 
-        $ob = null;
+        $obVue = null;
+        /***** Création des courbe de statistique ******/
         if($this->getUser()->getAbonne()->getId() == $event->getOrganisateur()->getId())
         {
-
+            /**** Courbe de nombre de vues ******/
             $data = array();
             $vues = $event->getVues();
 
             foreach ($vues as $vue) {
                 $week = $vue->getDateVue()->format('W');
                 $ancienValeur = isset($data[$week]) ? $data[$week] : 0;
-                $data[$vue->getDateVue()->format('W')] = $ancienValeur + 1;
+                $data[$week] = $ancienValeur + 1;
+            }
+
+            $data2 = array();
+            foreach ($data as $key => $value) {
+                $data2[] = [intval($key), $value];
+            }
+
+            // Chart
+            $series = array(
+                array("name" => "Intéressement",    "data" => $data2)
+            );
+
+            $obVue = new Highchart();
+            $obVue->chart->renderTo('linechartVue');  // The #id of the div where to render the chart
+            $obVue->title->text('Nombre des interessées par semaine de l\'année');
+            $obVue->xAxis->title(array('text'  => "Semaine"));
+            $obVue->xAxis->allowDecimals(false);
+            $obVue->yAxis->allowDecimals(false);
+            $obVue->yAxis->title(array('text'  => "Nombre des interessées"));
+            $obVue->series($series);
+
+
+            /******* Courbe de nombre de réservations ********/
+            $data = array();
+            $reservations = $event->getReservations();
+
+            foreach ($reservations as $reservation) {
+                $week = $reservation->getDateReservation()->format('W');
+                $ancienValeur = isset($data[$week]) ? $data[$week] : 0;
+                $data[$week] = $ancienValeur + $reservation->getNbrPlaces();
             }
 
             $data2 = array();
@@ -176,21 +207,21 @@ class EventController extends Controller
                 array("name" => "Reservations",    "data" => $data2)
             );
 
-
-            $ob = new Highchart();
-            $ob->chart->renderTo('linechart');  // The #id of the div where to render the chart
-            $ob->title->text('Nombre des interessées par semaine de l\'année');
-            $ob->xAxis->title(array('text'  => "Semaine"));
-            $ob->xAxis->allowDecimals(false);
-            $ob->yAxis->allowDecimals(false);
-            $ob->yAxis->title(array('text'  => "Nombre des interessées"));
-            $ob->series($series);
+            $obReservations = new Highchart();
+            $obReservations->chart->renderTo('linechartReservation');  // The #id of the div where to render the chart
+            $obReservations->title->text('Nombre de places reservé par semaine de l\'année');
+            $obReservations->xAxis->title(array('text'  => "Semaine"));
+            $obReservations->xAxis->allowDecimals(false);
+            $obReservations->yAxis->allowDecimals(false);
+            $obReservations->yAxis->title(array('text'  => "Nombre de places réservé"));
+            $obReservations->series($series);
         }
 
         return $this->render('event/show.html.twig', array(
             'event' => $event,
             'reservationForm' => $reservationForm == null ? $reservationForm : $reservationForm->createView(),
-            'chart' => $ob
+            'chartVue' => $obVue,
+            'chartReservation' => $obReservations
         ));
 
     }
