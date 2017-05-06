@@ -11,6 +11,7 @@
             <th class="text-center">Email</th>
             <th class="text-center">Events</br>Organisé</th>
             <th class="text-center">Events</br>Participé</th>
+            <th class="text-center">Dernier</br>Connexion</th>
             <th class="text-center">Activé</th>
             <th class="text-center">Admin</th>
             <th class="text-center">Activer</br>/Bannir</th>
@@ -29,6 +30,7 @@
                     <td class="text-center">{{ abonne.email }}</td>
                     <td class="text-center">{{ abonne.events|length }}</td>
                     <td class="text-center">{{ abonne.eventsParticipe|length }}</td>
+                    <td class="text-center">{{ abonne.compte.lastLogin|date("d/m/Y h:i:s") }}</td>
                     <td class="text-center">
                     	{% if abonne.compte.isEnabled() %}
                     		<span class="glyphicon glyphicon-ok"></span>

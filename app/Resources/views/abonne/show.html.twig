@@ -1,48 +1,101 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Abonne</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ abonne.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ abonne.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ abonne.prenom }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ abonne.email }}</td>
-            </tr>
-            <tr>
-                <th>Nom Société</th>
-                <td>{{ abonne.nomSociete }}</td>
-            </tr>
-            <tr>
-                <th>Telephone</th>
-                <td>{{ abonne.telephone }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row">
 
-    <ul>
-        <li>
-            <a href="{{ path('abonne_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('abonne_edit', { 'id': abonne.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+        <div class="col-sm-8 col-sm-push-2 col-xs-12 event_show">
+            </br>
+
+            <h2 class="h2">Détails abonne</h1>
+
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th>Login</th>
+                        <td>{{ abonne.compte.username }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ abonne.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Prenom</th>
+                        <td>{{ abonne.prenom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ abonne.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Date Naissance</th>
+                        <td>{{ abonne.dateNaissance|date("d/m/Y") }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nom Société</th>
+                        <td>{{ abonne.nomSociete }}</td>
+                    </tr>
+                    <tr>
+                        <th>Telephone</th>
+                        <td>{{ abonne.telephone }}</td>
+                    </tr>
+                    <tr>
+                        <th>Dernier connexion</th>
+                        <td>{{ abonne.compte.lastLogin|date("d/m/Y h:i:s") }}</td>
+                    </tr>
+                    <tr>
+                        <th>Evènements organisées</th>
+                        <td>{{ abonne.events|length }}</td>
+                    </tr>
+                    <tr>
+                        <th>Evènements Participée</th>
+                        <td>{{ abonne.eventsParticipe|length }}</td>
+                    </tr>
+                    <tr>
+                        <th>Activé</th>
+                        <td>
+                            {% if abonne.compte.isEnabled() %}
+                        		<span class="glyphicon glyphicon-ok"></span>
+                        	{% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Admin</th>
+                        <td>
+                            {% if abonne.compte.hasRole("ROLE_ADMIN") %}
+                                <i class=" glyphicon glyphicon-ok"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="col-sm-2 col-sm-push-10 col-xs-3 col-xs-push-4">
+            {% if abonne.compte.isEnabled() %}
+                <a class="btn btn-sm btn-danger" href="{{ path('bannir_abonne', { 'id': abonne.id }) }}" role="button">
+                    <span class="glyphicon glyphicon-ban-circle"></span>
+                    <span>
+                        Bannir
+                    </span>
+                </a>
+            {% else %}
+                <a class="btn btn-sm btn-success" href="{{ path('activate_abonne', { 'id': abonne.id }) }}" role="button">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    <span>
+                        Activer
+                    </span>
+                </a>
+            {% endif %}
+            </div>
+            </br></br>
+            <div>
+
+                <a class="btn btn-primary" href="{{ path('admin_users') }}">
+                    <i class="ion-reply" aria-hidden="true"></i>
+                    <b>Retour à la liste</b>
+                </a>
+            </div>
+
+        </div>
+    </div>
 {% endblock %}
