@@ -10,4 +10,10 @@ namespace AppBundle\Repository;
  */
 class AbonneRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAllJoined()
+    {
+        return $this->getEntityManager()->createQuery(
+            'SELECT a FROM AppBundle:Abonne a JOIN a.compte c'
+            )->getResult();
+    }
 }

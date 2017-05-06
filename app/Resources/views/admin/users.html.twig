@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+    <table class="table table-bordered table-responsive table-striped">
+        <thead>
+            <th class="text-center">Login</th>
+            <th class="text-center">Nom</th>
+            <th class="text-center">Prénom</th>
+            <th class="text-center">Email</th>
+            <th class="text-center">Events</br>Organisé</th>
+            <th class="text-center">Events</br>Participé</th>
+            <th class="text-center">Activé</th>
+            <th class="text-center">Admin</th>
+            <th class="text-center">Activer</br>/Bannir</th>
+
+        </thead>
+        <tbody>
+            {% for abonne in abonnes %}
+            <tr>
+                    <td class="text-center">
+                        <a class="" href="{{ path('abonne_show', { 'id': abonne.id }) }}" role="button">
+                            {{ abonne.compte.username }}
+                        </a>
+                    </td>
+                    <td class="text-center">{{ abonne.nom }}</td>
+                    <td class="text-center">{{ abonne.prenom }}</td>
+                    <td class="text-center">{{ abonne.email }}</td>
+                    <td class="text-center">{{ abonne.events|length }}</td>
+                    <td class="text-center">{{ abonne.eventsParticipe|length }}</td>
+                    <td class="text-center">
+                    	{% if abonne.compte.isEnabled() %}
+                    		<span class="glyphicon glyphicon-ok"></span>
+                    	{% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if abonne.compte.hasRole("ROLE_ADMIN") %}
+                            <i class=" glyphicon glyphicon-ok"></i>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                       {% if abonne.compte.isEnabled() %}
+                           <a class="btn btn-sm btn-danger" href="{{ path('bannir_abonne', { 'id': abonne.id }) }}" role="button">
+                               <span class="glyphicon glyphicon-ban-circle"></span>
+                               <span class="hidden-xs">
+                                   Bannir
+                               </span>
+                           </a>
+                       {% else %}
+                           <a class="btn btn-sm btn-success" href="{{ path('activate_abonne', { 'id': abonne.id }) }}" role="button">
+                               <span class="glyphicon glyphicon-ok"></span>
+                               <span class="hidden-xs">
+                                   Activer
+                               </span>
+                           </a>
+                       {% endif %}
+                   </td>
+
+
+                </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

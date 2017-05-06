@@ -29,6 +29,16 @@
                         <th>Description</th>
                         <td>{{ event.description }}</td>
                     </tr>
+                    {% if event.organisateur.telephone %}
+                        <tr>
+                            <th>Numéro téléphone de l'organisateur</th>
+                            <td>{{ event.organisateur.telephone }}</td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <th>Email de l'organisateur</th>
+                        <td>{{ event.organisateur.email }}</td>
+                    </tr>
                     <tr>
                         <th>Lieu</th>
                         <td>{{ event.lieu }}</td>

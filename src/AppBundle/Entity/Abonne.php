@@ -79,7 +79,7 @@ class Abonne
     private $nomSociete;
 
     /**
-     * Relation entre Event et Organisateur
+     * Relation entre Abonne et ses Events organisées
      * @ORM\OneToMany(targetEntity="Event", mappedBy="organisateur")
      * @ORM\JoinTable(name="eventorganisateur")
      */
