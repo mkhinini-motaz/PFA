@@ -17,13 +17,14 @@ use AppBundle\Entity\Abonne;
 class AdminController extends Controller
 {
     private $em;
+    private $mois;
     /**
      * @Route("/", name="admin_index")
      */
     public function indexAction()
     {
         $this->em = $this->getDoctrine()->getManager();
-
+        $this->mois = $this->initialiseMois();
         $obVue = $this->createVueChart();
 
         $obReservations = $this->createReservationsChart();
@@ -121,6 +122,7 @@ class AdminController extends Controller
         $obVue->yAxis->allowDecimals(false);
         $obVue->yAxis->title(array('text'  => "Nombre des interessées"));
         $obVue->series($series);
+        $obVue->xAxis->categories($this->mois);
         return $obVue;
     }
 
@@ -160,8 +162,12 @@ class AdminController extends Controller
         $obReservations->yAxis->allowDecimals(false);
         $obReservations->yAxis->title(array('text'  => "Nombre de places réservé"));
         $obReservations->series($series);
+        $obReservations->xAxis->categories($this->mois);
         return $obReservations;
     }
+
+/********************************************************************************************************/
+
     public function createEventChart()
     {
         /******* Courbe statistique des events ******************************************************/
@@ -229,7 +235,29 @@ class AdminController extends Controller
         $obRealisation->yAxis->allowDecimals(false);
         $obRealisation->yAxis->title(array('text'  => "Nombre d\'évènements publié"));
         $obRealisation->series($series);
+
+        $obRealisation->xAxis->categories($this->mois);
+        $obPublication->xAxis->categories($this->mois);
+
         $eventCharts = ["publication" => $obPublication, "realisation" => $obRealisation];
         return $eventCharts;
+    }
+
+    /** Méthode qui retourne le numéro de semaine par mois **/
+    public function initialiseMois()
+    {
+        $mois = ['1er Semaine - Janvier', '2éme Semaine - Janvier','3éme Semaine - Janvier','4éme Semaine - Janvier',
+        '1er Semaine - Fevrier', '2éme Semaine - Fevrier', '3éme Semaine - Fevrier', '4éme Semaine - Fevrier',
+         '1er Semaine - mars', '2éme Semaine - mars', '3éme Semaine - mars', '4éme Semaine - mars', '5éme Semaine - mars',
+          '1er Semaine - Avril', '2éme Semaine - Avril', '3éme Semaine - Avril', '4éme Semaine - Avril',
+          '1er Semaine - Mai', '2éme Semaine - Mai', '3éme Semaine - Mai', '4éme Semaine - Mai',
+          '1er Semaine - Juin', '2éme Semaine - Juin', '3éme Semaine - Juin', '4éme Semaine - Juin', '5éme Semaine - Juin',
+          '1er Semaine - Juillet', '2éme Semaine - Juillet', '3éme Semaine - Juillet', '4éme Semaine - Juillet',
+          '1er Semaine - Août', '2éme Semaine - Août', '3éme Semaine - Août', '4éme Semaine - Août', '5éme Semaine - Août/Septembre',
+          '1er Semaine - Septembre', '2éme Semaine - Septembre', '3éme Semaine - Septembre', '4éme Semaine - Septembre',
+          '1er Semaine - October', '2éme Semaine - October', '3éme Semaine - October', '4éme Semaine - October',
+          '1er Semaine - Novembre', '2éme Semaine - Novembre', '3éme Semaine - Novembre', '4éme Semaine - Novembre', '5éme Semaine - Novembre',
+          '1er Semaine - Decembre', '2éme Semaine - Decembre', '3éme Semaine - Decembre', '4éme Semaine - Decembre'];
+          return $mois;
     }
 }

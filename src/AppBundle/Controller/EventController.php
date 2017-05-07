@@ -154,8 +154,10 @@ class EventController extends Controller
         }
 
         $obVue = null;
+        $obReservations = null;
+
         /***** Création des courbe de statistique ******/
-        if($this->getUser()->getAbonne()->getId() == $event->getOrganisateur()->getId() || $this->getUser()->hasRole("ROLE_ADMIN"))
+        if($this->getUser() != null && ($this->getUser()->getAbonne()->getId() == $event->getOrganisateur()->getId() || $this->getUser()->hasRole("ROLE_ADMIN")) )
         {
             /**** Courbe de nombre de vues ******/
             $data = array();
@@ -184,17 +186,18 @@ class EventController extends Controller
                 array("name" => "Intéressement",    "data" => $data2)
             );
 
+            $mois = $this->initialiseMois();
             $obVue = new Highchart();
             $obVue->chart->renderTo('linechartVue');  // The #id of the div where to render the chart
             $obVue->title->text('Nombre des interessées par semaine de l\'année');
             $obVue->xAxis->title(array('text'  => "Semaine"));
+            $obVue->xAxis->categories($mois);
             $obVue->xAxis->allowDecimals(false);
             $obVue->yAxis->allowDecimals(false);
             $obVue->yAxis->title(array('text'  => "Nombre des interessées"));
             $obVue->series($series);
 
             /******* Courbe de nombre de réservations ********/
-            $obReservations = null;
             $data = array();
             $reservations = $event->getReservations();
 
@@ -226,6 +229,7 @@ class EventController extends Controller
                 $obReservations->chart->renderTo('linechartReservation');  // The #id of the div where to render the chart
                 $obReservations->title->text('Nombre de places reservé par semaine de l\'année');
                 $obReservations->xAxis->title(array('text'  => "Semaine"));
+                $obReservations->xAxis->categories($mois);
                 $obReservations->xAxis->allowDecimals(false);
                 $obReservations->yAxis->allowDecimals(false);
                 $obReservations->yAxis->title(array('text'  => "Nombre de places réservé"));
@@ -351,6 +355,23 @@ class EventController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    public function initialiseMois()
+    {
+        $mois = ['1er Semaine - Janvier', '2éme Semaine - Janvier','3éme Semaine - Janvier','4éme Semaine - Janvier',
+        '1er Semaine - Fevrier', '2éme Semaine - Fevrier', '3éme Semaine - Fevrier', '4éme Semaine - Fevrier',
+         '1er Semaine - mars', '2éme Semaine - mars', '3éme Semaine - mars', '4éme Semaine - mars', '5éme Semaine - mars',
+          '1er Semaine - Avril', '2éme Semaine - Avril', '3éme Semaine - Avril', '4éme Semaine - Avril',
+          '1er Semaine - Mai', '2éme Semaine - Mai', '3éme Semaine - Mai', '4éme Semaine - Mai',
+          '1er Semaine - Juin', '2éme Semaine - Juin', '3éme Semaine - Juin', '4éme Semaine - Juin', '5éme Semaine - Juin',
+          '1er Semaine - Juillet', '2éme Semaine - Juillet', '3éme Semaine - Juillet', '4éme Semaine - Juillet',
+          '1er Semaine - Août', '2éme Semaine - Août', '3éme Semaine - Août', '4éme Semaine - Août', '5éme Semaine - Août/Septembre',
+          '1er Semaine - Septembre', '2éme Semaine - Septembre', '3éme Semaine - Septembre', '4éme Semaine - Septembre',
+          '1er Semaine - October', '2éme Semaine - October', '3éme Semaine - October', '4éme Semaine - October',
+          '1er Semaine - Novembre', '2éme Semaine - Novembre', '3éme Semaine - Novembre', '4éme Semaine - Novembre', '5éme Semaine - Novembre',
+          '1er Semaine - Decembre', '2éme Semaine - Decembre', '3éme Semaine - Decembre', '4éme Semaine - Decembre'];
+          return $mois;
     }
 
 }

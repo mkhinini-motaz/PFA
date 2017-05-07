@@ -6,7 +6,12 @@
 
 {% block body %}
     <div class="row">
+        {% if chartVue %}
+        {% else %}
+            <div class="col-sm-3 hidden-xs">
 
+            </div>
+        {% endif %}
         <div class="col-sm-6 col-xs-12 event_show">
         </br>
             {% if event.photo %}
