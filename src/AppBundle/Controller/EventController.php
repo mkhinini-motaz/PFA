@@ -172,6 +172,13 @@ class EventController extends Controller
                 $data2[] = [intval($key), $value];
             }
 
+            usort($data2, function($a, $b) {
+                if ($a == $b) {
+                    return 0;
+                }
+                return ($a < $b) ? -1 : 1;
+            });
+
             // Chart
             $series = array(
                 array("name" => "Intéressement",    "data" => $data2)
@@ -185,7 +192,6 @@ class EventController extends Controller
             $obVue->yAxis->allowDecimals(false);
             $obVue->yAxis->title(array('text'  => "Nombre des interessées"));
             $obVue->series($series);
-
 
             /******* Courbe de nombre de réservations ********/
             $obReservations = null;
@@ -202,6 +208,13 @@ class EventController extends Controller
             foreach ($data as $key => $value) {
                 $data2[] = [intval($key), $value];
             }
+
+            usort($data2, function($a, $b) {
+                if ($a == $b) {
+                    return 0;
+                }
+                return ($a < $b) ? -1 : 1;
+            });
 
             // Chart
             $series = array(

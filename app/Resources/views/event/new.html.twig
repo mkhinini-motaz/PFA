@@ -26,9 +26,6 @@
     {{ parent() }}
 
     <script type="text/javascript">
-        var fields = $("#appbundle_event_dateDebutInscri, #appbundle_event_dateFinInscri, #appbundle_event_capacite");
-        var field = $("#appbundle_event_prix");
-
         {% if form.ouvertCheck.vars.checked %}
             fields.hide();
             fields.prev().hide();
