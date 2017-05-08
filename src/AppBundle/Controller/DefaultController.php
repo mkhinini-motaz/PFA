@@ -23,7 +23,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:Event');
 
-        $events = $repo->findAllRecent();
+        $events = $repo->findAllRecent($page);
 
         $data = $repo->findAllDistinctLieu();
         $lieux = array();
@@ -68,9 +68,9 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/eventPassee", name="event_passee")
+     * @Route("/eventPassee/{page}", requirements={"page" = "\d+"}, defaults={"page" = 1}, name="event_passee")
      */
-    public function eventPasseeAction(Request $request)
+    public function eventPasseeAction(Request $request, $page)
     {
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('AppBundle:Event');
@@ -103,8 +103,18 @@ class DefaultController extends Controller
             $data = $form->getData();
             $events = $repo->findAllRecherche($data["motcle"], $data["lieu"], $data["categories"]);
         }
+
+        $pagination = array(
+            'page' => $page,
+            'nbPages' => ceil(count($events) / 15),
+            'nomRoute' => 'homepage',
+            'paramsRoute' => array()
+        );
+
         return $this->render('default/index.html.twig',
-            array('events' => $events, 'searchForm' => $form->createView()) );
+            array('events' => $events
+                    ,'searchForm' => $form->createView()
+                    ,'pagination' => $pagination) );
 
 
     }

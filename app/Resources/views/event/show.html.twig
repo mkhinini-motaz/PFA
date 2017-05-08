@@ -124,14 +124,14 @@
                 {% elseif event.organisateur.compte != app.user %}
 
                     {% if not event.ouvertCheck and "now"|date() < event.datefinInscri %}
-                        <button onClick="afficherForm();" class="reservation-button btn btn-success">Réserver votre place</button>
+                        <button onClick="afficherForm();" class="reservation-button btn btn-primary">Réserver votre place</button>
                     {% endif %}
 
                     <div class="reservation-form">
                         {% if reservationForm %}
                             {{ form_start(reservationForm) }}
                             {{ form_widget(reservationForm) }}
-                            <button type="submit" name="creer" class="btn btn-success">Réserver votre place</button>
+                            <button type="submit" name="creer" class="btn btn-primary">Réserver votre place</button>
                             {{ form_end(reservationForm) }}
                         {% endif %}
                     </div>

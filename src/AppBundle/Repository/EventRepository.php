@@ -32,16 +32,20 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function findAllPasse()
+    public function findAllPasse($page = 1, $nbMaxParPage = 15)
     {
-        return $this->getEntityManager()
+        $premierResultat = ($page - 1) * $nbMaxParPage;
+        $qb = $this->createQueryBuilder('post');
+        $qb = $this->getEntityManager()
             ->createQuery(
                 'SELECT e FROM AppBundle:Event e WHERE e.date < CURRENT_DATE() ORDER BY e.datePublication DESC'
-            )
-            ->getResult();
+            );
+
+        $pag = new Paginator($qb);
+        return $pag;
     }
 
-    public function findAllRecent($page = 1, $nbMaxParPage = 20)
+    public function findAllRecent($page = 1, $nbMaxParPage = 15)
     {
         $premierResultat = ($page - 1) * $nbMaxParPage;
         $qb = $this->createQueryBuilder('post');
@@ -49,6 +53,7 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
             ->createQuery(
                 'SELECT e FROM AppBundle:Event e WHERE e.date > CURRENT_DATE() ORDER BY e.datePublication DESC'
             );
+        $qb->setFirstResult($premierResultat)->setMaxResults($nbMaxParPage);
 
         $pag = new Paginator($qb);
         return $pag;

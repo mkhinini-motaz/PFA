@@ -636,23 +636,6 @@ class Event implements GroupSequenceProviderInterface
         return $this->gratuitCheck;
     }
 
-    public function getGroupSequence(){
-            $groups = ['Default', 'Event'];
-
-            if(!$this->getOuvertCheck())
-            {
-                $groups[] = 'eventferme';
-            }
-
-            if(!$this->getGratuitCheck())
-            {
-                $groups[] = 'eventpayant';
-            }
-
-            return $groups;
-    }
-
-
     /**
      * Set dateFin
      *
@@ -699,22 +682,6 @@ class Event implements GroupSequenceProviderInterface
     public function getOrganisateur()
     {
         return $this->organisateur;
-    }
-
-    /**
-    * Vérifier si l'abonne a déjà réservé sa place dans l'évenement
-    *
-    * @param \AppBundle\Entity\Abonne $abonne
-    */
-    public function checkReservation(\AppBundle\Entity\Abonne $abonne)
-    {
-        $reservations = $this->getReservations();
-        foreach ($reservations as $reservation) {
-            if ($reservation->getAbonne() == $abonne) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
@@ -767,4 +734,38 @@ class Event implements GroupSequenceProviderInterface
     {
         return $this->vues;
     }
+
+    /**
+    * Vérifier si l'abonne a déjà réservé sa place dans l'évenement
+    *
+    * @param \AppBundle\Entity\Abonne $abonne
+    */
+    public function checkReservation(\AppBundle\Entity\Abonne $abonne)
+    {
+        $reservations = $this->getReservations();
+        foreach ($reservations as $reservation) {
+            if ($reservation->getAbonne() == $abonne) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+        public function getGroupSequence(){
+                $groups = ['Default', 'Event'];
+
+                if(!$this->getOuvertCheck())
+                {
+                    $groups[] = 'eventferme';
+                }
+
+                if(!$this->getGratuitCheck())
+                {
+                    $groups[] = 'eventpayant';
+                }
+
+                return $groups;
+        }
+
 }

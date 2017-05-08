@@ -302,4 +302,45 @@ class Sponsor
 
         return $this;
     }
+
+    /**
+    * @Assert\IsTrue(message = "Le numéro de téléphone saisi est invalide")
+    */
+    public function isValidTel()
+    {
+        if($this->getTelephone() == null)
+            return true;
+        $tel = str_replace(" ", "", $this->getTelephone());
+        if($tel[0] == '+')
+        {
+            $tel = substr($tel,1);
+
+            if (strlen($tel) != 11)
+              return false;
+            if (substr($tel, 0, 3) != "216")
+              return false;
+
+            $tel = substr($tel, 3);
+        }
+        elseif (substr($tel, 0, 2) == "00") {
+            if (substr($tel, 2, 3) != "216")
+                return false;
+            if (strlen($tel) != 13)
+                return false;
+
+            $tel = substr($tel,5);
+        }
+        else {
+        if (strlen($tel) != 8)
+          return false;
+        }
+        if (!ctype_digit($tel))
+            return false;
+        if (in_array($tel[0], ['0', '1', '6', '8']))
+            return false;
+
+        $this->setTelephone($tel);
+        return true;
+    }
+
 }

@@ -23,5 +23,11 @@
         <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
     </div>
 
-    <button type="submit" id="_submit" name="_submit" class="btn btn-success btn-connexion">{{ 'security.login.submit'|trans }}</button>
+    <button type="submit" id="_submit" name="_submit" class="btn btn-success btn-connexion">
+        {{ 'security.login.submit'|trans }} <span class="glyphicon glyphicon-log-in"></span>
+    </button>
+    <a href="{{ path('inscription') }}" class="btn btn-primary" name="inscription">
+        S'inscrire <span class="glyphicon glyphicon-user"></span>
+
+    </a>
 </form>

@@ -8,7 +8,9 @@
         <div class="col-sm-3 col-xs-12">
             <h2 class="h2">Trouver un évennement :</h2>
             {{ form_start(searchForm) }}
-            <button type="submit" name="rechercher" class="btn btn-success">Rechercher</button>
+            <button type="submit" name="rechercher" class="btn btn-success">
+                Rechercher <span class="glyphicon glyphicon-search"></span>
+            </button>
             {{ form_widget(searchForm) }}
             {{ form_end(searchForm) }}
         </div>
@@ -20,6 +22,9 @@
                 {% endfor %}
             </div>
         </div>
-        {% include 'default/pagination.html.twig' %}
+        <div class="col-xs-12 col-sm-4 col-sm-push-4">
+            {% include 'default/pagination.html.twig' %}
+        </div>
+
     </div>
 {% endblock %}
