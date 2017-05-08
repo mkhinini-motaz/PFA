@@ -329,3 +329,8 @@ footer{
 	border: dashed 1px #8db7fc;
 	border-radius: 12px;
 }
+
+.inscription {
+	border: 1px solid #d6e5ff;
+	padding : 3% 3% 3% 3%;  
+}

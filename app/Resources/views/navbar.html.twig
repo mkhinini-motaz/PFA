@@ -28,9 +28,10 @@
                         <li {{ (app.request.attributes.get('_route') == 'mes_events') ? ' class="active"' }} >
                             <a href="{{ path('mes_events') }}">Mes Events</a>
                         </li>
-                        <li>
+                <!--        <li>
                             <a href="#">Mon Compte</a>
                         </li>
+                -->
                         <li>
                             <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
                         </li>

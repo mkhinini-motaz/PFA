@@ -5,9 +5,11 @@
 {% block body %}
     <div class="row">
 
-        <div class="col-sm-6 col-sm-push-3 col-xs-12">
-
-            <h1 class="h1">Inscription</h1>
+        <div class="col-sm-6 col-sm-push-3 col-xs-12 inscription">
+            <b>Déjà inscrit ?</b> <a href="{{ path('fos_user_security_login') }}" class="btn btn-success" name="inscription">
+                Conntectez vous <span class="glyphicon glyphicon-log-in"></span>
+            </a>
+            <h1 class="h1">Inscription : </h1>
 
             {{ form_start(form) }}
                 {{ form_widget(form) }}
