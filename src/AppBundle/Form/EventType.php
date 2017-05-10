@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 use Symfony\Component\Form\FormInterface;
+use Doctrine\ORM\EntityRepository;
 
 class EventType extends AbstractType
 {
@@ -41,9 +42,13 @@ class EventType extends AbstractType
                 ->add('lieu', TextType::class)
 
                 ->add('categories', EntityType::class, ['class' => 'AppBundle:Categorie',
-                                                        'choice_label' => 'nom',
+                                                        'choice_label' => 'getNomAndCount',
                                                         'multiple' => true,
                                                         'expanded' => true,
+                                                        'query_builder' => function (EntityRepository $er) {
+                                                                    return $er->createQueryBuilder('c')
+                                                                              ->where('c.accepte = true');
+                                                                          },
                 ])
 
                 ->add('date', DateTimeType::class, ["years" => range(date("Y"), strval(intval(date("Y")) + 7))

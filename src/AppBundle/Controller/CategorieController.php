@@ -59,6 +59,7 @@ class CategorieController extends Controller
             $em->flush($categorie);
 
             $this->addFlash('notice', 'Demande envoyé à l\'administrateur avec succées');
+            $this->addFlash('admin-categorie', 'Nouvelle categorie proposé par ' . $this->getUser()->getUserName());
 
             return $this->redirectToRoute('categorie_index', array('id' => $categorie->getId()));
         }

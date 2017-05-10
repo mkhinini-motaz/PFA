@@ -137,8 +137,10 @@
                         {% if reservationForm %}
                             {{ form_start(reservationForm) }}
                             {{ form_widget(reservationForm) }}
-                            <button type="submit" name="creer" class="btn btn-primary">Réserver votre place <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-</button>
+                            <button type="submit" name="creer" class="btn btn-primary">
+                                Réserver votre place
+                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            </button>
                             {{ form_end(reservationForm) }}
                         {% endif %}
                     </div>
