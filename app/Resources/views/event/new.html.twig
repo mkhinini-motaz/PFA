@@ -6,29 +6,42 @@
 
 {% block body %}
     <div class="row">
+        {{ form_start(form) }}
+            <div class="container-fluid">
+                <div class="row inscription">
 
-        <div class="col-sm-6 col-sm-offset-3 col-xs-12">
+                    <div class="col-sm-6 col-xs-12">
 
-            <h1 class="h1">Création d'un nouveau évennement</h1>
+                        <h1 class="h1">Création d'un nouveau évennement</h1>
 
-            Votre évennement est : </br>
+                        Votre évennement est : </br>
 
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button type="submit" name="creer" class="btn btn-success">Créer</button>
-            {{ form_end(form) }}
-
+                        {{ form_row(form.ouvertCheck) }}
+                        {{ form_row(form.gratuitCheck) }}
+                        {{ form_row(form.nom) }}
+                        {{ form_row(form.description) }}
+                        {{ form_row(form.lieu) }}
+                        {{ form_row(form.categories) }}
+                    </div>
+                    <div class="col-sm-6 col-xs-12">
+                        {{ form_widget(form) }}
+                        <button type="submit" name="creer" class="btn btn-success">Créer <span class="glyphicon glyphicon-plus"></span></button>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
 
     <script type="text/javascript">
+        var fieldsDate = $("#appbundle_event_dateDebutInscri, #appbundle_event_dateFinInscri,  #appbundle_event_capacite");
+        var field = $("#appbundle_event_prix");
         {% if form.ouvertCheck.vars.checked %}
-            fields.hide();
-            fields.prev().hide();
+            fieldsDate.hide();
+            fieldsDate.prev().hide();
         {% endif %}
 
         {% if form.gratuitCheck.vars.checked %}
@@ -38,11 +51,11 @@
 
         $("#appbundle_event_ouvertCheck").click(function(){
             if($(this).is(":checked")){
-                fields.hide();
-                fields.prev().hide();
+                fieldsDate.hide();
+                fieldsDate.prev().hide();
             }else{
-                fields.show();
-                fields.prev().show();
+                fieldsDate.show();
+                fieldsDate.prev().show();
             }
         });
 

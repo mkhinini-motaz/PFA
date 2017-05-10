@@ -356,3 +356,9 @@ footer{
   background-color: #a0ffa2;
   border-color: #d6e9c6;
 }
+
+#appbundle_event_categories .checkbox, #form_categories .checkbox, #form_lieu .checkbox{
+	float: left;
+	margin-right: 3%;
+	margin-top: -2%;
+}

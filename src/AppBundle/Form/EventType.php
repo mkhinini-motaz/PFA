@@ -43,6 +43,7 @@ class EventType extends AbstractType
 
                 ->add('categories', EntityType::class, ['class' => 'AppBundle:Categorie',
                                                         'choice_label' => 'getNomAndCount',
+                                                        'label' => 'Categories',
                                                         'multiple' => true,
                                                         'expanded' => true,
                                                         'query_builder' => function (EntityRepository $er) {
