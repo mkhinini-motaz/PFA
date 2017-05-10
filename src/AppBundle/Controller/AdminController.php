@@ -35,9 +35,13 @@ class AdminController extends Controller
 
         $obEvent = $this->createEventChart();
 
-        $params = [ 'chartReservation' => $obReservations ,'chartVue' => $obVue
+        $obInscriptions = $this->createInscriptionsChart();
+
+        $params = [ 'chartReservation' => $obReservations
+                   ,'chartVue' => $obVue
                    ,'chartPublication' => $obEvent["publication"]
                    ,'chartRealisation' => $obEvent["realisation"]
+                   ,'chartInscription' => $obInscriptions
                   ];
 
         return $this->render('admin/index.html.twig', $params );
@@ -204,6 +208,46 @@ class AdminController extends Controller
         $obReservations->xAxis->categories($this->mois);
         return $obReservations;
     }
+
+/*************************************************************************************************************/
+    public function createInscriptionsChart()
+    {
+        $users = $this->em->getRepository('AppBundle:Compte')->findAll();
+        $data = array();
+        foreach ($users as $user) {
+            $week = $user->getDateInscription()->format('W');
+            $ancienValeur = isset($data[$week]) ? $data[$week] : 0;
+            $data[$week] = $ancienValeur + 1;
+        }
+
+        $data2 = array();
+        foreach ($data as $key => $value) {
+            $data2[] = [intval($key), $value];
+        }
+        usort($data2, function($a, $b) {
+            if ($a == $b) {
+                return 0;
+            }
+            return ($a < $b) ? -1 : 1;
+        });
+
+        // Chart
+        $series = array(
+            array("name" => "Inscriptions",    "data" => $data2)
+        );
+
+        $obInscriptions = new Highchart();
+        $obInscriptions->chart->renderTo('linechartInscription');  // The #id of the div where to render the chart
+        $obInscriptions->title->text('Nombre d\'inscriptions par semaine de l\'année sur le site');
+        $obInscriptions->xAxis->title(array('text'  => "Semaine"));
+        $obInscriptions->xAxis->allowDecimals(false);
+        $obInscriptions->yAxis->allowDecimals(false);
+        $obInscriptions->yAxis->title(array('text'  => "Nombre d'inscriptions"));
+        $obInscriptions->series($series);
+        $obInscriptions->xAxis->categories($this->mois);
+        return $obInscriptions;
+    }
+
 
 /********************************************************************************************************/
 

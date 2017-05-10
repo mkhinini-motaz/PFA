@@ -19,6 +19,13 @@ class Compte extends BaseUser
     protected $id;
 
     /**
+     * @var datetime $date
+     *
+     * @ORM\Column(name="date_inscription", type="date", nullable=true)
+     */
+    protected $dateInscription;
+
+    /**
      * Relation entre Abonne et son Compte
      * @ORM\OneToOne(targetEntity="Abonne", mappedBy="compte")
      * @ORM\JoinColumn(name="abonne_id", referencedColumnName="id")
@@ -55,4 +62,28 @@ class Compte extends BaseUser
    {
        return $this->abonne;
    }
+
+    /**
+     * Set dateInscription
+     *
+     * @param \DateTime $dateInscription
+     *
+     * @return Compte
+     */
+    public function setDateInscription($dateInscription)
+    {
+        $this->dateInscription = $dateInscription;
+
+        return $this;
+    }
+
+    /**
+     * Get dateInscription
+     *
+     * @return \DateTime
+     */
+    public function getDateInscription()
+    {
+        return $this->dateInscription;
+    }
 }

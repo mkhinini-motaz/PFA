@@ -54,6 +54,7 @@ class AbonneController extends Controller
             $abonne->getCompte()->setEnabled(1);
             $abonne->getCompte()->addRole("ROLE_USER");
 	        $abonne->getCompte()->setAbonne($abonne);
+            $abonne->getCompte()->setDateInscription(new \DateTime("now", new \DateTimeZone("Africa/Tunis")));
 
             $em->persist($abonne->getCompte());
             $em->persist($abonne);
