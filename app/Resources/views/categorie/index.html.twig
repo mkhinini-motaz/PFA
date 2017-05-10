@@ -1,20 +1,30 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Tunisia Events - Categories
+{% endblock %}
+
 {% block body %}
     <div class="row">
         <div class="col-sm-6 col-sm-push-3 col-xs-12">
 
-            <h1>Liste des Categories</h1>
+            <h1 class="h1">Liste des Categories</h1>
+            {% for flash_message in app.session.flashBag.get('notice') %}
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <div class="flash-notice">
+                            <b>{{ flash_message }}</b>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
             <ul class="unstyled">
                 {% for categorie in categories %}
                     <li><a href="{{ path('categorie_show', { 'id': categorie.id }) }}">{{ categorie.getNomAndCount }}</a></li>
                 {% endfor %}
             </ul>
-            <ul class="class="unstyled"">
-                <li>
-                    <a href="{{ path('categorie_new') }}">Proposer une nouvelle categorie</a>
-                </li>
-            </ul>
+            <a class="btn btn-primary" href="{{ path('categorie_new') }}">Proposer une nouvelle categorie <span class="glyphicon glyphicon-plus"></span></a>
         </div>
     </div>
 

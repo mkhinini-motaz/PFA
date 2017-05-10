@@ -12,6 +12,7 @@
 
             </div>
         {% endif %}
+
         <div class="col-sm-6 col-xs-12 event_show">
         </br>
             {% if event.photo %}
@@ -80,9 +81,13 @@
                             <td>
                                 {% for categorie in event.categories %}
                                     <a href="{{ path('categorie_show', {'id' : categorie.id}) }}">
-                                        {{ categorie.nom }}
+                                        <span class="glyphicon glyphicon-search"></span> {{ categorie.nom }}
                                     </a>
                                 {% endfor %}
+                                {% if event.organisateur.compte == app.user or is_granted("ROLE_ADMIN") %}
+                                    <a class="btn btn-success" href="{{ path('categorie_new_for_event', {'id' : event.id} ) }}">Ajouter catégorie <span class="glyphicon glyphicon-plus"></span></a>
+                                    <a class="btn btn-warning" href="{{ path('categorie_new') }}">Proposer votre categorie <span class="glyphicon glyphicon-pencil"></span></a>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endif %}
@@ -108,7 +113,7 @@
                                     </a>
                                 {% endfor %}
                                 {% if app.user == event.organisateur.compte %}
-                                    <a href="{{ path('sponsor_new_for_event', {'id' : event.id}) }}" class="btn btn-primary">Ajouter Sponsor</a>
+                                    <a href="{{ path('sponsor_new_for_event', {'id' : event.id}) }}" class="btn btn-primary">Ajouter Sponsor <span class="glyphicon glyphicon-plus"></span></a>
 
                                 {% endif %}
                             </td>
@@ -119,26 +124,28 @@
             {% if app.user %}
                 {% if event.checkReservation(app.user.abonne) %}
                     <div class="btn btn-success deja-reserve">
-                        Déja réservé
+                        Déja réservé <span class="glyphicon glyphicon-ok"></span>
                     </div>
                 {% elseif event.organisateur.compte != app.user %}
 
                     {% if not event.ouvertCheck and "now"|date() < event.datefinInscri %}
-                        <button onClick="afficherForm();" class="reservation-button btn btn-primary">Réserver votre place</button>
+                        <button onClick="afficherForm();" class="reservation-button btn btn-primary">Réserver votre place <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+</button>
                     {% endif %}
 
                     <div class="reservation-form">
                         {% if reservationForm %}
                             {{ form_start(reservationForm) }}
                             {{ form_widget(reservationForm) }}
-                            <button type="submit" name="creer" class="btn btn-primary">Réserver votre place</button>
+                            <button type="submit" name="creer" class="btn btn-primary">Réserver votre place <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+</button>
                             {{ form_end(reservationForm) }}
                         {% endif %}
                     </div>
                 {% endif %}
             {% else %}
                 {% if not event.ouvertCheck and "now"|date() < event.datefinInscri %}
-                    <a href="{{ path('event_reserver', { 'id': event.id }) }}" class="btn btn-success">Connecter vous pour réserver votre place</a>
+                    <a href="{{ path('event_reserver', { 'id': event.id }) }}" class="btn btn-success">Connecter vous pour réserver votre place <span class="glyphicon glyphicon-log-in"></span></a>
                 {% endif %}
             {% endif %}
 

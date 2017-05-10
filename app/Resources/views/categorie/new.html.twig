@@ -1,16 +1,23 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Tunisia Events - Categorie
+{% endblock %}
+
+
 {% block body %}
-    <h1>Categorie creation</h1>
+    <div class="row">
+        <div class="col-sm-6 col-sm-push-3 col-xs-12">
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+            <h2 class="h2">Proposition d'une nouvelle categorie</h2>
 
-    <ul>
-        <li>
-            <a href="{{ path('categorie_index') }}">Back to the list</a>
-        </li>
-    </ul>
+            {{ form_start(form) }}
+            {{form_errors(form) }}
+                {{ form_widget(form) }}
+                <button class="btn btn-primary" type="submit" />Envoyer <span class="glyphicon glyphicon-share-alt"></span> </button>
+            {{ form_end(form) }}
+            </br>
+            <a class="btn btn-warning" href="{{ path('categorie_index') }}"> <span class="ion ion-reply"></span> Retour à la liste</a>
+        </div>
+    </div>
 {% endblock %}

@@ -31,6 +31,13 @@ class Categorie
     private $nom;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="accepte", type="boolean", nullable=true)
+     */
+    private $accepte = false;
+
+    /**
      * Relation entre Categorie et Event
      * @ORM\ManyToMany(targetEntity="Event", mappedBy="categories")
      * @ORM\JoinTable(name="eventcategorie")
@@ -112,5 +119,29 @@ class Categorie
     public function getNomAndCount()
     {
         return $this->getNom() . " (" . $this->getEvents()->count() .")";
+    }
+
+    /**
+     * Set accepte
+     *
+     * @param boolean $accepte
+     *
+     * @return Categorie
+     */
+    public function setAccepte($accepte)
+    {
+        $this->accepte = $accepte;
+
+        return $this;
+    }
+
+    /**
+     * Get accepte
+     *
+     * @return boolean
+     */
+    public function getAccepte()
+    {
+        return $this->accepte;
     }
 }

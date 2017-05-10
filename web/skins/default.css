@@ -332,5 +332,27 @@ footer{
 
 .inscription {
 	border: 1px solid #d6e5ff;
-	padding : 3% 3% 3% 3%;  
+	padding : 3% 3% 3% 3%;
+}
+
+.ion-reply {
+	font-size: 1.5em;;
+}
+
+.glyphicon-share-alt {
+	margin-left: 3%;
+}
+
+.button-users {
+	padding-bottom: 1%;
+}
+
+.panel-success {
+  border-color: #d6e9c6;
+  width: 50%;
+}
+.panel-success > .panel-heading {
+  color: black;
+  background-color: #a0ffa2;
+  border-color: #d6e9c6;
 }

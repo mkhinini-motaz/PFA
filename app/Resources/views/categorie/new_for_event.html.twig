@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tunisia Events{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-sm-6 col-sm-push-3 col-xs-12">
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" onClick="alert('Ajouté avec succées');" name="ajouter" class="btn btn-success">
+                Ajouter à l'évènement <span class="glyphicon glyphicon-plus"></span>
+            </button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

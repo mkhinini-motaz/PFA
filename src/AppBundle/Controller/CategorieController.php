@@ -5,7 +5,14 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Categorie;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\EntityRepository;
+use AppBundle\Entity\Event;
 
 /**
  * Categorie controller.
@@ -24,7 +31,7 @@ class CategorieController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $categories = $em->getRepository('AppBundle:Categorie')->findAll();
+        $categories = $em->getRepository('AppBundle:Categorie')->findByAccepte(true);
 
         return $this->render('categorie/index.html.twig', array(
             'categories' => $categories,
@@ -44,15 +51,67 @@ class CategorieController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($this->getUser()->hasRole("ROLE_ADMIN"))
+                $categorie->setAccepte(true);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($categorie);
             $em->flush($categorie);
 
-            return $this->redirectToRoute('categorie_show', array('id' => $categorie->getId()));
+            $this->addFlash('notice', 'Demande envoyé à l\'administrateur avec succées');
+
+            return $this->redirectToRoute('categorie_index', array('id' => $categorie->getId()));
         }
 
         return $this->render('categorie/new.html.twig', array(
             'categorie' => $categorie,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * Creates a new categorie entity for Event.
+     *
+     * @Route("/new/{id}", name="categorie_new_for_event")
+     * @Method({"GET", "POST"})
+     * @ParamConverter("event", class="AppBundle:Event")
+     */
+    public function newForEventAction(Request $request, Event $event)
+    {
+        $data = array();
+        $form = $this->createFormBuilder($data)
+            ->add('categories', EntityType::class, ['class' => 'AppBundle:Categorie',
+                                                    'label' => 'Ajouter categorie à votre évènement',
+                                                    'choice_label' => 'getNomAndCount',
+                                                    'multiple' => true,
+                                                    'expanded' => true,
+                                                    'required' => false,
+                                                    'query_builder' => function (EntityRepository $er) use($event) {
+                                                                return $er->createQueryBuilder('c')
+                                                                           ->andWhere('c.accepte = true AND c NOT IN (:categories)')
+                                                                           ->setParameter('categories', $event->getCategories())
+                                                                           ->groupBy('c.id');
+                                                                },
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            var_dump($data);
+            $categories = $form["categories"]->getData();
+            foreach ($categories as $categorie) {
+                $event->addCategory($categorie);
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($event);
+            $em->flush();
+            $this->addFlash('notice', 'Catégories ajouté avec succées');
+            return $this->redirectToRoute('event_show', ["id" => $event->getId()]);
+
+        }
+
+        return $this->render('categorie/new_for_event.html.twig', array(
+            'event' => $event,
             'form' => $form->createView(),
         ));
     }

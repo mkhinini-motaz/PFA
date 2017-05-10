@@ -7,9 +7,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\QueryBuilder;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -25,28 +26,8 @@ class DefaultController extends Controller
 
         $events = $repo->findAllRecent($page);
 
-        $data = $repo->findAllDistinctLieu();
-        $lieux = array();
-        foreach ($data as $value) {
-            $lieux[$value['lieu']. " (" . $value['nombre'] . ")"] = $value['lieu'];
-
-        }
-
         $data = array();
-        $form = $this->createFormBuilder($data)
-            ->add('motcle', TextType::class, ['label' => 'Mot Clé', 'required' => false,])
-            ->add('categories', EntityType::class, ['class' => 'AppBundle:Categorie',
-                                                    'choice_label' => 'getNomAndCount',
-                                                    'multiple' => true,
-                                                    'expanded' => true,
-                                                    'required' => false,
-            ])
-            ->add('lieu', ChoiceType::class, ['multiple' => true,
-                                              'expanded' => true,
-                                              'choices' => $lieux,
-                                              'required' => false,
-            ])
-            ->getForm();
+        $form = $this->createSearchForm($data);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -76,28 +57,10 @@ class DefaultController extends Controller
         $repo = $em->getRepository('AppBundle:Event');
 
         $events = $repo->findAllPasse();
-        $data = $repo->findAllDistinctLieu();
-        $lieux = array();
-        foreach ($data as $value) {
-            $lieux[$value['lieu']. " (" . $value['nombre'] . ")"] = $value['lieu'];
-        }
 
         $data = array();
-        $form = $this->createFormBuilder($data)
-            ->add('motcle', TextType::class, ['label' => 'Mot Clé', 'required' => false,])
-            ->add('categories', EntityType::class, ['class' => 'AppBundle:Categorie',
-                                                    'choice_label' => 'getNomAndCount',
-                                                    'multiple' => true,
-                                                    'expanded' => true,
-                                                    'required' => false,
-            ])
-            ->add('lieu', ChoiceType::class, ['multiple' => true,
-                                              'expanded' => true,
-                                              'choices' => $lieux,
-                                              'required' => false,
-            ])
-            ->getForm();
 
+        $form = $this->createSearchForm($data);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
@@ -117,5 +80,47 @@ class DefaultController extends Controller
                     ,'pagination' => $pagination) );
 
 
+    }
+
+
+    /***************************************************************************/
+
+    public function createSearchForm($data)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('AppBundle:Event');
+
+        $data = $repo->findAllDistinctLieu();
+        $lieux = array();
+        foreach ($data as $value) {
+            $lieux[$value['lieu']. " (" . $value['nombre'] . ")"] = $value['lieu'];
+
+        }
+
+        $data = array();
+
+        $form = $this->createFormBuilder($data)
+            ->add('motcle', TextType::class, ['label' => 'Mot Clé', 'required' => false,])
+            ->add('categories', EntityType::class, ['class' => 'AppBundle:Categorie',
+                                                    'choice_label' => 'getNomAndCount',
+                                                    'multiple' => true,
+                                                    'expanded' => true,
+                                                    'required' => false,
+                                                    'query_builder' => function (EntityRepository $er) {
+                                                                return $er->createQueryBuilder('c')
+                                                                          ->where('c.accepte = true')
+                                                                          ->leftJoin('c.events','e')
+                                                                          ->having('COUNT(e.id) > 0')
+                                                                          ->groupBy('c.id');
+                                                            },
+            ])
+            ->add('lieu', ChoiceType::class, ['multiple' => true,
+                                              'expanded' => true,
+                                              'choices' => $lieux,
+                                              'required' => false,
+            ])
+            ->getForm();
+
+        return $form;
     }
 }
