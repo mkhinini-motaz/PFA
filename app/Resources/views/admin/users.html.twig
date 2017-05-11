@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-xs-12 col-xs-pull-1 col-sm-pull-0">
+        <div class="col-xs-12">
             <table class="table table-bordered table-responsive table-striped table-condensed">
                 <thead>
                     <th class="text-center">Login</th>
@@ -31,14 +31,21 @@
                             <td class="text-center hidden-xs">{{ abonne.prenom }}</td>
                             <td class="text-center hidden-xs">{{ abonne.email }}</td>
                             <td class="text-center">
-                                <a href="#">
-                                    {{ abonne.events|length }}
-                                </a>
+                                {% if abonne.events|length > 0 %}
+                                    <a href="{{ path('events_organise', {'id' : abonne.id}) }}">
+                                        {{ abonne.events|length }}
+                                {% else %}
+                                    Pas encore
+                                {% endif %}
                             </td>
                             <td class="text-center">
-                                <a href="#">
-                                    {{ abonne.eventsParticipe|length }}
-                                </a>
+                                {% if abonne.reservations|length %}
+                                    <a href="{{ path('events_participe', {'id' : abonne.id}) }}">
+                                        {{ abonne.reservations|length }}
+                                    </a>
+                                {% else %}
+                                    Pas encore
+                                {% endif %}
                             </td>
                             <td class="text-center hidden-xs">{{ abonne.compte.lastLogin|date("d/m/Y h:i:s") }}</td>
                             <td class="text-center hidden-xs">

@@ -49,6 +49,55 @@ class AdminController extends Controller
     }
 
     /**
+     * Liste des évents organisé par abonne
+     *
+     * @Route("/eventsorganise/{id}", name="events_organise")
+     */
+    public function eventsOrganiseAction(Abonne $abonne)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $events = $em->getRepository('AppBundle:Event')->findByAbonne($abonne);
+
+        return $this->render('event/mesevents.html.twig', array(
+            'events' => $events,
+        ));
+    }
+
+    /**
+     * Liste des évents participé par abonne
+     *
+     * @Route("/eventsparticipe/{id}", name="events_participe")
+     */
+    public function eventsParticipeAction(Abonne $abonne)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $events = $em->getRepository('AppBundle:Reservation')->findByAbonne($abonne);
+
+        return $this->render('event/mesevents.html.twig', array(
+            'events' => $events,
+        ));
+    }
+
+    /**
+     * Liste des évents
+     *
+     * @Route("/events", name="admin_events")
+     */
+    public function eventsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $events = $em->getRepository('AppBundle:Event')->findAll();
+
+        return $this->render('event/mesevents.html.twig', array(
+            'events' => $events,
+        ));
+    }
+
+
+    /**
      * @Route("/categories", name="admin_categories")
      */
     public function categoriesAction()
@@ -331,8 +380,8 @@ class AdminController extends Controller
     {
         $mois = ['1er Semaine - Janvier', '2éme Semaine - Janvier','3éme Semaine - Janvier','4éme Semaine - Janvier', '5éme semaine - Janvier', 'Fin Janvier / Debut Fevrier',
          '2éme Semaine - Fevrier', '3éme Semaine - Fevrier', '4éme Semaine - Fevrier',
-         'Fin Fevrier / Debut mars', '2éme Semaine - mars', '3éme Semaine - mars', '4éme Semaine - mars', '5éme Semaine - mars',
-          '1er Semaine - Avril', '2éme Semaine - Avril', '3éme Semaine - Avril', '4éme Semaine - Avril',
+         'Fin Fevrier / Debut Mars', '2éme Semaine - Mars', '3éme Semaine - Mars', '4éme Semaine - Mars', 'fin Mars / Début Avril',
+          '2éme Semaine - Avril', '3éme Semaine - Avril', '4éme Semaine - Avril', '5éme Semaine - Avril',
           '1er Semaine - Mai', '2éme Semaine - Mai', '3éme Semaine - Mai', '4éme Semaine - Mai', 'Fin Mai / Debut Juin',
            '2éme Semaine - Juin', '3éme Semaine - Juin', '4éme Semaine - Juin', '5éme Semaine - Juin',
           '1er Semaine - Juillet', '2éme Semaine - Juillet', '3éme Semaine - Juillet', '4éme Semaine - Juillet',

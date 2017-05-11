@@ -39,7 +39,11 @@ class EventType extends AbstractType
 
                 ->add('description', TextareaType::class)
 
-                ->add('lieu', TextType::class)
+                ->add('lieu',  EntityType::class, ['class' => 'AppBundle:Etat',
+                                                        'choice_label' => 'nom',
+                                                        'label' => 'Lieu',
+                                                        'choice_value' => 'nom'
+                ])
 
                 ->add('categories', EntityType::class, ['class' => 'AppBundle:Categorie',
                                                         'choice_label' => 'getNomAndCount',
@@ -80,11 +84,7 @@ class EventType extends AbstractType
                                                 ,"attr" => ["accept" => ".png,.jpg,.jpeg"]
                 ])
 
-                ->add('fichiers', FileType::class, ["multiple" => true,
-                                                    "label" => "Fichiers joints",
-                                                    "required" => false
-                                                    ,"attr" => ["accept" => ".png,.jpg,.jpeg,.pdf"]
-                ]);
+                ;
     }
 
     /**

@@ -84,7 +84,7 @@
                                         <span class="glyphicon glyphicon-search"></span> {{ categorie.nom }}
                                     </a>
                                 {% endfor %}
-                                {% if event.organisateur.compte == app.user or is_granted("ROLE_ADMIN") %}
+                                {% if event.organisateur.compte == app.user %}
                                     <a class="btn btn-success" href="{{ path('categorie_new_for_event', {'id' : event.id} ) }}">Ajouter catégorie <span class="glyphicon glyphicon-plus"></span></a>
                                     <a class="btn btn-warning" href="{{ path('categorie_new') }}">Proposer votre categorie <span class="glyphicon glyphicon-pencil"></span></a>
                                 {% endif %}

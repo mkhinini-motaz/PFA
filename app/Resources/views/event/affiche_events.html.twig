@@ -29,10 +29,10 @@
 
             {% if event.organisateur.compte == app.user %}
                 <div class="col-xs-12">
-                    <p class="nbr-reservation">{{ event.reservations.count }} reservations</p>
+                    <p class="nbr-reservation"><b>{{ event.reservations.count }} reservations</b></p>
                 </div>
                 <div class="col-xs-12">
-                    <p class="nbr-places-reservation">{{ nbrReservations }} places reservées</p>
+                    <p class="nbr-places-reservation"><b>{{ nbrReservations }} places reservées</b></p>
                 </div>
             {% endif %}
 

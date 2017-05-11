@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\Abonne;
 
 /**
  * ReservationsRepository
@@ -10,4 +11,15 @@ namespace AppBundle\Repository;
  */
 class ReservationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByAbonne(Abonne $abonne)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT e FROM AppBundle:Event e
+                    WHERE e IN
+                        (SELECT IDENTITY(r.eventFerme) FROM AppBundle:Reservation r WHERE r.abonne = :abonne)'
+            )
+            ->setParameter("abonne", $abonne)
+            ->getResult();
+    }
 }
