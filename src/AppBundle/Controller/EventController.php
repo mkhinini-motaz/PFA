@@ -276,25 +276,11 @@ class EventController extends Controller
         $path = $this->get('kernel')->getRootDir() . '/../web/images/events/' . $event->getNom();
         $photoPath = $path . DIRECTORY_SEPARATOR . $event->getPhoto();
 
-//        $event->setPhoto(new File($photoPath));
+        $event->setPhoto(new File($photoPath));
 
-/*        $fichiers = [];
-        $nomFichiers = explode(";", $event->getFichiers());
-
-        foreach ( $nomFichiers as $file ){
-          $filePath = $path . DIRECTORY_SEPARATOR . $file;
-          $fichiers[] = new File($filePath);
-        }
-
-        $event->setFichiers($fichiers);
-*/
-        $deleteForm = $this->createDeleteForm($event);
         $editForm = $this->createForm('AppBundle\Form\EventType', $event);
         $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-          // Déplacement de la photo
-        //  $event->setPhoto($photoName);
-        //  $event->setFichiers(implode(";", $nomFichiers));
 
             $this->getDoctrine()->getManager()->flush();
 
@@ -303,8 +289,7 @@ class EventController extends Controller
 
         return $this->render('event/edit.html.twig', array(
             'event' => $event,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form' => $editForm->createView(),
         ));
     }
 
