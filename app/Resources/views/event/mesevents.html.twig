@@ -4,6 +4,21 @@
 
 {% block body %}
     <div class="row">
+        <div class="col-sm-12">
+            {% set route = app.request.attributes.get('_route') %}
+            {% if route == 'admin_events' %}
+                {% set directionRoute = 'admin_index' %}
+            {% elseif route == 'events_participe' or route == 'events_organise' %}
+                {% set directionRoute = 'admin_users' %}
+            {% else %}
+                {% set directionRoute = 'homepage' %}
+            {% endif %}
+            <a class="btn btn-primary edit-retour-btn" href="{{ path(directionRoute) }}">
+                <span class="ion-reply"></span>
+                 Retour
+            </a>
+            </br></br>
+        </div>
         <div class="col-sm-8 col-sm-push-2 col-xs-12">
             <div class="container-fluid">
                 {% for event in events %}
@@ -12,5 +27,5 @@
             </div>
         </div>
     </div>
-    
+
 {% endblock %}
